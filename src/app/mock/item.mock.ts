@@ -10,6 +10,9 @@ export const items: IDatabaseItem[] = [
     picture: 'assets/tshirt-men-1.jpeg',
     attributes: ['Cotton', 'Fair Trade'],
     availableSizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
+    Enim, ut tenetur.`
   },
   {
     id: '2',
@@ -20,6 +23,9 @@ export const items: IDatabaseItem[] = [
     picture: 'assets/tshirt-men-2.jpeg',
     attributes: ['Polyester'],
     availableSizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
+    Enim, ut tenetur.`
   },
   {
     id: '3',
@@ -30,6 +36,9 @@ export const items: IDatabaseItem[] = [
     picture: 'assets/tshirt-women-1.jpeg',
     attributes: ['Cotton', 'Fair Trade'],
     availableSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
+    Enim, ut tenetur.`
   },
   {
     id: '4',
@@ -40,6 +49,9 @@ export const items: IDatabaseItem[] = [
     picture: 'assets/tshirt-women-2.jpeg',
     attributes: ['Polyester'],
     availableSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
+    Enim, ut tenetur.`
   },
   {
     id: '5',
@@ -50,6 +62,9 @@ export const items: IDatabaseItem[] = [
     picture: 'assets/shoes-unisex-1.jpeg',
     attributes: ['New'],
     availableSizes: [36, 37, 38, 39, 40, 41, 42, 43, 44],
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
+    Enim, ut tenetur.`
   },
   {
     id: '6',
@@ -60,6 +75,9 @@ export const items: IDatabaseItem[] = [
     picture: 'assets/shoes-unisex-2.jpeg',
     attributes: ['New'],
     availableSizes: [36, 37, 38, 39, 40, 41, 42, 43, 44],
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
+    Enim, ut tenetur.`
   },
   {
     id: '7',
@@ -70,6 +88,9 @@ export const items: IDatabaseItem[] = [
     picture: 'assets/shoes-men-1.jpeg',
     attributes: ['New'],
     availableSizes: [40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50],
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
+    Enim, ut tenetur.`
   },
   {
     id: '8',
@@ -80,6 +101,9 @@ export const items: IDatabaseItem[] = [
     picture: 'assets/shoes-men-2.jpeg',
     attributes: ['New'],
     availableSizes: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50],
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
+    Enim, ut tenetur.`
   },
   {
     id: '9',
@@ -90,6 +114,9 @@ export const items: IDatabaseItem[] = [
     picture: 'assets/shoes-women-1.jpeg',
     attributes: ['New'],
     availableSizes: [36, 37, 38, 39, 40, 41, 42],
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
+    Enim, ut tenetur.`
   },
   {
     id: '10',
@@ -100,5 +127,8 @@ export const items: IDatabaseItem[] = [
     picture: 'assets/shoes-women-2.jpeg',
     attributes: ['New'],
     availableSizes: [36, 37, 38, 39, 40, 41, 42],
+    description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
+    In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
+    Enim, ut tenetur.`
   },
 ];

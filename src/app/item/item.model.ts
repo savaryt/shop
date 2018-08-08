@@ -25,6 +25,7 @@ export interface IDatabaseItem {
   sex: Sex;
   picture: string;
   availableSizes: TShirtSize[] | ShoeSize[];
+  description: string;
   attributes?: string[];
 }
 
@@ -37,6 +38,7 @@ export class DatabaseItem {
     public sex: Sex,
     public picture: string,
     public availableSizes: TShirtSize[] | ShoeSize[],
+    public description: string,
     public attributes?: string[],
   ) { }
 }

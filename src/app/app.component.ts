@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 
-// import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
 import * as localforage from 'localforage';
 
 import { Store } from '@ngrx/store';
@@ -84,7 +84,7 @@ export class AppComponent {
     private store: Store<IItem>,
     private snackbar: MatSnackBar,
     private feedback: FeedbackService,
-    // private firestore: AngularFirestore,
+    private firestore: AngularFirestore,
   ) {
     this.isMobile = this.media.asObservable()
       .pipe(map((change: MediaChange) => {
