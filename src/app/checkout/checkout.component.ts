@@ -5,6 +5,9 @@ import { FeedbackMessage } from '../services/feedback-message.model';
 import { Store } from '@ngrx/store';
 import { selectAll } from '../item/item.reducer';
 import { IItem } from '../item/item.model';
+import { environment } from '../../environments/environment';
+import { first } from '../../../node_modules/rxjs/operators';
+import { HttpClient } from '../../../node_modules/@angular/common/http';
 
 @Component({
   selector: 'app-checkout',
@@ -21,6 +24,7 @@ export class CheckoutComponent implements OnInit {
     private store: Store<IItem>,
     private formBuilder: FormBuilder,
     private feedback: FeedbackService,
+    private http: HttpClient,
   ) { }
 
   ngOnInit() {
@@ -61,7 +65,13 @@ export class CheckoutComponent implements OnInit {
         })
         const data = { account: this.account.value, shipping: this.shipping.value, payment: this.payment.value, order: usefulState };
         console.log(data);
-        this.feedback.message.next(new FeedbackMessage('Payment not implemented yet !'));
+        this.http.post(`${environment.functions.root}order`, data)
+          .pipe(first())
+          .subscribe(
+            () => console.log('success'),
+            (error) => console.log(error)
+          );
+        // this.feedback.message.next(new FeedbackMessage('Payment not implemented yet !'));
       });
   }
 

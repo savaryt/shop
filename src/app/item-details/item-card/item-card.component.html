@@ -40,8 +40,15 @@
                 <mat-select formControlName="size"
                             required
                             placeholder="Size">
-                  <mat-option *ngFor="let size of item?.availableSizes"
-                              [value]="size">{{size}}</mat-option>
+                  <ng-container *ngFor="let availableSize of item?.availableSizes">
+                    <mat-option *ngIf="availableSize.stock > 5"
+                                [value]="availableSize.size">{{availableSize.size}}</mat-option>
+                    <mat-option *ngIf="availableSize.stock <= 5 && availableSize.stock > 0"
+                                [value]="availableSize.size">{{availableSize.size}} - Only {{availableSize.stock}} left</mat-option>
+                    <mat-option *ngIf="availableSize.stock == 0"
+                                [value]="availableSize.size"
+                                disabled>{{availableSize.size}} - Unavailable</mat-option>
+                  </ng-container>
                 </mat-select>
               </mat-form-field>
 

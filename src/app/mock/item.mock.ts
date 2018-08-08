@@ -8,11 +8,39 @@ export const items: IDatabaseItem[] = [
     sale: 0,
     sex: 'men',
     picture: 'assets/tshirt-men-1.jpeg',
-    attributes: ['Cotton', 'Fair Trade'],
-    availableSizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+    attributes: ['Cotton', 'Fair Trade'], availableSizes: [
+      {
+        size: 'XS',
+        stock: 10
+      },
+      {
+        size: 'S',
+        stock: 10
+      },
+      {
+        size: 'M',
+        stock: 10
+      },
+      {
+        size: 'L',
+        stock: 10
+      },
+      {
+        size: 'XL',
+        stock: 10
+      },
+      {
+        size: 'XXL',
+        stock: 10
+      },
+      {
+        size: 'XXXL',
+        stock: 10
+      }
+    ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
-    Enim, ut tenetur.`
+    Enim, ut tenetur.`,
   },
   {
     id: '2',
@@ -21,11 +49,39 @@ export const items: IDatabaseItem[] = [
     sale: 5,
     sex: 'men',
     picture: 'assets/tshirt-men-2.jpeg',
-    attributes: ['Polyester'],
-    availableSizes: ['S', 'M', 'L', 'XL', 'XXL', 'XXXL'],
+    attributes: ['Polyester'], availableSizes: [
+      {
+        size: 'XS',
+        stock: 10
+      },
+      {
+        size: 'S',
+        stock: 10
+      },
+      {
+        size: 'M',
+        stock: 10
+      },
+      {
+        size: 'L',
+        stock: 10
+      },
+      {
+        size: 'XL',
+        stock: 10
+      },
+      {
+        size: 'XXL',
+        stock: 10
+      },
+      {
+        size: 'XXXL',
+        stock: 10
+      }
+    ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
-    Enim, ut tenetur.`
+    Enim, ut tenetur.`,
   },
   {
     id: '3',
@@ -35,10 +91,39 @@ export const items: IDatabaseItem[] = [
     sex: 'women',
     picture: 'assets/tshirt-women-1.jpeg',
     attributes: ['Cotton', 'Fair Trade'],
-    availableSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    availableSizes: [
+      {
+        size: 'XS',
+        stock: 10
+      },
+      {
+        size: 'S',
+        stock: 10
+      },
+      {
+        size: 'M',
+        stock: 10
+      },
+      {
+        size: 'L',
+        stock: 10
+      },
+      {
+        size: 'XL',
+        stock: 10
+      },
+      {
+        size: 'XXL',
+        stock: 10
+      },
+      {
+        size: 'XXXL',
+        stock: 10
+      }
+    ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
-    Enim, ut tenetur.`
+    Enim, ut tenetur.`,
   },
   {
     id: '4',
@@ -48,10 +133,39 @@ export const items: IDatabaseItem[] = [
     sex: 'women',
     picture: 'assets/tshirt-women-2.jpeg',
     attributes: ['Polyester'],
-    availableSizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    availableSizes: [
+      {
+        size: 'XS',
+        stock: 10
+      },
+      {
+        size: 'S',
+        stock: 10
+      },
+      {
+        size: 'M',
+        stock: 10
+      },
+      {
+        size: 'L',
+        stock: 10
+      },
+      {
+        size: 'XL',
+        stock: 10
+      },
+      {
+        size: 'XXL',
+        stock: 10
+      },
+      {
+        size: 'XXXL',
+        stock: 10
+      }
+    ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
-    Enim, ut tenetur.`
+    Enim, ut tenetur.`,
   },
   {
     id: '5',
@@ -61,10 +175,39 @@ export const items: IDatabaseItem[] = [
     sex: 'unisex',
     picture: 'assets/shoes-unisex-1.jpeg',
     attributes: ['New'],
-    availableSizes: [36, 37, 38, 39, 40, 41, 42, 43, 44],
+    availableSizes: [
+      {
+        size: 36,
+        stock: 10
+      },
+      {
+        size: 37,
+        stock: 10
+      },
+      {
+        size: 38,
+        stock: 10
+      },
+      {
+        size: 39,
+        stock: 10
+      },
+      {
+        size: 40,
+        stock: 10
+      },
+      {
+        size: 41,
+        stock: 10
+      },
+      {
+        size: 42,
+        stock: 10
+      }
+    ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
-    Enim, ut tenetur.`
+    Enim, ut tenetur.`,
   },
   {
     id: '6',
@@ -74,10 +217,39 @@ export const items: IDatabaseItem[] = [
     sex: 'unisex',
     picture: 'assets/shoes-unisex-2.jpeg',
     attributes: ['New'],
-    availableSizes: [36, 37, 38, 39, 40, 41, 42, 43, 44],
+    availableSizes: [
+      {
+        size: 36,
+        stock: 10
+      },
+      {
+        size: 37,
+        stock: 10
+      },
+      {
+        size: 38,
+        stock: 10
+      },
+      {
+        size: 39,
+        stock: 10
+      },
+      {
+        size: 40,
+        stock: 10
+      },
+      {
+        size: 41,
+        stock: 10
+      },
+      {
+        size: 42,
+        stock: 10
+      }
+    ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
-    Enim, ut tenetur.`
+    Enim, ut tenetur.`,
   },
   {
     id: '7',
@@ -87,10 +259,39 @@ export const items: IDatabaseItem[] = [
     sex: 'men',
     picture: 'assets/shoes-men-1.jpeg',
     attributes: ['New'],
-    availableSizes: [40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50],
+    availableSizes: [
+      {
+        size: 38,
+        stock: 10
+      },
+      {
+        size: 39,
+        stock: 10
+      },
+      {
+        size: 40,
+        stock: 10
+      },
+      {
+        size: 41,
+        stock: 10
+      },
+      {
+        size: 42,
+        stock: 10
+      },
+      {
+        size: 43,
+        stock: 10
+      },
+      {
+        size: 44,
+        stock: 10
+      },
+    ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
-    Enim, ut tenetur.`
+    Enim, ut tenetur.`,
   },
   {
     id: '8',
@@ -100,10 +301,39 @@ export const items: IDatabaseItem[] = [
     sex: 'men',
     picture: 'assets/shoes-men-2.jpeg',
     attributes: ['New'],
-    availableSizes: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50],
+    availableSizes: [
+      {
+        size: 38,
+        stock: 10
+      },
+      {
+        size: 39,
+        stock: 10
+      },
+      {
+        size: 40,
+        stock: 10
+      },
+      {
+        size: 41,
+        stock: 10
+      },
+      {
+        size: 42,
+        stock: 10
+      },
+      {
+        size: 43,
+        stock: 10
+      },
+      {
+        size: 44,
+        stock: 10
+      },
+    ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
-    Enim, ut tenetur.`
+    Enim, ut tenetur.`,
   },
   {
     id: '9',
@@ -113,10 +343,39 @@ export const items: IDatabaseItem[] = [
     sex: 'women',
     picture: 'assets/shoes-women-1.jpeg',
     attributes: ['New'],
-    availableSizes: [36, 37, 38, 39, 40, 41, 42],
+    availableSizes: [
+      {
+        size: 36,
+        stock: 10
+      },
+      {
+        size: 37,
+        stock: 10
+      },
+      {
+        size: 38,
+        stock: 10
+      },
+      {
+        size: 39,
+        stock: 10
+      },
+      {
+        size: 40,
+        stock: 10
+      },
+      {
+        size: 41,
+        stock: 10
+      },
+      {
+        size: 42,
+        stock: 10
+      }
+    ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
-    Enim, ut tenetur.`
+    Enim, ut tenetur.`,
   },
   {
     id: '10',
@@ -126,9 +385,38 @@ export const items: IDatabaseItem[] = [
     sex: 'women',
     picture: 'assets/shoes-women-2.jpeg',
     attributes: ['New'],
-    availableSizes: [36, 37, 38, 39, 40, 41, 42],
+    availableSizes: [
+      {
+        size: 36,
+        stock: 10
+      },
+      {
+        size: 37,
+        stock: 10
+      },
+      {
+        size: 38,
+        stock: 10
+      },
+      {
+        size: 39,
+        stock: 10
+      },
+      {
+        size: 40,
+        stock: 10
+      },
+      {
+        size: 41,
+        stock: 10
+      },
+      {
+        size: 42,
+        stock: 10
+      }
+    ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
-    Enim, ut tenetur.`
+    Enim, ut tenetur.`,
   },
 ];
