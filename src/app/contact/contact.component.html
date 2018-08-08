@@ -1,0 +1,46 @@
+<h2>CONTACT</h2>
+<div class="wrapper"
+     fxLayout
+     fxLayoutAlign="center start">
+
+  <form fxFlex.gt-md="50%"
+        fxFlex.md="75%"
+        fxFlex.lt-md="100%"
+        fxLayout="column"
+        fxLayoutAlign="start center"
+        [formGroup]="form"
+        (ngSubmit)="onSubmit()">
+
+    <mat-form-field fxFlex>
+      <input matInput
+             type="text"
+             placeholder="Email"
+             formControlName="email">
+    </mat-form-field>
+
+    <mat-form-field fxFlex>
+      <input matInput
+             type="text"
+             placeholder="Subject"
+             formControlName="subject">
+    </mat-form-field>
+
+    <mat-form-field fxFlex>
+      <input matInput
+             type="text"
+             placeholder="Reference"
+             formControlName="reference">
+    </mat-form-field>
+
+    <mat-form-field fxFlex>
+      <textarea matInput
+                matTextareaAutosize
+                placeholder="Content"
+                formControlName="content"></textarea>
+    </mat-form-field>
+
+    <button mat-raised-button
+            color="primary"
+            type="submit">Submit</button>
+  </form>
+</div>

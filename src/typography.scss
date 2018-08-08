@@ -1,0 +1,13 @@
+@import '~@angular/material/theming';
+
+$typography: mat-typography-config($font-family: 'Roboto Condensed, monospace');
+$typography-mobile: mat-typography-config($font-family: 'Roboto Condensed, monospace',);
+@media all and (max-width: 599px) {
+  @include angular-material-typography($typography-mobile);
+}
+@media all and (min-width: 600px) {
+  @include angular-material-typography($typography);
+}
+
+// @import './app/_app.typography.scss';
+// @include app-typography($typography);

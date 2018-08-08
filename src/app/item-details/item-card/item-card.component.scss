@@ -1,0 +1,34 @@
+:host {
+  border: 8px solid transparent;
+  box-sizing: border-box;
+  mat-card {
+    height: 100%;
+    box-sizing: border-box;
+  }
+  mat-card-title {
+    max-width: calc(100% - 48px);
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  mat-card-content {
+    margin-bottom: 0;
+  }
+  mat-card-footer {
+    padding: 6px;
+  }
+  div.item-options-wrapper {
+    padding: 16px;
+  }
+  div.item-img-wrapper {
+    max-width: 480px;
+    height: auto;
+    overflow: hidden;
+  }
+  img.item-img {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+}

@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+:host {
+  div.wrapper {
+    height: 100%;
+  }
+  mat-sidenav-container {
+    height: calc(100% - 64px);
+  }
+  mat-sidenav {
+    width: 240px;
+  }
+  mat-sidenav-content {
+    overflow: auto;
+  }
+  a {
+    margin-left: 8px;
+  }
+  .active {
+    color: map-get($mat-light-blue, A200)
+  }
+}

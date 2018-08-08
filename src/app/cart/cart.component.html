@@ -1,0 +1,133 @@
+<h2>CART</h2>
+<div class="orientation-wrapper">
+  <mat-list role="list">
+    <mat-list-item role="listitem">
+      <div fxFlex
+           fxLayout
+           fxLayoutAlign="start space-between">
+
+        <div fxFlex
+             fxLayoutAlign="start center"
+             class="label">
+          <h4>Product</h4>
+        </div>
+        <div fxFlex="10%"
+             fxLayoutAlign="start center"
+             class="size">
+          <h4>Size</h4>
+        </div>
+        <div fxFlex="10%"
+             fxLayoutAlign="start center"
+             class="price">
+          <h4>Price</h4>
+        </div>
+        <div fxFlex="10%"
+             fxLayoutAlign="center center"
+             class="quantity">
+          <h4>Quantity</h4>
+        </div>
+        <div fxFlex="10%"
+             fxLayoutAlign="end center"
+             class="subtotal">
+          <h4>Subtotal</h4>
+        </div>
+        <div fxFlex="5%"
+             fxLayoutAlign="end center"
+             class="actions"></div>
+
+      </div>
+
+    </mat-list-item>
+    <mat-list-item *ngFor="let item of items | async"
+                   role="listitem">
+
+      <div fxFlex
+           fxLayout
+           fxLayoutAlign="center space-between">
+
+        <div fxFlex
+             fxLayoutAlign="start center"
+             class="label">{{item.label}} ({{item.sex}})</div>
+        <div fxFlex="10%"
+             fxLayoutAlign="start center"
+             class="size">{{item.size}}</div>
+        <div fxFlex="10%"
+             fxLayoutAlign="start center"
+             class="price">{{item.price | currency}}</div>
+        <div fxFlex="10%"
+             fxLayoutAlign="center center"
+             class="quantity">
+          <button mat-icon-button>
+            <mat-icon (click)="removeQuantity(item)">remove</mat-icon>
+          </button>
+          {{item.quantity}}
+          <button mat-icon-button>
+            <mat-icon (click)="addQuantity(item)">add</mat-icon>
+          </button>
+        </div>
+        <div fxFlex="10%"
+             fxLayoutAlign="end center"
+             class="subtotal">{{item.price * item.quantity | currency}}</div>
+        <div fxFlex="5%"
+             fxLayoutAlign="end center"
+             class="actions">
+          <button mat-icon-button>
+            <mat-icon (click)="remove(item)">clear</mat-icon>
+          </button>
+        </div>
+
+      </div>
+
+    </mat-list-item>
+    <ng-container *ngIf="(items | async).length">
+
+      <mat-divider></mat-divider>
+
+      <mat-list-item role="listitem">
+        <div fxFlex
+             fxLayout
+             fxLayoutAlign="start space-between">
+
+          <div fxFlex
+               fxLayoutAlign="start center"
+               class="label">
+            <h4>Total</h4>
+          </div>
+          <div fxFlex="10%"
+               fxLayoutAlign="start center"
+               class="size"></div>
+          <div fxFlex="10%"
+               fxLayoutAlign="start center"
+               class="price"></div>
+          <div fxFlex="10%"
+               fxLayoutAlign="start center"
+               class="quantity"></div>
+          <div fxFlex="10%"
+               fxLayoutAlign="end center"
+               class="total">{{total | async | currency}}</div>
+          <div fxFlex="5%"
+               fxLayoutAlign="end center"
+               class="actions">
+            <button mat-icon-button
+                    color="warn"
+                    *ngIf="(items | async).length">
+              <mat-icon (click)="clear()">clear</mat-icon>
+            </button>
+          </div>
+
+        </div>
+      </mat-list-item>
+    </ng-container>
+
+  </mat-list>
+  <div fxLayout
+       fxLayoutAlign="center center">
+    <a mat-raised-button
+       color="primary"
+       *ngIf="(items | async).length"
+       routerLink="/checkout">CHECKOUT</a>
+  </div>
+</div>
+<div class="orientation-info">
+  This view isn't available in portait mode on your device, please use landscape mode instead.
+</div>

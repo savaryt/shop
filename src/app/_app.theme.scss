@@ -1,0 +1,24 @@
+@import '~@angular/material/theming';
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+$warn: map-get($theme, warn);
+$foreground: map-get($theme, foreground);
+@mixin app-theme($theme) {
+  a {
+    outline: none;
+    color: map-get($foreground, text);
+    text-decoration: none;
+    &:visited {
+      color: map-get($foreground, text);
+    }
+    &:active {
+      color: map-get($accent, A200);
+    }
+  }
+  .text-accent {
+    color: map-get($accent, A200);
+  }
+  .text-warn {
+    color: map-get($warn, 500);
+  }
+}

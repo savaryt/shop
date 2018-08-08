@@ -1,0 +1,40 @@
+<div class="wrapper">
+  <mat-toolbar color="primary"
+               fxLayout>
+    <button mat-icon-button
+            *ngIf="isMobile | async"
+            (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Shop</span>
+    <span fxFlex></span>
+    <a mat-icon-button
+       [routerLink]="'/cart'">
+      <mat-icon [matBadge]="count | async"
+                matBadgeColor="accent">shopping_cart</mat-icon>
+    </a>
+  </mat-toolbar>
+
+  <mat-sidenav-container>
+    <mat-sidenav [mode]="(isMobile | async) ? 'over' : 'side'"
+                 [opened]="!(isMobile | async)"
+                 #sidenav>
+      <mat-list role="list">
+        <ng-container *ngFor="let link of navLinks">
+          <mat-list-item role="listitem"
+                         *ngIf="!link.disabled"
+                         fxLayout
+                         fxLayoutGap="20px">
+            <mat-icon color="accent">{{link.icon}}</mat-icon>
+            <a [routerLink]="link.path"
+               routerLinkActive="active"
+               (click)="isMobileStatic ? sidenav.close() : noop()">{{link.label | uppercase}}</a>
+          </mat-list-item>
+        </ng-container>
+      </mat-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

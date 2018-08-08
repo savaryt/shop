@@ -1,0 +1,12 @@
+<h2>{{headline | uppercase}}</h2>
+
+<div class="wrapper"
+     fxLayout="row wrap"
+     fxLayoutAlign="start stretch">
+  <app-item-card fxFlex.gt-lg="25%"
+                 fxFlex.lg="33%"
+                 fxFlex.md="33%"
+                 fxFlex.lt-md="100%"
+                 *ngFor="let item of items | async"
+                 [item]="item"></app-item-card>
+</div>

@@ -1,0 +1,44 @@
+<mat-card>
+  <mat-card-title [matTooltip]="item?.label + ' (' + item?.sex + ')'"
+                  matTooltipPosition="below">{{item?.label}} ({{item?.sex}})</mat-card-title>
+  <mat-card-subtitle fxLayout
+                     fxLayoutGap="16px">
+    <span [style.textDecoration]="item?.sale !== 0 ? 'line-through' : 'none'">{{item?.price | currency}}</span>
+    <span *ngIf="item?.sale !== 0"
+          class="text-warn">{{item?.price - item?.sale | currency}}</span>
+  </mat-card-subtitle>
+
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <div class="item-img-wrapper">
+      <img class="item-img"
+           [src]="item?.picture"
+           alt="picture">
+    </div>
+  </mat-card-content>
+  <mat-divider class="mat-divider-shifted"></mat-divider>
+  <mat-card-footer fxLayout
+                   fxLayoutAlign="start center">
+
+    <mat-chip-list>
+      <ng-container *ngFor="let attribute of item?.attributes">
+        <mat-chip selected
+                  [color]="attribute == 'Fair Trade' ? 'accent' : 'primary'">{{attribute}}</mat-chip>
+      </ng-container>
+      <mat-chip *ngIf="item?.sale !== 0"
+                selected
+                color="warn">On sale</mat-chip>
+    </mat-chip-list>
+
+    <span fxFlex> </span>
+
+    <div>
+      <a mat-mini-fab
+         color="primary"
+         [routerLink]="['/details', item?.id]">
+        <mat-icon>search</mat-icon>
+      </a>
+    </div>
+
+  </mat-card-footer>
+</mat-card>

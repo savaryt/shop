@@ -1,0 +1,32 @@
+:host {
+  display: block;
+  padding: 16px;
+  mat-form-field {
+    margin-right: 16px;
+    width: calc(100% - 16px);
+  }
+  @media all and (orientation: portrait) and (max-width: 599px) {
+    div.orientation-wrapper {
+      display: none;
+    }
+    div.orientation-info {
+      display: block;
+    }
+  }
+  @media all and (orientation: portrait) and (min-width: 600px) {
+    div.orientation-wrapper {
+      display: block;
+    }
+    div.orientation-info {
+      display: none;
+    }
+  }
+  @media all and (orientation: landscape) {
+    div.orientation-wrapper {
+      display: block;
+    }
+    div.orientation-info {
+      display: none;
+    }
+  }
+}

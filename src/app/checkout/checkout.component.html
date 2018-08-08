@@ -1,0 +1,206 @@
+<h2>CHECKOUT</h2>
+<div class="orientation-wrapper">
+  <mat-horizontal-stepper linear>
+
+    <mat-step [stepControl]="account">
+
+      <form [formGroup]="account"
+            fxLayout="row wrap"
+            fxLayoutAlign="center center">
+        <ng-template matStepLabel>Account</ng-template>
+
+        <mat-form-field fxFlex>
+          <input matInput
+                 placeholder="Email"
+                 formControlName="email"
+                 required>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <input matInput
+                 placeholder="Phone"
+                 formControlName="phone"
+                 required>
+        </mat-form-field>
+
+      </form>
+      <div fxLayout
+           fxLayoutAlign="start center">
+        <a mat-raised-button
+           color="primary"
+           routerLink="/cart">Back</a>
+        <span fxFlex></span>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="shipping">
+      <form [formGroup]="shipping"
+            fxLayoutAlign="center center"
+            fxLayout="row wrap">
+        <ng-template matStepLabel>Shipping</ng-template>
+
+        <div fxFlex
+             fxLayout="column wrap"
+             fxLayoutAlign="start start">
+
+          <mat-form-field fxFlex>
+            <input matInput
+                   type="text"
+                   placeholder="First name"
+                   formControlName="firstName"
+                   required>
+          </mat-form-field>
+
+          <mat-form-field fxFlex>
+            <input matInput
+                   type="text"
+                   placeholder="Last name"
+                   formControlName="lastName"
+                   required>
+          </mat-form-field>
+
+
+          <mat-form-field fxFlex>
+            <input matInput
+                   type="text"
+                   placeholder="Street"
+                   formControlName="street"
+                   required>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex
+             fxLayout="column wrap"
+             fxLayoutAlign="start start">
+          <mat-form-field fxFlex>
+            <input matInput
+                   type="text"
+                   placeholder="City"
+                   formControlName="city"
+                   required>
+          </mat-form-field>
+
+          <mat-form-field fxFlex>
+            <input matInput
+                   type="number"
+                   placeholder="Zip"
+                   formControlName="zip"
+                   required>
+          </mat-form-field>
+
+          <mat-form-field fxFlex>
+            <input matInput
+                   type="text"
+                   placeholder="State"
+                   formControlName="state"
+                   required>
+          </mat-form-field>
+
+        </div>
+
+      </form>
+      <div fxLayout
+           fxLayoutAlign="start center">
+        <button mat-raised-button
+                color="primary"
+                matStepperPrevious>Back</button>
+        <span fxFlex></span>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="payment">
+      <form [formGroup]="payment"
+            fxLayout="row wrap"
+            fxLayoutAlign="center start">
+        <ng-template matStepLabel>Payment</ng-template>
+
+        <div fxFlex
+             fxLayout="column wrap"
+             fxLayoutAlign="start start">
+
+          <mat-form-field fxFlex>
+            <input matInput
+                   type="text"
+                   placeholder="Card holder"
+                   formControlName="cardHolder"
+                   required>
+          </mat-form-field>
+
+          <mat-form-field fxFlex>
+            <input matInput
+                   type="number"
+                   placeholder="Card number"
+                   formControlName="cardNumber"
+                   required>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex
+             formGroupName="expiry"
+             fxLayout="column wrap"
+             fxLayoutAlign="start start">
+
+          <mat-form-field fxFlex>
+            <input matInput
+                   type="number"
+                   placeholder="Month"
+                   formControlName="month"
+                   required>
+          </mat-form-field>
+
+          <mat-form-field fxFlex>
+            <input matInput
+                   type="number"
+                   placeholder="Year"
+                   formControlName="year"
+                   required>
+          </mat-form-field>
+
+          <mat-form-field fxFlex>
+            <input matInput
+                   type="number"
+                   placeholder="CVV"
+                   formControlName="cvv"
+                   required>
+          </mat-form-field>
+
+        </div>
+      </form>
+      <div fxLayout
+           fxLayoutAlign="start center">
+        <button mat-raised-button
+                color="primary"
+                matStepperPrevious>Back</button>
+        <span fxFlex></span>
+        <button mat-raised-button
+                color="primary"
+                matStepperNext>Next</button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Validation</ng-template>
+      <div fxLayout
+           fxLayoutAlign="center center">
+        <button mat-raised-button
+                color="primary"
+                (click)="proceed()">Proceed to payment</button>
+      </div>
+      <div fxLayout
+           fxLayoutAlign="start center">
+        <button mat-raised-button
+                color="primary"
+                matStepperPrevious>Back</button>
+      </div>
+    </mat-step>
+
+  </mat-horizontal-stepper>
+</div>
+<div class="orientation-info">
+  This view isn't available in portait mode on your device, please use landscape mode instead.
+</div>

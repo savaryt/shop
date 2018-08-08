@@ -1,0 +1,7 @@
+:host {
+  display: block;
+  padding: 16px;
+  mat-form-field {
+    width: calc(100% - 16px);
+  }
+}
