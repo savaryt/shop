@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { selectAll } from '../item/item.reducer';
 import { IItem } from '../item/item.model';
 import { environment } from '../../environments/environment';
-import { first } from '../../../node_modules/rxjs/operators';
+import { first, map, switchMap } from '../../../node_modules/rxjs/operators';
 import { HttpClient } from '../../../node_modules/@angular/common/http';
 
 @Component({
@@ -54,25 +54,31 @@ export class CheckoutComponent implements OnInit {
     });
   }
 
-  proceed() {
-    const order = this.store.select(selectAll)
-      .subscribe((state) => {
-        const usefulState = state.map((item) => {
-          const parts = item.id.split('-');
-          const id = parts[0];
-          const size = parts[1];
-          return { id, size, quantity: item.quantity };
-        })
+  order() {
+    const order = this.store
+      .select(selectAll)
+      .pipe(first())
+      .pipe(switchMap(state => {
+
+        const usefulState = state
+          .map((item) => {
+            const parts = item.id.split('-');
+            const id = parts[0];
+            return { id, size: item.size, quantity: item.quantity };
+          });
+
         const data = { account: this.account.value, shipping: this.shipping.value, payment: this.payment.value, order: usefulState };
-        console.log(data);
-        this.http.post(`${environment.functions.root}order`, data)
-          .pipe(first())
-          .subscribe(
-            () => console.log('success'),
-            (error) => console.log(error)
-          );
-        // this.feedback.message.next(new FeedbackMessage('Payment not implemented yet !'));
+
+        return this.http.post(`${environment.functions.root}order`, data);
+
+      }))
+      .toPromise()
+      .then(({ success }: { success }) => { this.feedback.message.next(new FeedbackMessage(success)); })
+      .catch(({ error }: { error }) => {
+        console.log(error)
+        this.feedback.message.next(new FeedbackMessage(error));
       });
+
   }
 
 }
