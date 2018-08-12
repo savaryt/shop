@@ -47,7 +47,10 @@
 
         <div fxFlex
              fxLayoutAlign="start center"
-             class="label">{{item.label}} ({{item.sex}})</div>
+             class="label">
+          <span (click)="navigate(item)"
+                class="pointer">{{item.label}} ({{item.sex}})</span>
+        </div>
         <div fxFlex="10%"
              fxLayoutAlign="start center"
              class="size">{{item.size}}</div>
@@ -57,12 +60,16 @@
         <div fxFlex="10%"
              fxLayoutAlign="center center"
              class="quantity">
-          <button mat-icon-button>
-            <mat-icon (click)="removeQuantity(item)">remove</mat-icon>
+          <button mat-icon-button
+                  (click)="removeQuantity(item)"
+                  [disabled]="false">
+            <mat-icon>remove</mat-icon>
           </button>
           {{item.quantity}}
-          <button mat-icon-button>
-            <mat-icon (click)="addQuantity(item)">add</mat-icon>
+          <button mat-icon-button
+                  (click)="addQuantity(item)"
+                  [disabled]="false">
+            <mat-icon>add</mat-icon>
           </button>
         </div>
         <div fxFlex="10%"

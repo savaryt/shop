@@ -5,6 +5,7 @@ import { IItem } from '../item/item.model';
 import { UpdateItem, DeleteItem, ClearItems } from '../item/item.actions';
 import { selectAll } from '../item/item.reducer';
 import { map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart',
@@ -19,6 +20,7 @@ export class CartComponent implements OnInit {
 
   constructor(
     private store: Store<IItem>,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -62,4 +64,9 @@ export class CartComponent implements OnInit {
     this.store.dispatch(action);
   }
 
+  navigate(item: IItem) {
+    const parts = item.id.split('-');
+    const dbId = parts[0];
+    this.router.navigate(['details', dbId]);
+  }
 }
