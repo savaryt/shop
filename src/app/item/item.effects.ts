@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ItemActionTypes } from './item.actions';
-import { tap, map, switchMap, } from 'rxjs/operators';
+import { tap, map, switchMap, concat, } from 'rxjs/operators';
 import { FeedbackService } from '../services/feedback.service';
 import { FeedbackMessage } from '../services/feedback-message.model';
 import { IItem } from './item.model';
 import { Store } from '@ngrx/store';
-import { selectAll } from './item.reducer';
+import { selectAll, selectEntities, selectIds } from './item.reducer';
 import * as localforage from 'localforage';
 
 @Injectable()
@@ -19,7 +19,11 @@ export class ItemEffects {
   ) { }
 
   @Effect({ dispatch: false }) save = this.actions
-    .pipe(switchMap(() => this.store.select(selectAll)))
+    .pipe(switchMap(() => {
+      return this.store.select(selectEntities)
+        .pipe(switchMap((entities) => {
+          return this.store.select(selectIds).pipe(map(ids => ({ ids, entities })));
+        }))))
     .pipe(map(state => localforage.setItem('cart', state)));
 
   @Effect({ dispatch: false }) add = this.actions
