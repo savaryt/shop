@@ -177,33 +177,33 @@ export const items: IDatabaseItem[] = [
     attributes: ['New'],
     availableSizes: [
       {
-        size: 36,
+        size: '38',
         stock: 10
       },
       {
-        size: 37,
+        size: '39',
         stock: 10
       },
       {
-        size: 38,
+        size: '40',
         stock: 10
       },
       {
-        size: 39,
+        size: '41',
         stock: 10
       },
       {
-        size: 40,
+        size: '42',
         stock: 10
       },
       {
-        size: 41,
+        size: '43',
         stock: 10
       },
       {
-        size: 42,
+        size: '44',
         stock: 10
-      }
+      },
     ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
@@ -219,33 +219,33 @@ export const items: IDatabaseItem[] = [
     attributes: ['New'],
     availableSizes: [
       {
-        size: 36,
+        size: '38',
         stock: 10
       },
       {
-        size: 37,
+        size: '39',
         stock: 10
       },
       {
-        size: 38,
+        size: '40',
         stock: 10
       },
       {
-        size: 39,
+        size: '41',
         stock: 10
       },
       {
-        size: 40,
+        size: '42',
         stock: 10
       },
       {
-        size: 41,
+        size: '43',
         stock: 10
       },
       {
-        size: 42,
+        size: '44',
         stock: 10
-      }
+      },
     ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
@@ -261,31 +261,31 @@ export const items: IDatabaseItem[] = [
     attributes: ['New'],
     availableSizes: [
       {
-        size: 38,
+        size: '38',
         stock: 10
       },
       {
-        size: 39,
+        size: '39',
         stock: 10
       },
       {
-        size: 40,
+        size: '40',
         stock: 10
       },
       {
-        size: 41,
+        size: '41',
         stock: 10
       },
       {
-        size: 42,
+        size: '42',
         stock: 10
       },
       {
-        size: 43,
+        size: '43',
         stock: 10
       },
       {
-        size: 44,
+        size: '44',
         stock: 10
       },
     ],
@@ -303,31 +303,31 @@ export const items: IDatabaseItem[] = [
     attributes: ['New'],
     availableSizes: [
       {
-        size: 38,
+        size: '38',
         stock: 10
       },
       {
-        size: 39,
+        size: '39',
         stock: 10
       },
       {
-        size: 40,
+        size: '40',
         stock: 10
       },
       {
-        size: 41,
+        size: '41',
         stock: 10
       },
       {
-        size: 42,
+        size: '42',
         stock: 10
       },
       {
-        size: 43,
+        size: '43',
         stock: 10
       },
       {
-        size: 44,
+        size: '44',
         stock: 10
       },
     ],
@@ -345,33 +345,33 @@ export const items: IDatabaseItem[] = [
     attributes: ['New'],
     availableSizes: [
       {
-        size: 36,
+        size: '38',
         stock: 10
       },
       {
-        size: 37,
+        size: '39',
         stock: 10
       },
       {
-        size: 38,
+        size: '40',
         stock: 10
       },
       {
-        size: 39,
+        size: '41',
         stock: 10
       },
       {
-        size: 40,
+        size: '42',
         stock: 10
       },
       {
-        size: 41,
+        size: '43',
         stock: 10
       },
       {
-        size: 42,
+        size: '44',
         stock: 10
-      }
+      },
     ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?
@@ -387,33 +387,33 @@ export const items: IDatabaseItem[] = [
     attributes: ['New'],
     availableSizes: [
       {
-        size: 36,
+        size: '38',
         stock: 10
       },
       {
-        size: 37,
+        size: '39',
         stock: 10
       },
       {
-        size: 38,
+        size: '40',
         stock: 10
       },
       {
-        size: 39,
+        size: '41',
         stock: 10
       },
       {
-        size: 40,
+        size: '42',
         stock: 10
       },
       {
-        size: 41,
+        size: '43',
         stock: 10
       },
       {
-        size: 42,
+        size: '44',
         stock: 10
-      }
+      },
     ],
     description: `Lorem ipsum dolor sit amet consectetur adipisicing elit.
     In ut consequuntur doloribus, cumque fugit soluta atque perferendisdicta explicabo rem enim vel quidem molestias magni nemo vero?

@@ -18,9 +18,9 @@ export const order = functions.https.onRequest((req, res) => {
             return admin.firestore().doc(`items/${item.id}`).get()
               .then(snapshot => {
                 const value = snapshot.data()
+                // avoid negative stock issue
                 const availableSize = value.availableSizes.find(x => x.size === item.size);
                 const index = value.availableSizes.findIndex(x => x.size === item.size);
-                // manage stock to avoid negative stock
                 const stock = availableSize.stock - item.quantity;
                 value.availableSizes[index].stock = stock;
                 if (stock >= 0) {
@@ -31,8 +31,8 @@ export const order = functions.https.onRequest((req, res) => {
               });
           });
         return Promise.all(promises);
-        // add shipping to queue
-        // send confirmation mail
+        // @todo add shipping to queue
+        // @todo send confirmation mail
       })
       .then(() => {
         res.status(200).send({ success: 'Payment accepted' })
