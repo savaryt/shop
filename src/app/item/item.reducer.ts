@@ -1,5 +1,5 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { IItem } from './item.model';
+import { IItem, TShirtSize, ShoeSize } from './item.model';
 import { ItemActions, ItemActionTypes } from './item.actions';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
@@ -19,72 +19,51 @@ export function reducer(
 ): State {
   switch (action.type) {
     case ItemActionTypes.AddItem: {
+
       if (state.entities[action.payload.item.id]) {
-        const entity = state.entities[action.payload.item.id]
+        const entity = state.entities[action.payload.item.id];
         const newEntity = { ...entity, quantity: action.payload.item.quantity + entity.quantity };
         state.entities[action.payload.item.id] = newEntity;
-        localforage.setItem('cart', state);
         return state;
       } else {
-        const newState = adapter.addOne(action.payload.item, state);
-        localforage.setItem('cart', newState);
-        return newState;
+        return adapter.addOne(action.payload.item, state);
       }
     }
 
     case ItemActionTypes.UpsertItem: {
-      const newState = adapter.upsertOne(action.payload.item, state);
-      localforage.setItem('cart', newState);
-      return newState;
+      return adapter.upsertOne(action.payload.item, state);
     }
 
     case ItemActionTypes.AddItems: {
-      const newState = adapter.addMany(action.payload.items, state);
-      localforage.setItem('cart', newState);
-      return newState;
+      return adapter.addMany(action.payload.items, state);
     }
 
     case ItemActionTypes.UpsertItems: {
-      const newState = adapter.upsertMany(action.payload.items, state);
-      localforage.setItem('cart', newState);
-      return newState;
+      return adapter.upsertMany(action.payload.items, state);
     }
 
     case ItemActionTypes.UpdateItem: {
-      const newState = adapter.updateOne(action.payload.item, state);
-      localforage.setItem('cart', newState);
-      return newState;
+      return adapter.updateOne(action.payload.item, state);
     }
 
     case ItemActionTypes.UpdateItems: {
-      const newState = adapter.updateMany(action.payload.items, state);
-      localforage.setItem('cart', newState);
-      return newState;
+      return adapter.updateMany(action.payload.items, state);
     }
 
     case ItemActionTypes.DeleteItem: {
-      const newState = adapter.removeOne(action.payload.id, state);
-      localforage.setItem('cart', newState);
-      return newState;
+      return adapter.removeOne(action.payload.id, state);
     }
 
     case ItemActionTypes.DeleteItems: {
-      const newState = adapter.removeMany(action.payload.ids, state);
-      localforage.setItem('cart', newState);
-      return newState;
+      return adapter.removeMany(action.payload.ids, state);
     }
 
     case ItemActionTypes.LoadItems: {
-      const newState = adapter.addAll(action.payload.items, state);
-      localforage.setItem('cart', newState);
-      return newState;
+      return adapter.addAll(action.payload.items, state);
     }
 
-
     case ItemActionTypes.ClearItems: {
-      const newState = adapter.removeAll(state);
-      localforage.setItem('cart', newState);
-      return newState;
+      return adapter.removeAll(state);
     }
 
     case ItemActionTypes.SetState: {
@@ -111,3 +90,8 @@ export const {
 // selected item id selector
 const getSelectedId = (state: State): string => state.selectedItem.id;
 export const selectId = createSelector(selectState, getSelectedId);
+
+
+function checkStock(item: IItem, size: string) {
+  const selectedSize = (item.availableSizes as Array<any>).find(x => x.size === size);
+}

@@ -1,39 +1,45 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { ItemActionTypes } from './item.actions';
-import { tap, map, } from 'rxjs/operators';
+import { tap, map, switchMap, } from 'rxjs/operators';
 import { FeedbackService } from '../services/feedback.service';
 import { FeedbackMessage } from '../services/feedback-message.model';
 import { IItem } from './item.model';
+import { Store } from '@ngrx/store';
+import { selectAll } from './item.reducer';
+import * as localforage from 'localforage';
 
 @Injectable()
 export class ItemEffects {
 
   constructor(
-    private actions$: Actions,
+    private actions: Actions,
     private feedback: FeedbackService,
+    private store: Store<IItem>,
   ) { }
 
-  @Effect({ dispatch: false }) add$ = this.actions$
+  @Effect({ dispatch: false }) save = this.actions
+    .pipe(switchMap(() => this.store.select(selectAll)))
+    .pipe(map(state => localforage.setItem('cart', state)));
+
+  @Effect({ dispatch: false }) add = this.actions
     .pipe(ofType(ItemActionTypes.AddItem))
-    .pipe(tap(console.log))
-    .pipe(map((data) => {
-      const { payload, type } = data;
+    .pipe(map(({ payload }: { payload }) => {
       const { item } = payload;
       this.feedback.message.next(new FeedbackMessage(`${item.label} added to cart`));
     }));
 
-  @Effect({ dispatch: false }) delete$ = this.actions$
+  @Effect({ dispatch: false }) delete = this.actions
     .pipe(ofType(ItemActionTypes.DeleteItem))
-    .pipe(tap(console.log))
     .pipe(map(() => {
       this.feedback.message.next(new FeedbackMessage(`Item removed from cart`));
     }));
 
-  @Effect({ dispatch: false }) clear$ = this.actions$
+  @Effect({ dispatch: false }) clear = this.actions
     .pipe(ofType(ItemActionTypes.ClearItems))
-    .pipe(tap(console.log))
     .pipe(map(() => {
       this.feedback.message.next(new FeedbackMessage(`Cart cleared`));
     }));
+
+
 }
