@@ -62,13 +62,13 @@
              class="quantity">
           <button mat-icon-button
                   (click)="removeQuantity(item)"
-                  [disabled]="false">
+                  [disabled]="item.quantity <= 1">
             <mat-icon>remove</mat-icon>
           </button>
           {{item.quantity}}
           <button mat-icon-button
                   (click)="addQuantity(item)"
-                  [disabled]="false">
+                  [disabled]="!hasEnoughStock(item)">
             <mat-icon>add</mat-icon>
           </button>
         </div>

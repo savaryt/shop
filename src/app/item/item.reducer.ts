@@ -19,15 +19,7 @@ export function reducer(
 ): State {
   switch (action.type) {
     case ItemActionTypes.AddItem: {
-
-      if (state.entities[action.payload.item.id]) {
-        const entity = state.entities[action.payload.item.id];
-        const newEntity = { ...entity, quantity: action.payload.item.quantity + entity.quantity };
-        state.entities[action.payload.item.id] = newEntity;
-        return state;
-      } else {
-        return adapter.addOne(action.payload.item, state);
-      }
+      return adapter.addOne(action.payload.item, state);
     }
 
     case ItemActionTypes.UpsertItem: {
@@ -91,7 +83,3 @@ export const {
 const getSelectedId = (state: State): string => state.selectedItem.id;
 export const selectId = createSelector(selectState, getSelectedId);
 
-
-function checkStock(item: IItem, size: string) {
-  const selectedSize = (item.availableSizes as Array<any>).find(x => x.size === size);
-}

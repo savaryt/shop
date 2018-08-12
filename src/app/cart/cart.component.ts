@@ -69,4 +69,10 @@ export class CartComponent implements OnInit {
     const dbId = parts[0];
     this.router.navigate(['details', dbId]);
   }
+
+  hasEnoughStock(item: IItem) {
+    const size = item.id.split('-')[1];
+    const selectedSize = (item.availableSizes as { size: string, stock: number }[]).find(x => x.size === size);
+    return selectedSize.stock >= item.quantity + 1;
+  }
 }
