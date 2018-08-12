@@ -52,15 +52,6 @@
                 </mat-select>
               </mat-form-field>
 
-              <mat-form-field>
-                <mat-select formControlName="quantity"
-                            required
-                            placeholder="Quantity">
-                  <mat-option *ngFor="let quantity of [1,2,3,4,5]"
-                              [value]="quantity">{{quantity}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-
               <button mat-raised-button
                       color="primary"
                       type="submit"

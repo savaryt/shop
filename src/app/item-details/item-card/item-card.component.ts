@@ -21,15 +21,14 @@ export class ItemCardComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       size: ['', Validators.required],
-      quantity: ['', Validators.required],
     });
   }
 
   onSubmit() {
-    const { size, quantity } = this.form.value;
+    const { size } = this.form.value;
     const id = `${this.item.id}-${size}`;
     const price = this.item.price - this.item.sale;
-    const item = new Item(id, this.item.label, quantity, price, this.item.sex, size);
+    const item = new Item(id, this.item.label, 1, price, this.item.availableSizes, this.item.sex, size);
     this.add(item);
   }
 
