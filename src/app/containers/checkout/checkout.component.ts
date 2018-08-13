@@ -8,6 +8,7 @@ import { IItem } from '../../item/item.model';
 import { environment } from '../../../environments/environment';
 import { first, map, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { ClearItems } from '../../item/item.actions';
 
 @Component({
   selector: 'app-checkout',
@@ -73,7 +74,11 @@ export class CheckoutComponent implements OnInit {
 
       }))
       .toPromise()
-      .then(({ success }: { success }) => { this.feedback.message.next(new FeedbackMessage(success)); })
+      .then(({ success }: { success }) => {
+        const action = new ClearItems();
+        this.store.dispatch(action);
+        this.feedback.message.next(new FeedbackMessage(success));
+      })
       .catch(({ error }: { error }) => {
         console.log(error)
         this.feedback.message.next(new FeedbackMessage(error));
