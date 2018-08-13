@@ -25,7 +25,7 @@ export interface IDatabaseItem {
   price: number;
   sale: number;
   sex: Sex;
-  picture: string;
+  pictures: { src: string, alt: string }[];
   availableSizes: ITShirtSize[] | IShoeSize[];
   description: string;
   attributes?: string[];
@@ -39,7 +39,7 @@ export class DatabaseItem implements IDatabaseItem {
     public sale: number,
     public stock: number,
     public sex: Sex,
-    public picture: string,
+    public pictures: { src: string, alt: string }[],
     public availableSizes: ITShirtSize[] | IShoeSize[],
     public description: string,
     public attributes?: string[],

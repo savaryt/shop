@@ -7,7 +7,11 @@ export const items: IDatabaseItem[] = [
     price: 34.99,
     sale: 0,
     sex: 'men',
-    picture: 'assets/tshirt-men-1.jpeg',
+    pictures: [
+      { src: 'assets/tshirt-men-1.jpeg', alt: '' },
+      { src: 'assets/tshirt-men-1.jpeg', alt: '' },
+      { src: 'assets/tshirt-men-1.jpeg', alt: '' }
+    ],
     attributes: ['Cotton', 'Fair Trade'], availableSizes: [
       {
         size: 'XS',
@@ -48,7 +52,11 @@ export const items: IDatabaseItem[] = [
     price: 44.99,
     sale: 5,
     sex: 'men',
-    picture: 'assets/tshirt-men-2.jpeg',
+    pictures: [
+      { src: 'assets/tshirt-men-2.jpeg', alt: '' },
+      { src: 'assets/tshirt-men-2.jpeg', alt: '' },
+      { src: 'assets/tshirt-men-2.jpeg', alt: '' }
+    ],
     attributes: ['Polyester'], availableSizes: [
       {
         size: 'XS',
@@ -89,7 +97,11 @@ export const items: IDatabaseItem[] = [
     price: 29.99,
     sale: 5,
     sex: 'women',
-    picture: 'assets/tshirt-women-1.jpeg',
+    pictures: [
+      { src: 'assets/tshirt-women-1.jpeg', alt: '' },
+      { src: 'assets/tshirt-women-1.jpeg', alt: '' },
+      { src: 'assets/tshirt-women-1.jpeg', alt: '' }
+    ],
     attributes: ['Cotton', 'Fair Trade'],
     availableSizes: [
       {
@@ -131,7 +143,11 @@ export const items: IDatabaseItem[] = [
     price: 39.99,
     sale: 0,
     sex: 'women',
-    picture: 'assets/tshirt-women-2.jpeg',
+    pictures: [
+      { src: 'assets/tshirt-women-2.jpeg', alt: '' },
+      { src: 'assets/tshirt-women-2.jpeg', alt: '' },
+      { src: 'assets/tshirt-women-2.jpeg', alt: '' }
+    ],
     attributes: ['Polyester'],
     availableSizes: [
       {
@@ -173,7 +189,11 @@ export const items: IDatabaseItem[] = [
     price: 39.99,
     sale: 5,
     sex: 'unisex',
-    picture: 'assets/shoes-unisex-1.jpeg',
+    pictures: [
+      { src: 'assets/shoes-unisex-1.jpeg', alt: '' },
+      { src: 'assets/shoes-unisex-1.jpeg', alt: '' },
+      { src: 'assets/shoes-unisex-1.jpeg', alt: '' }
+    ],
     attributes: ['New'],
     availableSizes: [
       {
@@ -215,7 +235,11 @@ export const items: IDatabaseItem[] = [
     price: 39.99,
     sale: 0,
     sex: 'unisex',
-    picture: 'assets/shoes-unisex-2.jpeg',
+    pictures: [
+      { src: 'assets/shoes-unisex-2.jpeg', alt: '' },
+      { src: 'assets/shoes-unisex-2.jpeg', alt: '' },
+      { src: 'assets/shoes-unisex-2.jpeg', alt: '' }
+    ],
     attributes: ['New'],
     availableSizes: [
       {
@@ -257,7 +281,11 @@ export const items: IDatabaseItem[] = [
     price: 39.99,
     sale: 5,
     sex: 'men',
-    picture: 'assets/shoes-men-1.jpeg',
+    pictures: [
+      { src: 'assets/shoes-men-1.jpeg', alt: '' },
+      { src: 'assets/shoes-men-1.jpeg', alt: '' },
+      { src: 'assets/shoes-men-1.jpeg', alt: '' }
+    ],
     attributes: ['New'],
     availableSizes: [
       {
@@ -299,7 +327,11 @@ export const items: IDatabaseItem[] = [
     price: 39.99,
     sale: 0,
     sex: 'men',
-    picture: 'assets/shoes-men-2.jpeg',
+    pictures: [
+      { src: 'assets/shoes-men-2.jpeg', alt: '' },
+      { src: 'assets/shoes-men-2.jpeg', alt: '' },
+      { src: 'assets/shoes-men-2.jpeg', alt: '' }
+    ],
     attributes: ['New'],
     availableSizes: [
       {
@@ -341,7 +373,11 @@ export const items: IDatabaseItem[] = [
     price: 39.99,
     sale: 5,
     sex: 'women',
-    picture: 'assets/shoes-women-1.jpeg',
+    pictures: [
+      { src: 'assets/shoes-women-1.jpeg', alt: '' },
+      { src: 'assets/shoes-women-1.jpeg', alt: '' },
+      { src: 'assets/shoes-women-1.jpeg', alt: '' }
+    ],
     attributes: ['New'],
     availableSizes: [
       {
@@ -383,7 +419,11 @@ export const items: IDatabaseItem[] = [
     price: 39.99,
     sale: 0,
     sex: 'women',
-    picture: 'assets/shoes-women-2.jpeg',
+    pictures: [
+      { src: 'assets/shoes-women-2.jpeg', alt: '' },
+      { src: 'assets/shoes-women-2.jpeg', alt: '' },
+      { src: 'assets/shoes-women-2.jpeg', alt: '' }
+    ],
     attributes: ['New'],
     availableSizes: [
       {

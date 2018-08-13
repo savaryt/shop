@@ -12,8 +12,8 @@ import { AddItem, UpsertItem } from '../../../item/item.actions';
 export class ItemCardComponent implements OnInit {
   @Input() item: IDatabaseItem;
   form: FormGroup;
-  images: { src: string, alt: string }[];
-
+  images: { src: string, alt: string }[] = [];
+  image: { src: string, alt: string } = { src: 'string', alt: 'string' };
 
   constructor(
     private store: Store<IItem>,
@@ -24,44 +24,6 @@ export class ItemCardComponent implements OnInit {
     this.form = this.formBuilder.group({
       size: ['', Validators.required],
     });
-    this.images = [
-      {
-        src: 'http://via.placeholder.com/240x160',
-        alt: 'any'
-      },
-      {
-        src: 'http://via.placeholder.com/240x160',
-        alt: 'any'
-      },
-      {
-        src: 'http://via.placeholder.com/240x160',
-        alt: 'any'
-      },
-      {
-        src: 'http://via.placeholder.com/240x160',
-        alt: 'any'
-      },
-      {
-        src: 'http://via.placeholder.com/240x160',
-        alt: 'any'
-      },
-      {
-        src: 'http://via.placeholder.com/240x160',
-        alt: 'any'
-      },
-      {
-        src: 'http://via.placeholder.com/240x160',
-        alt: 'any'
-      },
-      {
-        src: 'http://via.placeholder.com/240x160',
-        alt: 'any'
-      },
-      {
-        src: 'http://via.placeholder.com/240x160',
-        alt: 'any'
-      },
-    ];
   }
 
   onSubmit() {
@@ -78,7 +40,7 @@ export class ItemCardComponent implements OnInit {
   }
 
   onSelectedImageChange(image: { src: string, alt: string }) {
-
+    this.image = image;
   }
 
 

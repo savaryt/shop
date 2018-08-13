@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter, AfterViewInit } from '@angular/core';
 
 @Component({
   selector: 'app-image-selector',
@@ -9,13 +9,20 @@ export class ImageSelectorComponent implements OnInit {
 
   selected: { src: string, alt: string };
   selectedIndex: number;
-  @Input() images: { src: string, alt: string }[] = [];
   @Output() selectedChange: EventEmitter<{ src: string, alt: string }> = new EventEmitter();
+
+  private _images: { src: string, alt: string }[];
+  @Input() set images(images: { src: string, alt: string }[]) {
+    this._images = images;
+    this.select(0);
+  }
+  get images() {
+    return this._images || [];
+  }
 
   constructor() { }
 
   ngOnInit() {
-    this.select(0);
   }
 
   previous() {
@@ -35,11 +42,10 @@ export class ImageSelectorComponent implements OnInit {
   }
 
   select(index: number) {
-    if (this.images.length - 1 >= index && index >= 0) {
+    if (this.images && this.images.length - 1 >= index && index >= 0) {
       this.selectedIndex = index;
       this.selected = this.images[this.selectedIndex];
       this.selectedChange.emit(this.selected);
-      console.log(this.selected);
     }
   }
 
