@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Update } from '@ngrx/entity';
-import { IItem } from './item.model';
+import { Item } from './item.model';
 import { State } from './item.reducer';
 
 export enum ItemActionTypes {
@@ -14,49 +14,48 @@ export enum ItemActionTypes {
   DeleteItem = '[Item] Delete Item',
   DeleteItems = '[Item] Delete Items',
   ClearItems = '[Item] Clear Items',
-  SetState = '[Item] Set State'
 }
 
 export class LoadItems implements Action {
   readonly type = ItemActionTypes.LoadItems;
 
-  constructor(public payload: { items: IItem[] }) { }
+  constructor(public payload: { items: Item[] }) { }
 }
 
 export class AddItem implements Action {
   readonly type = ItemActionTypes.AddItem;
 
-  constructor(public payload: { item: IItem }) { }
+  constructor(public payload: { item: Item }) { }
 }
 
 export class UpsertItem implements Action {
   readonly type = ItemActionTypes.UpsertItem;
 
-  constructor(public payload: { item: IItem }) { }
+  constructor(public payload: { item: Item }) { }
 }
 
 export class AddItems implements Action {
   readonly type = ItemActionTypes.AddItems;
 
-  constructor(public payload: { items: IItem[] }) { }
+  constructor(public payload: { items: Item[] }) { }
 }
 
 export class UpsertItems implements Action {
   readonly type = ItemActionTypes.UpsertItems;
 
-  constructor(public payload: { items: IItem[] }) { }
+  constructor(public payload: { items: Item[] }) { }
 }
 
 export class UpdateItem implements Action {
   readonly type = ItemActionTypes.UpdateItem;
 
-  constructor(public payload: { item: Update<IItem> }) { }
+  constructor(public payload: { item: Update<Item> }) { }
 }
 
 export class UpdateItems implements Action {
   readonly type = ItemActionTypes.UpdateItems;
 
-  constructor(public payload: { items: Update<IItem>[] }) { }
+  constructor(public payload: { items: Update<Item>[] }) { }
 }
 
 export class DeleteItem implements Action {
@@ -75,11 +74,6 @@ export class ClearItems implements Action {
   readonly type = ItemActionTypes.ClearItems;
 }
 
-export class SetState implements Action {
-  readonly type = ItemActionTypes.SetState;
-
-  constructor(public payload: { state: State }) { }
-}
 
 export type ItemActions =
   LoadItems
@@ -91,5 +85,5 @@ export type ItemActions =
   | UpdateItems
   | DeleteItem
   | DeleteItems
-  | ClearItems
-  | SetState;
+  | ClearItems;
+

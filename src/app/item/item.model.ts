@@ -1,59 +1,48 @@
-export interface IItem {
-  id: string;
-  label: string;
-  quantity: number;
-  price: number;
-  availableSizes: ITShirtSize[] | IShoeSize[];
-  sex: Sex;
-  size: TShirtSize | ShoeSize;
-}
-export class Item implements IItem {
+export class Item {
   constructor(
     public id: string,
     public label: string,
     public quantity: number,
     public price: number,
-    public availableSizes: ITShirtSize[] | IShoeSize[],
-    public sex: Sex,
-    public size: TShirtSize | ShoeSize,
+    public sizes: Size[],
+    public size: string,
   ) { }
 }
 
-export interface IDatabaseItem {
-  id: string;
-  label: string;
-  price: number;
-  sale: number;
-  sex: Sex;
-  pictures: { src: string, alt: string }[];
-  availableSizes: ITShirtSize[] | IShoeSize[];
-  description: string;
-  attributes?: string[];
-}
-
-export class DatabaseItem implements IDatabaseItem {
+export class DatabaseItem {
   constructor(
-    public id: string,
-    public label: string,
+    public createdAt: number,
+    public updatedAt: number,
     public price: number,
     public sale: number,
-    public stock: number,
-    public sex: Sex,
-    public pictures: { src: string, alt: string }[],
-    public availableSizes: ITShirtSize[] | IShoeSize[],
+    public label: string,
     public description: string,
-    public attributes?: string[],
+    public pictures: Image[],
+    public sizes: Size[],
+    public attributes: Attribute[],
+    public id?: string,
   ) { }
 }
 
 export type Sex = 'men' | 'women' | 'unisex';
-export type TShirtSize = 'XS' | 'S' | 'M' | 'L' | 'XL' | 'XXL' | 'XXXL';
-export interface ITShirtSize {
-  size: TShirtSize;
-  stock: number;
+
+export class Image {
+  constructor(
+    public src: string,
+    public alt: string
+  ) { }
 }
-export type ShoeSize = '34' | '35' | '36' | '37' | '38' | '39' | '40' | '41' | '42' | '43' | '44' | '45' | '46' | '47' | '48' | '49' | '50';
-export interface IShoeSize {
-  size: ShoeSize;
-  stock: number;
+
+export class Size {
+  constructor(
+    public label: string,
+    public stock: number,
+  ) { }
+}
+
+export class Attribute {
+  constructor(
+    public label: string,
+    public color: string,
+  ) { }
 }

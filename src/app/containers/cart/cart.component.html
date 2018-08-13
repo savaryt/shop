@@ -38,7 +38,7 @@
       </div>
 
     </mat-list-item>
-    <mat-list-item *ngFor="let item of items | async"
+    <mat-list-item *ngFor="let item of items"
                    role="listitem">
 
       <div fxFlex
@@ -49,23 +49,23 @@
              fxLayoutAlign="start center"
              class="label">
           <span (click)="navigate(item)"
-                class="pointer">{{item.label}} ({{item.sex}})</span>
+                class="pointer">{{item?.label}}</span>
         </div>
         <div fxFlex="10%"
              fxLayoutAlign="start center"
-             class="size">{{item.size}}</div>
+             class="size">{{item?.size}}</div>
         <div fxFlex="10%"
              fxLayoutAlign="start center"
-             class="price">{{item.price | currency}}</div>
+             class="price">{{item?.price | currency}}</div>
         <div fxFlex="10%"
              fxLayoutAlign="center center"
              class="quantity">
           <button mat-icon-button
                   (click)="removeQuantity(item)"
-                  [disabled]="item.quantity <= 1">
+                  [disabled]="item?.quantity <= 1">
             <mat-icon>remove</mat-icon>
           </button>
-          {{item.quantity}}
+          {{item?.quantity}}
           <button mat-icon-button
                   (click)="addQuantity(item)"
                   [disabled]="!hasEnoughStock(item)">
@@ -74,7 +74,7 @@
         </div>
         <div fxFlex="10%"
              fxLayoutAlign="end center"
-             class="subtotal">{{item.price * item.quantity | currency}}</div>
+             class="subtotal">{{item?.price * item?.quantity | currency}}</div>
         <div fxFlex="5%"
              fxLayoutAlign="end center"
              class="actions">
@@ -86,7 +86,7 @@
       </div>
 
     </mat-list-item>
-    <ng-container *ngIf="(items | async).length">
+    <ng-container *ngIf="items.length">
 
       <mat-divider></mat-divider>
 
@@ -117,7 +117,7 @@
                class="actions">
             <button mat-icon-button
                     color="warn"
-                    *ngIf="(items | async).length">
+                    *ngIf="items.length">
               <mat-icon (click)="clear()">clear</mat-icon>
             </button>
           </div>
@@ -131,7 +131,7 @@
        fxLayoutAlign="center center">
     <a mat-raised-button
        color="primary"
-       *ngIf="(items | async).length"
+       *ngIf="items.length"
        routerLink="/checkout">CHECKOUT</a>
   </div>
 </div>

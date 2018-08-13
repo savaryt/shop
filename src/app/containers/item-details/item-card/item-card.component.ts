@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { IItem, Item, IDatabaseItem } from '../../../item/item.model';
-import { AddItem, UpsertItem } from '../../../item/item.actions';
+import { Item, DatabaseItem } from '../../../item/item.model';
+import { AddItem } from '../../../item/item.actions';
 
 @Component({
   selector: 'app-item-card',
@@ -10,13 +10,13 @@ import { AddItem, UpsertItem } from '../../../item/item.actions';
   styleUrls: ['./item-card.component.scss']
 })
 export class ItemCardComponent implements OnInit {
-  @Input() item: IDatabaseItem;
+  @Input() item: DatabaseItem;
   form: FormGroup;
   images: { src: string, alt: string }[] = [];
   image: { src: string, alt: string } = { src: 'string', alt: 'string' };
 
   constructor(
-    private store: Store<IItem>,
+    private store: Store<Item>,
     private formBuilder: FormBuilder,
   ) { }
 
@@ -30,11 +30,11 @@ export class ItemCardComponent implements OnInit {
     const { size } = this.form.value;
     const id = `${this.item.id}-${size}`;
     const price = this.item.price - this.item.sale;
-    const item = new Item(id, this.item.label, 1, price, this.item.availableSizes, this.item.sex, size);
+    const item = new Item(id, this.item.label, 1, price, this.item.sizes, size);
     this.add(item);
   }
 
-  add(item: IItem) {
+  add(item: Item) {
     const action = new AddItem({ item });
     this.store.dispatch(action);
   }

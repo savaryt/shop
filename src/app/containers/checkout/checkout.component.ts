@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { FeedbackService } from '../../services/feedback.service';
 import { FeedbackMessage } from '../../services/feedback-message.model';
 import { Store } from '@ngrx/store';
 import { selectAll } from '../../item/item.reducer';
-import { IItem } from '../../item/item.model';
+import { Item } from '../../item/item.model';
 import { environment } from '../../../environments/environment';
 import { first, map, switchMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
@@ -13,7 +13,8 @@ import { ClearItems } from '../../item/item.actions';
 @Component({
   selector: 'app-checkout',
   templateUrl: './checkout.component.html',
-  styleUrls: ['./checkout.component.scss']
+  styleUrls: ['./checkout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckoutComponent implements OnInit {
 
@@ -22,7 +23,7 @@ export class CheckoutComponent implements OnInit {
   payment: FormGroup;
 
   constructor(
-    private store: Store<IItem>,
+    private store: Store<Item>,
     private formBuilder: FormBuilder,
     private feedback: FeedbackService,
     private http: HttpClient,

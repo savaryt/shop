@@ -31,6 +31,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatTooltipModule,
     MatDividerModule,
   ],
-  declarations: [ItemListComponent, ItemCardComponent]
+  declarations: [ItemListComponent, ItemCardComponent],
+  exports: [ItemListComponent]
 })
 export class ItemListModule { }

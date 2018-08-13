@@ -1,17 +1,16 @@
 import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap, tap, first } from 'rxjs/operators';
 import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 
 import { AngularFirestore } from 'angularfire2/firestore';
 import * as localforage from 'localforage';
 
 import { Store } from '@ngrx/store';
-import { IItem, IDatabaseItem } from './item/item.model';
-import { items } from './mock/item.mock';
-import { selectTotal, selectState, State } from './item/item.reducer';
-import { LoadItems, SetState } from './item/item.actions';
-
+import { Item, DatabaseItem } from './item/item.model';
+import { selectTotal, State } from './item/item.reducer';
+import { LoadItems } from './item/item.actions';
+import { items as mock } from './mock/item.mock';
 import { FeedbackService } from './services/feedback.service';
 import { FeedbackMessage } from './services/feedback-message.model';
 
@@ -71,7 +70,7 @@ export class AppComponent {
       label: 'Admin',
       path: '/admin',
       icon: 'chevron_right',
-      disabled: true
+      disabled: false
     }
   ];
   isMobile: Observable<boolean>;
@@ -81,7 +80,7 @@ export class AppComponent {
 
   constructor(
     private media: ObservableMedia,
-    private store: Store<IItem>,
+    private store: Store<Item>,
     private snackbar: MatSnackBar,
     private feedback: FeedbackService,
     private firestore: AngularFirestore,
@@ -97,19 +96,19 @@ export class AppComponent {
 
     this.count = this.store.select(selectTotal);
 
-    localforage.getItem('cart').then((state: State) => {
-      if (state) {
-        this.store.dispatch(new SetState({ state }));
-      }
-    });
+    localforage.getItem('cart')
+      .then((items: Item[]) => {
+        if (items) {
+          this.store.dispatch(new LoadItems({ items }));
+        }
+      });
 
     this.feedback.message.subscribe((feedbackMessage: FeedbackMessage) => {
       this.openSnackBar(feedbackMessage.message, feedbackMessage.action);
     });
 
-    // items.map(item => {
-    //   delete item.id;
-    //   this.firestore.collection<IDatabaseItem>('items').add(item);
+    // mock.map(item => {
+    //   this.firestore.collection<DatabaseItem>('items').add(item);
     // });
   }
 

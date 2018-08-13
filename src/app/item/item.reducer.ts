@@ -1,15 +1,15 @@
 import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
-import { IItem, TShirtSize, ShoeSize } from './item.model';
+import { Item } from './item.model';
 import { ItemActions, ItemActionTypes } from './item.actions';
 import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import * as localforage from 'localforage';
 
-export interface State extends EntityState<IItem> {
-  selectedItem: IItem | null;
+export interface State extends EntityState<Item> {
+  selectedItem: Item | null;
 }
 
-export const adapter: EntityAdapter<IItem> = createEntityAdapter<IItem>();
+export const adapter: EntityAdapter<Item> = createEntityAdapter<Item>();
 
 export const initialState: State = adapter.getInitialState({ selectedItem: null });
 
@@ -22,9 +22,9 @@ export function reducer(
       // manage multiple add of same item of the same size by increasing quantity
       if (state.entities[action.payload.item.id]) {
         const item = state.entities[action.payload.item.id];
-        const { id, quantity, availableSizes, size } = item;
-        const availableSize = (availableSizes as any[]).find(x => x.size === size)
-        if (quantity <= availableSize.stock) {
+        const { id, quantity, sizes, size } = item;
+        const availableSize = sizes.find(x => x.label === size);
+        if (quantity < availableSize.stock) {
           const changes = { quantity: quantity + 1 };
           return adapter.updateOne({ id, changes }, state);
         }
@@ -66,10 +66,6 @@ export function reducer(
 
     case ItemActionTypes.ClearItems: {
       return adapter.removeAll(state);
-    }
-
-    case ItemActionTypes.SetState: {
-      return action.payload.state;
     }
 
     default: {

@@ -4,7 +4,7 @@ import { ItemActionTypes } from './item.actions';
 import { tap, map, switchMap, concat, } from 'rxjs/operators';
 import { FeedbackService } from '../services/feedback.service';
 import { FeedbackMessage } from '../services/feedback-message.model';
-import { IItem } from './item.model';
+import { Item } from './item.model';
 import { Store } from '@ngrx/store';
 import { selectAll, selectEntities, selectIds } from './item.reducer';
 import * as localforage from 'localforage';
@@ -15,17 +15,14 @@ export class ItemEffects {
   constructor(
     private actions: Actions,
     private feedback: FeedbackService,
-    private store: Store<IItem>,
+    private store: Store<Item>,
   ) { }
 
   @Effect({ dispatch: false }) save = this.actions
-    .pipe(switchMap(() => {
-      return this.store.select(selectEntities)
-        .pipe(switchMap((entities) => this.store.select(selectIds).pipe(map(ids => ({ ids, entities })))))
-    }))
-    .pipe(map(state => localforage.setItem('cart', state)));
+    .pipe(switchMap(() => this.store.select(selectAll)))
+    .pipe(map(items => localforage.setItem('cart', items)));
 
-  // @todo nofity if already in cart
+  // @todo nofity if already in cart & qty > stock
   @Effect({ dispatch: false }) add = this.actions
     .pipe(ofType(ItemActionTypes.AddItem))
     .pipe(map(({ payload }: { payload }) => {

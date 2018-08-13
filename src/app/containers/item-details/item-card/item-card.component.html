@@ -2,8 +2,8 @@
      fxLayout
      fxLayoutAlign="center start">
 
-  <mat-card fxFlex.gt-lg="60%"
-            fxFlex.lg="75%"
+  <mat-card fxFlex.gt-lg="50%"
+            fxFlex.lg="65%"
             fxFlex.lt-lg="100%">
     <mat-card-title [matTooltip]="item?.label"
                     matTooltipPosition="below">{{item?.label}}</mat-card-title>
@@ -53,14 +53,14 @@
               <mat-select formControlName="size"
                           required
                           placeholder="Size">
-                <ng-container *ngFor="let availableSize of item?.availableSizes">
-                  <mat-option *ngIf="availableSize.stock > 5"
-                              [value]="availableSize.size">{{availableSize.size}}</mat-option>
-                  <mat-option *ngIf="availableSize.stock <= 5 && availableSize.stock > 0"
-                              [value]="availableSize.size">{{availableSize.size}} - Only {{availableSize.stock}} left</mat-option>
-                  <mat-option *ngIf="availableSize.stock == 0"
-                              [value]="availableSize.size"
-                              disabled>{{availableSize.size}} - Unavailable</mat-option>
+                <ng-container *ngFor="let size of item?.sizes">
+                  <mat-option *ngIf="size.stock > 5"
+                              [value]="size.label">{{size.label}}</mat-option>
+                  <mat-option *ngIf="size.stock <= 5 && size.stock > 0"
+                              [value]="size.label">{{size.label}} - Only {{size.stock}} left</mat-option>
+                  <mat-option *ngIf="size.stock == 0"
+                              [value]="size.label"
+                              disabled>{{size.label}} - Unavailable</mat-option>
                 </ng-container>
               </mat-select>
             </mat-form-field>
@@ -86,7 +86,7 @@
       <mat-chip-list>
         <ng-container *ngFor="let attribute of item?.attributes">
           <mat-chip selected
-                    [color]="attribute == 'Fair Trade' ? 'accent' : 'primary'">{{attribute}}</mat-chip>
+                    [color]="attribute.color">{{attribute.label}}</mat-chip>
         </ng-container>
         <mat-chip *ngIf="item?.sale !== 0"
                   selected
