@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IDatabaseItem } from '../item/item.model';
+import { IDatabaseItem } from '../../item/item.model';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'node_modules/rxjs';
-import { map } from '../../../node_modules/rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-item-details',

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import { environment } from '../../../environments/environment';
 import { first } from 'rxjs/operators';
-import { FeedbackService } from '../services/feedback.service';
-import { FeedbackMessage } from '../services/feedback-message.model';
+import { FeedbackService } from '../../services/feedback.service';
+import { FeedbackMessage } from '../../services/feedback-message.model';
 
 @Component({
   selector: 'app-contact',

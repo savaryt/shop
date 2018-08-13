@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { FeedbackService } from '../services/feedback.service';
-import { FeedbackMessage } from '../services/feedback-message.model';
+import { FeedbackService } from '../../services/feedback.service';
+import { FeedbackMessage } from '../../services/feedback-message.model';
 import { Store } from '@ngrx/store';
-import { selectAll } from '../item/item.reducer';
-import { IItem } from '../item/item.model';
-import { environment } from '../../environments/environment';
-import { first, map, switchMap } from '../../../node_modules/rxjs/operators';
-import { HttpClient } from '../../../node_modules/@angular/common/http';
+import { selectAll } from '../../item/item.reducer';
+import { IItem } from '../../item/item.model';
+import { environment } from '../../../environments/environment';
+import { first, map, switchMap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-checkout',

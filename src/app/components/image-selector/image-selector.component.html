@@ -1,0 +1,9 @@
+<div class="wrapper"
+     fxLayout="row"
+     fxLayoutAlign="start center">
+  <img *ngFor="let image of images; let i = index"
+       [src]="image.src"
+       alt="image.alt"
+       (click)="select(i)"
+       [class]="selectedIndex === i ? 'line-bottom' : ''">
+</div>

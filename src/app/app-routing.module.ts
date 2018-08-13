@@ -4,43 +4,43 @@ import { Routes, RouterModule } from '@angular/router';
 const routes: Routes = [
   {
     path: 'contact',
-    loadChildren: './contact/contact.module#ContactModule'
+    loadChildren: './containers/contact/contact.module#ContactModule'
   },
   {
     path: 'about',
-    loadChildren: './about/about.module#AboutModule'
+    loadChildren: './containers/about/about.module#AboutModule'
   },
   {
     path: 'men',
-    loadChildren: './item-list/item-list.module#ItemListModule'
+    loadChildren: './containers/item-list/item-list.module#ItemListModule'
   },
   {
     path: 'women',
-    loadChildren: './item-list/item-list.module#ItemListModule'
+    loadChildren: './containers/item-list/item-list.module#ItemListModule'
   },
   {
     path: 'unisex',
-    loadChildren: './item-list/item-list.module#ItemListModule'
+    loadChildren: './containers/item-list/item-list.module#ItemListModule'
   },
   {
     path: 'sales',
-    loadChildren: './item-list/item-list.module#ItemListModule'
+    loadChildren: './containers/item-list/item-list.module#ItemListModule'
   },
   {
     path: 'cart',
-    loadChildren: './cart/cart.module#CartModule'
+    loadChildren: './containers/cart/cart.module#CartModule'
   },
   {
     path: 'checkout',
-    loadChildren: './checkout/checkout.module#CheckoutModule'
+    loadChildren: './containers/checkout/checkout.module#CheckoutModule'
   },
   {
     path: 'details',
-    loadChildren: './item-details/item-details.module#ItemDetailsModule'
+    loadChildren: './containers/item-details/item-details.module#ItemDetailsModule'
   },
   {
     path: 'admin',
-    loadChildren: './admin/admin.module#AdminModule'
+    loadChildren: './containers/admin/admin.module#AdminModule'
   },
   {
     path: '',

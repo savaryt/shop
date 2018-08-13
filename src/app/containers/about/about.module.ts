@@ -6,7 +6,7 @@ import { AboutComponent } from './about.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 
-import { MatCardModule } from '@angular/material'
+import { MatCardModule } from '@angular/material';
 
 @NgModule({
   imports: [

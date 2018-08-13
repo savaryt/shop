@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IDatabaseItem } from '../item/item.model';
-import { items } from '../mock/item.mock';
-import { Sex } from '../item/item.model';
-import { AngularFirestoreCollection, AngularFirestore } from '../../../node_modules/angularfire2/firestore';
-import { Observable } from '../../../node_modules/rxjs';
-import { map, tap } from '../../../node_modules/rxjs/operators';
+import { IDatabaseItem } from '../../item/item.model';
+import { items } from '../../mock/item.mock';
+import { Sex } from '../../item/item.model';
+import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-item-list',

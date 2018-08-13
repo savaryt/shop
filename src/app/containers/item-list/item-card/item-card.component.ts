@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IDatabaseItem } from '../../item/item.model';
+import { IDatabaseItem } from '../../../item/item.model';
 
 @Component({
   selector: 'app-item-card',

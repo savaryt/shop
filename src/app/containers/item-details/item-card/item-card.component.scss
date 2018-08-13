@@ -2,7 +2,6 @@
   border: 8px solid transparent;
   box-sizing: border-box;
   mat-card {
-    height: 100%;
     box-sizing: border-box;
   }
   mat-card-title {
@@ -18,17 +17,18 @@
   mat-card-footer {
     padding: 6px;
   }
-  div.item-options-wrapper {
-    padding: 16px;
-  }
-  div.item-img-wrapper {
-    max-width: 480px;
+  div.image-wrapper {
     height: auto;
-    overflow: hidden;
   }
-  img.item-img {
-    width: 100%;
+  img {
+    display: block;
     height: 100%;
-    overflow: hidden;
+    width: 100%;
+  }
+  app-image-selector {
+    margin-top: 16px;
+  }
+  form {
+    margin-bottom: 16px;
   }
 }

@@ -21,11 +21,11 @@ export class ItemEffects {
   @Effect({ dispatch: false }) save = this.actions
     .pipe(switchMap(() => {
       return this.store.select(selectEntities)
-        .pipe(switchMap((entities) => {
-          return this.store.select(selectIds).pipe(map(ids => ({ ids, entities })));
-        }))))
+        .pipe(switchMap((entities) => this.store.select(selectIds).pipe(map(ids => ({ ids, entities })))))
+    }))
     .pipe(map(state => localforage.setItem('cart', state)));
 
+  // @todo nofity if already in cart
   @Effect({ dispatch: false }) add = this.actions
     .pipe(ofType(ItemActionTypes.AddItem))
     .pipe(map(({ payload }: { payload }) => {

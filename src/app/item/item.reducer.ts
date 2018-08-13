@@ -19,6 +19,16 @@ export function reducer(
 ): State {
   switch (action.type) {
     case ItemActionTypes.AddItem: {
+      // manage multiple add of same item of the same size by increasing quantity
+      if (state.entities[action.payload.item.id]) {
+        const item = state.entities[action.payload.item.id];
+        const { id, quantity, availableSizes, size } = item;
+        const availableSize = (availableSizes as any[]).find(x => x.size === size)
+        if (quantity <= availableSize.stock) {
+          const changes = { quantity: quantity + 1 };
+          return adapter.updateOne({ id, changes }, state);
+        }
+      }
       return adapter.addOne(action.payload.item, state);
     }
 

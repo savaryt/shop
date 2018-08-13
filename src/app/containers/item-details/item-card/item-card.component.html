@@ -1,0 +1,103 @@
+<div class="wrapper"
+     fxLayout
+     fxLayoutAlign="center start">
+
+  <mat-card fxFlex.gt-lg="60%"
+            fxFlex.lg="75%"
+            fxFlex.lt-lg="100%">
+    <mat-card-title [matTooltip]="item?.label"
+                    matTooltipPosition="below">{{item?.label}}</mat-card-title>
+    <mat-card-subtitle fxLayout
+                       fxLayoutGap="16px">
+      <span [style.textDecoration]="item?.sale !== 0 ? 'line-through' : 'none'">{{item?.price | currency}}</span>
+      <span *ngIf="item?.sale !== 0"
+            class="text-warn">{{item?.price - item?.sale | currency}}</span>
+    </mat-card-subtitle>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content fxLayout
+                      fxLayout.lt-lg="column">
+
+      <div fxFlex="50%"
+           class="image-wrapper">
+        <img class="item-img"
+             [src]="item?.picture"
+             alt="picture">
+      </div>
+
+      <div fxFlex="50%"
+           fxLayout="column"
+           fxLayoutAlign="space-between"
+           fxLayoutGap="24px">
+
+        <app-image-selector [images]="images"
+                            (selectedChange)="onSelectedImageChange($event)"></app-image-selector>
+
+        <div>
+          <div>
+            <h3>Description</h3>
+            <p>{{item?.description}}</p>
+          </div>
+          <div>
+            <p>Ref: {{item.id}}</p>
+          </div>
+        </div>
+
+        <div>
+          <form [formGroup]="form"
+                (ngSubmit)="onSubmit()"
+                fxLayout="column">
+            <mat-form-field>
+              <mat-select formControlName="size"
+                          required
+                          placeholder="Size">
+                <ng-container *ngFor="let availableSize of item?.availableSizes">
+                  <mat-option *ngIf="availableSize.stock > 5"
+                              [value]="availableSize.size">{{availableSize.size}}</mat-option>
+                  <mat-option *ngIf="availableSize.stock <= 5 && availableSize.stock > 0"
+                              [value]="availableSize.size">{{availableSize.size}} - Only {{availableSize.stock}} left</mat-option>
+                  <mat-option *ngIf="availableSize.stock == 0"
+                              [value]="availableSize.size"
+                              disabled>{{availableSize.size}} - Unavailable</mat-option>
+                </ng-container>
+              </mat-select>
+            </mat-form-field>
+
+            <button mat-raised-button
+                    color="primary"
+                    type="submit"
+                    [disabled]="!form.valid">
+              <mat-icon>add_shopping_cart</mat-icon>
+            </button>
+          </form>
+        </div>
+
+      </div>
+
+    </mat-card-content>
+
+    <mat-divider class="mat-divider-shifted"></mat-divider>
+
+    <mat-card-footer fxLayout
+                     fxLayoutAlign="start center">
+
+      <mat-chip-list>
+        <ng-container *ngFor="let attribute of item?.attributes">
+          <mat-chip selected
+                    [color]="attribute == 'Fair Trade' ? 'accent' : 'primary'">{{attribute}}</mat-chip>
+        </ng-container>
+        <mat-chip *ngIf="item?.sale !== 0"
+                  selected
+                  color="warn">On sale</mat-chip>
+      </mat-chip-list>
+
+      <span fxFlex> </span>
+
+      <div>
+
+      </div>
+
+    </mat-card-footer>
+  </mat-card>
+</div>

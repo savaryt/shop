@@ -6,6 +6,8 @@ import { ItemDetailsRoutingModule } from './item-details-routing.module';
 import { ItemDetailsComponent } from './item-details.component';
 import { ItemCardComponent } from './item-card/item-card.component';
 
+import { ImageSelectorModule } from '../../components/image-selector/image-selector.module';
+
 import {
   MatCardModule,
   MatButtonModule,
@@ -23,6 +25,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     CommonModule,
     ReactiveFormsModule,
     ItemDetailsRoutingModule,
+
+    ImageSelectorModule,
 
     FlexLayoutModule,
 

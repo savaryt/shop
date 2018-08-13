@@ -4,6 +4,16 @@ $accent: map-get($theme, accent);
 $warn: map-get($theme, warn);
 $foreground: map-get($theme, foreground);
 @mixin app-theme($theme) {
+  ::-webkit-scrollbar-thumb {
+    background: map-get( map-get($theme, foreground), secondary-text);
+  }
+  ::-webkit-scrollbar-track,
+  ::-webkit-scrollbar {
+    background: map-get(map-get($theme, background), card);
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
   a {
     outline: none;
     color: map-get($foreground, text);

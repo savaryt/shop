@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { IItem } from '../item/item.model';
-import { UpdateItem, DeleteItem, ClearItems } from '../item/item.actions';
-import { selectAll } from '../item/item.reducer';
+import { IItem } from '../../item/item.model';
+import { UpdateItem, DeleteItem, ClearItems } from '../../item/item.actions';
+import { selectAll } from '../../item/item.reducer';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
