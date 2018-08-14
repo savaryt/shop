@@ -4,8 +4,12 @@ import { ItemListComponent } from './item-list.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':sex',
     component: ItemListComponent,
+  },
+  {
+    path: ':sex/:id',
+    loadChildren: './containers/item-details/item-details.module#ItemDetailsModule'
   },
   {
     path: '**',

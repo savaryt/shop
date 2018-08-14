@@ -26,26 +26,20 @@ export class AppComponent {
   navLinks = [
     {
       label: 'Men',
-      path: '/men',
+      path: '/items/men',
       icon: 'chevron_right',
       disabled: false
     },
     {
       label: 'Women',
-      path: '/women',
+      path: '/items/women',
       icon: 'chevron_right',
       disabled: false
     },
     {
       label: 'Unisex',
-      path: '/unisex',
+      path: '/items/unisex',
       icon: 'chevron_right',
-      disabled: false
-    },
-    {
-      label: 'Sales',
-      path: '/sales',
-      icon: 'attach_money',
       disabled: false
     },
     {

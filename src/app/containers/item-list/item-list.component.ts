@@ -1,11 +1,12 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Router } from '@angular/router';
-import { DatabaseItem } from '../../item/item.model';
-import { items } from '../../mock/item.mock';
-import { Sex } from '../../item/item.model';
-import { AngularFirestoreCollection, AngularFirestore } from 'angularfire2/firestore';
+import { ActivatedRoute } from '@angular/router';
+
+import { AngularFirestore } from 'angularfire2/firestore';
+
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+
+import { DatabaseItem } from '../../item/item.model';
 
 @Component({
   selector: 'app-item-list',
@@ -16,20 +17,22 @@ import { map, tap } from 'rxjs/operators';
 export class ItemListComponent implements OnInit {
 
   items: Observable<DatabaseItem[]>;
-  headline: string | Sex;
 
   constructor(
-    private router: Router,
+    private route: ActivatedRoute,
     private firestore: AngularFirestore,
   ) {
   }
 
   ngOnInit() {
-
-    this.items = this.firestore
-      .collection<DatabaseItem>('items')
-      .snapshotChanges()
-      .pipe(map(changes => changes.map(change => ({ id: change.payload.doc.id, ...change.payload.doc.data() }) as DatabaseItem)));
+    this.items = this.route.params.pipe(switchMap(({ sex }) => {
+      return this.firestore
+        .collection('sex')
+        .doc(sex)
+        .collection<DatabaseItem>('items')
+        .snapshotChanges()
+        .pipe(map(changes => changes.map(change => ({ id: change.payload.doc.id, ...change.payload.doc.data() }) as DatabaseItem)));
+    }))
   }
 
 }

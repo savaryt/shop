@@ -3,28 +3,34 @@ import { DatabaseItem } from '../../item/item.model';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { Observable } from 'node_modules/rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-item-details',
-  templateUrl: './item-details.component.html',
-  styleUrls: ['./item-details.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-item-details',
+    templateUrl: './item-details.component.html',
+    styleUrls: ['./item-details.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemDetailsComponent implements OnInit {
 
-  item: Observable<DatabaseItem>;
+    item: Observable<DatabaseItem>;
 
-  constructor(
-    private route: ActivatedRoute,
-    private firestore: AngularFirestore,
-  ) { }
+    constructor(
+        private route: ActivatedRoute,
+        private firestore: AngularFirestore,
+    ) {
+    }
 
-  ngOnInit() {
-    const { id } = this.route.snapshot.params;
-    this.item = this.firestore.collection<DatabaseItem>('items').doc<DatabaseItem>(id)
-      .snapshotChanges()
-      .pipe(map(change => ({ id: change.payload.id, ...change.payload.data() }) as DatabaseItem));
-  }
+    ngOnInit() {
+        this.item = this.route.params.pipe(switchMap(({ sex, id }) => {
+            return this.firestore
+                .collection('sex')
+                .doc(sex)
+                .collection<DatabaseItem>('items')
+                .doc(id)
+                .snapshotChanges()
+                .pipe(map(change => ({ id: change.payload.id, ...change.payload.data() }) as DatabaseItem));
+        }))
+    }
 
 }

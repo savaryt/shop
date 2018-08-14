@@ -11,21 +11,14 @@ const routes: Routes = [
     loadChildren: './containers/about/about.module#AboutModule'
   },
   {
-    path: 'men',
+    path: 'items',
     loadChildren: './containers/item-list/item-list.module#ItemListModule'
   },
   {
-    path: 'women',
-    loadChildren: './containers/item-list/item-list.module#ItemListModule'
+    path: 'details',
+    loadChildren: './containers/item-details/item-details.module#ItemDetailsModule'
   },
-  {
-    path: 'unisex',
-    loadChildren: './containers/item-list/item-list.module#ItemListModule'
-  },
-  {
-    path: 'sales',
-    loadChildren: './containers/item-list/item-list.module#ItemListModule'
-  },
+
   {
     path: 'cart',
     loadChildren: './containers/cart/cart.module#CartModule'
@@ -33,10 +26,6 @@ const routes: Routes = [
   {
     path: 'checkout',
     loadChildren: './containers/checkout/checkout.module#CheckoutModule'
-  },
-  {
-    path: 'details',
-    loadChildren: './containers/item-details/item-details.module#ItemDetailsModule'
   },
   {
     path: 'admin',
