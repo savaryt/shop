@@ -15,8 +15,11 @@ export const items: DatabaseItem[] = [
       { label: 'XL', stock: 10 }
     ],
     pictures: [
-      { src: 'assets/tshirt-men-1.jpeg', alt: 'tshirt' },
-      { src: 'assets/tshirt-men-2.jpeg', alt: 'tshirt' },
+      { src: 'assets/tshirt-men-1/1.jpeg', alt: 'tshirt' },
+      { src: 'assets/tshirt-men-1/2.jpeg', alt: 'tshirt' },
+      { src: 'assets/tshirt-men-1/3.jpeg', alt: 'tshirt' },
+      { src: 'assets/tshirt-men-1/4.jpeg', alt: 'tshirt' },
+      { src: 'assets/tshirt-men-1/5.jpeg', alt: 'tshirt' },
     ],
     attributes: [
       { label: 'Cotton', color: 'primary' },

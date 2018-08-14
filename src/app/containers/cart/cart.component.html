@@ -38,7 +38,7 @@
       </div>
 
     </mat-list-item>
-    <mat-list-item *ngFor="let item of items"
+    <mat-list-item *ngFor="let item of items | async"
                    role="listitem">
 
       <div fxFlex
@@ -86,7 +86,7 @@
       </div>
 
     </mat-list-item>
-    <ng-container *ngIf="items.length">
+    <ng-container *ngIf="(items | async).length">
 
       <mat-divider></mat-divider>
 
@@ -117,7 +117,7 @@
                class="actions">
             <button mat-icon-button
                     color="warn"
-                    *ngIf="items.length">
+                    *ngIf="(items | async).length">
               <mat-icon (click)="clear()">clear</mat-icon>
             </button>
           </div>
@@ -131,7 +131,7 @@
        fxLayoutAlign="center center">
     <a mat-raised-button
        color="primary"
-       *ngIf="items.length"
+       *ngIf="(items | async).length"
        routerLink="/checkout">CHECKOUT</a>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Item, DatabaseItem } from '../../item/item.model';
 import { UpdateItem, DeleteItem, ClearItems, LoadItems } from '../../item/item.actions';
@@ -12,11 +12,11 @@ import { AngularFirestore } from 'angularfire2/firestore';
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CartComponent implements OnInit, OnDestroy {
 
-  items: Item[];
-  storeSub: Subscription;
+  items: Observable<Item[]>;
   firestoreSub: Subscription;
   isMobilePortrait: boolean;
 
@@ -50,13 +50,12 @@ export class CartComponent implements OnInit, OnDestroy {
       ))
       .subscribe();
 
-    this.storeSub = this.store.select(selectAll).subscribe(items => this.items = items);
+    this.items = this.store.select(selectAll);
 
   }
 
   ngOnDestroy() {
     this.firestoreSub.unsubscribe();
-    this.storeSub.unsubscribe();
   }
 
   addQuantity(item: Item) {
