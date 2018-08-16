@@ -1,6 +1,6 @@
 <mat-card>
-  <mat-card-title [matTooltip]="item?.label + ' (' + item?.sex + ')'"
-                  matTooltipPosition="below">{{item?.label}} ({{item?.sex}})</mat-card-title>
+  <mat-card-title [matTooltip]="item?.label"
+                  matTooltipPosition="below">{{item?.label}}</mat-card-title>
   <mat-card-subtitle fxLayout
                      fxLayoutGap="16px">
     <span [style.textDecoration]="item?.sale !== 0 ? 'line-through' : 'none'">{{item?.price | currency}}</span>
