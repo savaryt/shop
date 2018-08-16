@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Item, DatabaseItem } from '../../../item/item.model';
 import { AddItem } from '../../../item/item.actions';
+import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
+import { first } from '../../../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-item-card',
@@ -18,6 +20,7 @@ export class ItemCardComponent implements OnInit {
   constructor(
     private store: Store<Item>,
     private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
@@ -27,10 +30,11 @@ export class ItemCardComponent implements OnInit {
   }
 
   onSubmit() {
+    const { sex } = this.route.snapshot.params;
     const { size } = this.form.value;
     const id = `${this.item.id}-${size}`;
     const price = this.item.price - this.item.sale;
-    const item = new Item(id, this.item.label, 1, price, this.item.sizes, size);
+    const item = new Item(id, this.item.label, 1, price, this.item.sizes, size, sex);
     this.add(item);
   }
 

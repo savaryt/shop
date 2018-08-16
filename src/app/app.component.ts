@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { Item, DatabaseItem } from './item/item.model';
 import { selectTotal, State } from './item/item.reducer';
 import { LoadItems } from './item/item.actions';
-import { items as mock } from './mock/item.mock';
+import { men } from './mock/item.mock';
 import { FeedbackService } from './services/feedback.service';
 import { FeedbackMessage } from './services/feedback-message.model';
 
@@ -101,8 +101,12 @@ export class AppComponent {
       this.openSnackBar(feedbackMessage.message, feedbackMessage.action);
     });
 
-    // mock.map(item => {
-    //   this.firestore.collection<DatabaseItem>('items').add(item);
+    // men.map(item => {
+    //   this.firestore
+    //     .collection('sex')
+    //     .doc('men')
+    //     .collection<DatabaseItem>('items')
+    //     .add(item);
     // });
   }
 

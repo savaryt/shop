@@ -9,7 +9,7 @@ const routes: Routes = [
   },
   {
     path: ':sex/:id',
-    loadChildren: './containers/item-details/item-details.module#ItemDetailsModule'
+    loadChildren: '../item-details/item-details.module#ItemDetailsModule'
   },
   {
     path: '**',

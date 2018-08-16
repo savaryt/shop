@@ -6,6 +6,7 @@ export class Item {
     public price: number,
     public sizes: Size[],
     public size: string,
+    public sex: string,
   ) { }
 }
 

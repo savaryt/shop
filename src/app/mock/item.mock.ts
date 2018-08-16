@@ -1,6 +1,6 @@
 import { DatabaseItem, Size, Image, Attribute } from '../item/item.model';
 
-export const items: DatabaseItem[] = [
+export const men: DatabaseItem[] = [
   {
     createdAt: Date.now(),
     updatedAt: Date.now(),

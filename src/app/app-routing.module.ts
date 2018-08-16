@@ -15,11 +15,6 @@ const routes: Routes = [
     loadChildren: './containers/item-list/item-list.module#ItemListModule'
   },
   {
-    path: 'details',
-    loadChildren: './containers/item-details/item-details.module#ItemDetailsModule'
-  },
-
-  {
     path: 'cart',
     loadChildren: './containers/cart/cart.module#CartModule'
   },
