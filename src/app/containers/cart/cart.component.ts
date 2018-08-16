@@ -31,14 +31,14 @@ export class CartComponent implements OnInit, OnDestroy {
     this.items = this.store.select(selectAll);
 
 
-    const autoStockUpdateSub = this.store.select(selectAll)
+    this.autoStockUpdateSub = this.store.select(selectAll)
       .pipe(first())
       .pipe(switchMap((items: Item[]) => {
         const _items = items
           .map(item => {
-            const { id, sex, size } = item;
+            const { id, sex } = item;
             const dbId = id.split('-')[0];
-            return { id: dbId, sex, size };
+            return { id: dbId, sex };
           });
 
         return of(uniqBy(_items, 'id'))
