@@ -83,7 +83,7 @@ export class CartComponent implements OnInit, OnDestroy {
                     this.store.dispatch(action);
                   }
                 } else {
-                  this.remove({ id: item.id });
+                  this.remove(item);
                 }
 
                 return item;

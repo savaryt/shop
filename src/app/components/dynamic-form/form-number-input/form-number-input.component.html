@@ -1,0 +1,14 @@
+<div [formGroup]="group">
+  <mat-form-field>
+    <input type="text"
+           matInput
+           placeholder="Size"
+           [formControlName]="config.name">
+  </mat-form-field>
+  <mat-form-field>
+    <input type="number"
+           matInput
+           placeholder="Stock"
+           [formControlName]="config.name + '-stock'">
+  </mat-form-field>
+</div>

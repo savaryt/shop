@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Item, DatabaseItem } from '../../../item/item.model';
 import { AddItem } from '../../../item/item.actions';
-import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
-import { first } from '../../../../../node_modules/rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { first } from 'rxjs/operators';
 import { getStoreId } from '../../../utilities';
 
 @Component({

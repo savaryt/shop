@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { DatabaseItem } from '../../item/item.model';
 import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
-import { Observable } from 'node_modules/rxjs';
+import { Observable } from 'rxjs';
 import { map, tap, switchMap } from 'rxjs/operators';
 
 @Component({
