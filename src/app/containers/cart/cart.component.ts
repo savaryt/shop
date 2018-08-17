@@ -8,6 +8,7 @@ import { map, switchMap, tap, mergeMap, concatMap, scan, throttleTime, debounceT
 import { Router } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { uniqBy } from 'lodash';
+import { getDbId } from '../../utilities';
 
 @Component({
   selector: 'app-cart',
@@ -37,7 +38,7 @@ export class CartComponent implements OnInit, OnDestroy {
         const _items = items
           .map(item => {
             const { id, sex } = item;
-            const dbId = id.split('-')[0];
+            const dbId = getDbId(id);
             return { id: dbId, sex };
           });
         return uniqBy(_items, 'id');
@@ -63,7 +64,7 @@ export class CartComponent implements OnInit, OnDestroy {
           .pipe(map(items => {
             return items
               .filter(x => {
-                const _dbId = x.id.split('-')[0];
+                const _dbId = getDbId(x.id);
                 return dbItem.id === _dbId;
               })
               .map(item => {
@@ -114,7 +115,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.store.dispatch(action);
   }
 
-  remove(item: Partial<Item>) {
+  remove(item: Item) {
     const { id } = item;
     const action = new DeleteItem({ id });
     this.store.dispatch(action);
