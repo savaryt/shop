@@ -1,8 +1,16 @@
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /items {
+    match /sex/men/items/{document=**}  {
       allow read;
-      allow write: if request.auth.uid == 'tgKFwAmFfAdICXmFG2CstabEfmE2'
+      allow write: if request.auth.uid == "tgKFwAmFfAdICXmFG2CstabEfmE2";
+    }
+    match /sex/women/items/{document=**}  {
+      allow read;
+      allow write: if request.auth.uid == "tgKFwAmFfAdICXmFG2CstabEfmE2";
+    }
+    match /sex/unisex/items/{document=**}  {
+      allow read;
+      allow write: if request.auth.uid == "tgKFwAmFfAdICXmFG2CstabEfmE2";
     }
   }
 }
