@@ -31,7 +31,7 @@ export class CartComponent implements OnInit, OnDestroy {
     this.items = this.store.select(selectAll);
 
 
-    this.autoStockUpdateSub = this.store.select(selectAll)
+    const uids = this.store.select(selectAll)
       .pipe(first())
       .pipe(switchMap((items: Item[]) => {
         const _items = items
@@ -40,57 +40,56 @@ export class CartComponent implements OnInit, OnDestroy {
             const dbId = id.split('-')[0];
             return { id: dbId, sex };
           });
+        return uniqBy(_items, 'id');
+      }));
 
-        return of(uniqBy(_items, 'id'))
-          .pipe(switchMap((watched: { id: string, sex: string }[]) => {
+    const watchedEntities = uids
+      .pipe(mergeMap(({ id, sex }) => {
+        return this.firestore
+          .collection('sex')
+          .doc(sex)
+          .collection('items')
+          .doc(id)
+          .snapshotChanges()
+          .pipe(map(change => ({ id: change.payload.id, ...change.payload.data() })))
+      }));
 
-            return from(watched)
-              .pipe(mergeMap(({ id, sex }) => {
+    this.autoStockUpdateSub = watchedEntities
+      .pipe(switchMap((dbItem: DatabaseItem) => {
 
-                return this.firestore
-                  .collection('sex')
-                  .doc(sex)
-                  .collection('items')
-                  .doc(id)
-                  .snapshotChanges()
-                  .pipe(map(change => ({ id: change.payload.id, ...change.payload.data() })))
-                  .pipe(switchMap((dbItem: DatabaseItem) => {
+        return this.store
+          .select(selectAll)
+          .pipe(first())
+          .pipe(map(items => {
+            return items
+              .filter(x => {
+                const _dbId = x.id.split('-')[0];
+                return dbItem.id === _dbId;
+              })
+              .map(item => {
 
-                    return this.store.select(selectAll)
-                      .pipe(first())
-                      .pipe(map(__items => {
+                const size = dbItem.sizes.find(x => x.label === item.size);
+                if (size.stock > 0) {
+                  if (item.quantity > size.stock) {
+                    const { id: _id, ...rest } = item;
+                    const changes = { quantity: size.stock, sizes: dbItem.sizes };
+                    const action = new UpdateItem({ item: { id: _id, changes } });
+                    this.store.dispatch(action);
+                  } else {
+                    const { id: _id, ...rest } = item;
+                    const changes = { sizes: dbItem.sizes };
+                    const action = new UpdateItem({ item: { id: _id, changes } });
+                    this.store.dispatch(action);
+                  }
+                } else {
+                  this.remove({ id: item.id });
+                }
 
-                        return __items.filter(x => {
-                          const _dbId = x.id.split('-')[0];
-                          return dbItem.id === _dbId;
-                        })
-                          .map(item => {
-
-                            const size = dbItem.sizes.find(x => x.label === item.size);
-                            if (size.stock > 0) {
-                              if (item.quantity > size.stock) {
-                                const { id: _id, ...rest } = item;
-                                const changes = { quantity: size.stock, sizes: dbItem.sizes };
-                                const action = new UpdateItem({ item: { id: _id, changes } });
-                                this.store.dispatch(action);
-                              } else {
-                                const { id: _id, ...rest } = item;
-                                const changes = { sizes: dbItem.sizes };
-                                const action = new UpdateItem({ item: { id: _id, changes } });
-                                this.store.dispatch(action);
-                              }
-                            } else {
-                              this.remove({ id: item.id });
-                            }
-
-                            return item;
-                          });
-                      }));
-                  }));
-              }));
+                return item;
+              });
           }));
       }))
-      .subscribe();
+      .subscribe(console.log);
 
   }
 
