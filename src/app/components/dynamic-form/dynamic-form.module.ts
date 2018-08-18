@@ -6,18 +6,29 @@ import { DynamicFormComponent } from './dynamic-form.component';
 import { DynamicFieldDirective } from './dynamic-field/dynamic-field.directive';
 
 import { FormInputComponent } from './form-input/form-input.component';
+import { FormNumberInputComponent } from './form-number-input/form-number-input.component';
 
 import {
   MatInputModule,
+  MatButtonModule,
+  MatIconModule,
+  MatTooltipModule,
 } from '@angular/material';
-import { FormNumberInputComponent } from './form-number-input/form-number-input.component';
+
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormImageInputComponent } from './form-image-input/form-image-input.component';
 
 @NgModule({
   imports: [
     CommonModule,
     ReactiveFormsModule,
 
+    FlexLayoutModule,
+
     MatInputModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
   ],
   declarations: [
     DynamicFormComponent,
@@ -25,6 +36,7 @@ import { FormNumberInputComponent } from './form-number-input/form-number-input.
 
     FormInputComponent,
     FormNumberInputComponent,
+    FormImageInputComponent,
   ],
   exports: [
     DynamicFormComponent
@@ -32,7 +44,7 @@ import { FormNumberInputComponent } from './form-number-input/form-number-input.
   entryComponents: [
     FormInputComponent,
     FormNumberInputComponent,
-
+    FormImageInputComponent,
   ]
 })
 export class DynamicFormModule { }

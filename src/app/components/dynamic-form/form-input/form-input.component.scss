@@ -1,0 +1,9 @@
+:host {
+  display: block;
+  flex-grow: 1;
+  flex-basis: 50%;
+  mat-form-field,
+  input {
+    width: 100%;
+  }
+}

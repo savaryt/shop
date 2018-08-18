@@ -1,4 +1,5 @@
-<form [formGroup]="form"
+<form fxLayout="row wrap"
+      [formGroup]="form"
       (submit)="handleSubmit($event)">
   <ng-container *ngFor="let field of config;"
                 dynamicField

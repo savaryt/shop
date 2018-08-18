@@ -1,14 +1,18 @@
-<mat-card>
-  <mat-card-title>Add Item</mat-card-title>
-  <mat-card-content>
-    <dynamic-form [config]="config"
-                  #form="dynamicForm"
-                  (submit)="submit($event)">
-    </dynamic-form>
-    <button mat-mini-fab
-            (click)="addSizeInput()">
-      <mat-icon>add</mat-icon>
-    </button>
-  </mat-card-content>
-</mat-card>
-{{form.value | json}}
+<div class="wrapper"
+     fxLayout
+     fxLayoutAlign="center start">
+
+  <mat-card fxFlex.gt-md="50%"
+            fxFlex.md="75%"
+            fxFlex.lt-md="100%">
+
+    <mat-card-title>Add Item</mat-card-title>
+
+    <mat-card-content>
+      <app-item-form (valueChange)="onItemFormChange($event)"></app-item-form>
+      <app-size-form (valueChange)="onSizeFormChange($event)"></app-size-form>
+      <app-image-form (valueChange)="onImageFormChange($event)"></app-image-form>
+    </mat-card-content>
+  </mat-card>
+
+</div>

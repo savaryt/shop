@@ -1,0 +1,33 @@
+<form [formGroup]="form"
+      fxLayout="row wrap">
+
+  <mat-form-field fxFlex="100%">
+    <input type="text"
+           matInput
+           placeholder="Label"
+           formControlName="label">
+  </mat-form-field>
+
+  <mat-form-field fxFlex="100%">
+    <textarea type="text"
+              matInput
+              matTextareaAutosize
+              placeholder="Description"
+              formControlName="description"></textarea>
+  </mat-form-field>
+
+  <mat-form-field fxFlex="50%">
+    <input type="number"
+           matInput
+           placeholder="Price"
+           formControlName="price">
+  </mat-form-field>
+
+  <mat-form-field fxFlex="50%">
+    <input type="number"
+           matInput
+           placeholder="Sale"
+           formControlName="sale">
+  </mat-form-field>
+
+</form>

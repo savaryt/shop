@@ -1,16 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ItemAddComponent } from './item-add.component';
-import { DynamicFormModule } from '../../../components/dynamic-form/dynamic-form.module';
 import { ItemAddRoutingModule } from './item-add-routing.module';
 
-import { MatCardModule, MatButtonModule, MatIconModule } from '@angular/material';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import {
+  MatCardModule,
+  MatButtonModule,
+  MatIconModule,
+} from '@angular/material';
+
+import { SizeFormModule } from '../../../components/size-form/size-form.module';
+import { ImageFormModule } from '../../../components/image-form/image-form.module';
+import { ItemFormModule } from '../../../components/item-form/item-form.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     ItemAddRoutingModule,
-    DynamicFormModule,
+
+    SizeFormModule,
+    ImageFormModule,
+    ItemFormModule,
+
+    FlexLayoutModule,
 
     MatCardModule,
     MatButtonModule,

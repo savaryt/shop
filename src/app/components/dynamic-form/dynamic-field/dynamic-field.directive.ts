@@ -6,10 +6,12 @@ import { Field } from './field.interface';
 
 import { FormInputComponent } from '../form-input/form-input.component';
 import { FormNumberInputComponent } from '../form-number-input/form-number-input.component';
+import { FormImageInputComponent } from '../form-image-input/form-image-input.component';
 
 const components: { [type: string]: Type<Field> } = {
-  input: FormInputComponent,
-  numericInput: FormNumberInputComponent,
+  textInput: FormInputComponent,
+  numberInput: FormNumberInputComponent,
+  imageInput: FormImageInputComponent,
 };
 
 @Directive({

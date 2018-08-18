@@ -1,0 +1,17 @@
+<dynamic-form [config]="config"
+              #form="dynamicForm">
+</dynamic-form>
+<button mat-icon-button
+        color="primary"
+        (click)="addInput()"
+        matTooltip="Add a size"
+        matTooltipPosition="left">
+  <mat-icon>add</mat-icon>
+</button>
+<button mat-icon-button
+        color="primary"
+        (click)="removeInput()"
+        matTooltip="Remove a size"
+        matTooltipPosition="right">
+  <mat-icon>remove</mat-icon>
+</button>

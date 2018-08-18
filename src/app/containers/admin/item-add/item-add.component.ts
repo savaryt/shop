@@ -9,36 +9,19 @@ import { DynamicFormComponent } from '../../../components/dynamic-form/dynamic-f
   templateUrl: './item-add.component.html',
   styleUrls: ['./item-add.component.scss']
 })
-export class ItemAddComponent implements AfterViewInit {
+export class ItemAddComponent {
 
-  @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
+  constructor() { }
 
-  config: FieldConfig[] = [];
-
-  ngAfterViewInit() {
-    let previousValid = this.form.valid;
-    this.form.changes.subscribe(() => {
-      if (this.form.valid !== previousValid) {
-        previousValid = this.form.valid;
-        this.form.setDisabled('submit', !previousValid);
-      }
-    });
-
-  }
-
-  submit(value: { [name: string]: any }) {
+  onSizeFormChange(value) {
     console.log(value);
   }
 
-  addSizeInput() {
-    const id = this.config.filter(input => input.type === 'numericInput').length;
-    const sizeInput = {
-      type: 'numericInput',
-      name: `size-${id}`,
-      placeholder: 'Stock',
-      // validation: [Validators.required]
-    };
-    this.config = [...this.config, sizeInput]
+  onImageFormChange(value) {
+    console.log(value);
   }
 
+  onItemFormChange(value) {
+    console.log(value);
+  }
 }
