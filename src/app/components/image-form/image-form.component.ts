@@ -2,6 +2,7 @@ import { Component, AfterViewInit, ViewChild, EventEmitter, Output } from '@angu
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { FieldConfig } from '../dynamic-form/dynamic-field/field-config.interface';
 import { Validators } from '@angular/forms';
+import { throttleTime } from '../../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-image-form',
@@ -21,11 +22,14 @@ export class ImageFormComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.form.changes.subscribe(() => {
-      if (this.form.valid) {
-        this.valueChange.emit(this.form.value);
-      }
-    });
+    this.form.changes
+      .pipe(throttleTime(250))
+      .subscribe(() => {
+        this.valueChange.emit({
+          value: this.form.value,
+          valid: this.form.valid
+        });
+      });
 
   }
 

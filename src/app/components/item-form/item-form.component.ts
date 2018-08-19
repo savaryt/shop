@@ -1,5 +1,6 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { throttleTime } from '../../../../node_modules/rxjs/operators';
 
 @Component({
   selector: 'app-item-form',
@@ -25,12 +26,15 @@ export class ItemFormComponent implements OnInit {
 
 
 
-    this.form.valueChanges.subscribe(value => {
-      const createdAt = Date.now(), updatedAt = Date.now();
-      if (this.form.valid) {
-        this.valueChange.emit({ createdAt, updatedAt, ...value });
-      }
-    });
+    this.form.valueChanges
+      .pipe(throttleTime(250))
+      .subscribe(value => {
+        const createdAt = Date.now(), updatedAt = Date.now();
+        this.valueChange.emit({
+          value: { createdAt, updatedAt, ...value },
+          valid: this.form.valid
+        });
+      });
   }
 
 

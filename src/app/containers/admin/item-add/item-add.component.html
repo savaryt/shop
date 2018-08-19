@@ -13,6 +13,10 @@
       <app-size-form (valueChange)="onSizeFormChange($event)"></app-size-form>
       <app-image-form (valueChange)="onImageFormChange($event)"></app-image-form>
     </mat-card-content>
+    <mat-card-footer>
+      <button mat-raised-button
+              (click)="onSubmit()">Submit</button>
+    </mat-card-footer>
   </mat-card>
 
 </div>

@@ -1,8 +1,4 @@
-import { Component, ViewChild, AfterViewInit } from '@angular/core';
-import { Validators } from '@angular/forms';
-
-import { FieldConfig } from '../../../components/dynamic-form/dynamic-field/field-config.interface';
-import { DynamicFormComponent } from '../../../components/dynamic-form/dynamic-form.component';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-item-add',
@@ -11,17 +7,55 @@ import { DynamicFormComponent } from '../../../components/dynamic-form/dynamic-f
 })
 export class ItemAddComponent {
 
+  sizeForm: { value: any, valid: boolean };
+  imageForm: { value: any, valid: boolean };
+  itemForm: { value: any, valid: boolean };
+
   constructor() { }
 
   onSizeFormChange(value) {
-    console.log(value);
+    this.sizeForm = value;
   }
 
   onImageFormChange(value) {
-    console.log(value);
+    this.imageForm = value;
   }
 
   onItemFormChange(value) {
-    console.log(value);
+    this.itemForm = value;
+  }
+
+  onSubmit() {
+    if (this.sizeForm.valid && this.imageForm.valid && this.itemForm.valid) {
+      const sizes = [];
+      for (const property in this.sizeForm.value) {
+        if (this.sizeForm.value.hasOwnProperty(property)) {
+          const parts = property.split('-');
+          const propertyName = parts[0];
+          const index = parts[1];
+          if (sizes[index]) {
+            sizes[index] = { ...sizes[index], [propertyName]: this.sizeForm.value[property] };
+          } else {
+            sizes[index] = { [propertyName]: this.sizeForm.value[property] };
+          }
+        }
+      }
+
+      const images = [];
+      for (const property in this.imageForm.value) {
+        if (this.imageForm.value.hasOwnProperty(property)) {
+          const parts = property.split('-');
+          const propertyName = parts[0];
+          const index = parts[1];
+          if (images[index]) {
+            images[index] = { ...images[index], [propertyName]: this.imageForm.value[property] };
+          } else {
+            images[index] = { [propertyName]: this.imageForm.value[property] };
+          }
+        }
+      }
+
+      console.log({ sizes, images, ...this.itemForm.value });
+    }
   }
 }
