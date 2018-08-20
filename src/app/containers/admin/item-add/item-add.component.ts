@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { AngularFirestore } from '../../../../../node_modules/angularfire2/firestore';
+import { FeedbackService } from '../../../services/feedback.service';
+import { FeedbackMessage } from '../../../services/feedback-message.model';
+import { AngularFireStorage } from '../../../../../node_modules/angularfire2/storage';
 
 @Component({
   selector: 'app-item-add',
@@ -7,11 +11,16 @@ import { Component } from '@angular/core';
 })
 export class ItemAddComponent {
 
-  sizeForm: { value: any, valid: boolean };
-  imageForm: { value: any, valid: boolean };
-  itemForm: { value: any, valid: boolean };
+  sizeForm: { value: any, valid: boolean } = { value: {}, valid: false };
+  imageForm: { value: any, valid: boolean } = { value: {}, valid: false };
+  itemForm: { value: any, valid: boolean } = { value: {}, valid: false };
+  attributeForm: { value: any, valid: boolean } = { value: {}, valid: true };
 
-  constructor() { }
+  constructor(
+    private firestore: AngularFirestore,
+    private storage: AngularFireStorage,
+    private feedback: FeedbackService,
+  ) { }
 
   onSizeFormChange(value) {
     this.sizeForm = value;
@@ -24,9 +33,12 @@ export class ItemAddComponent {
   onItemFormChange(value) {
     this.itemForm = value;
   }
+  onAttributeFormChange(value) {
+    this.attributeForm = value;
+  }
 
   onSubmit() {
-    if (this.sizeForm.valid && this.imageForm.valid && this.itemForm.valid) {
+    if (this.sizeForm.valid && this.imageForm.valid && this.itemForm.valid && this.attributeForm.valid) {
       const sizes = [];
       for (const property in this.sizeForm.value) {
         if (this.sizeForm.value.hasOwnProperty(property)) {
@@ -41,21 +53,60 @@ export class ItemAddComponent {
         }
       }
 
+      const attributes = [];
+      for (const property in this.attributeForm.value) {
+        if (this.attributeForm.value.hasOwnProperty(property)) {
+          const parts = property.split('-');
+          const propertyName = parts[0];
+          const index = parts[1];
+          if (attributes[index]) {
+            attributes[index] = { ...attributes[index], [propertyName]: this.attributeForm.value[property] };
+          } else {
+            attributes[index] = { [propertyName]: this.attributeForm.value[property] };
+          }
+        }
+      }
+
       const images = [];
       for (const property in this.imageForm.value) {
         if (this.imageForm.value.hasOwnProperty(property)) {
           const parts = property.split('-');
           const propertyName = parts[0];
           const index = parts[1];
-          if (images[index]) {
-            images[index] = { ...images[index], [propertyName]: this.imageForm.value[property] };
-          } else {
-            images[index] = { [propertyName]: this.imageForm.value[property] };
-          }
+
+          images[index] = { src: this.imageForm.value[property], alt: 'picture' };
         }
       }
+      const { sex, ...values } = this.itemForm.value;
+      this.firestore
+        .collection('sex')
+        .doc(sex)
+        .collection('items')
+        .add({ sizes, attributes, ...values })
+        .then(({ id }) => {
+          const promises = images.map((image, index) => {
+            fetch(image.src)
+              .then(response => response.blob())
+              .then(blob => this.storage.upload(`sex/${sex}/items/${id}/${index}`, blob))
+              .then(({ ref }) => {
+                return this.firestore
+                  .collection('sex')
+                  .doc(sex)
+                  .collection('items')
+                  .doc(id)
+                  .collection('pictures')
+                  .add({ src: ref.fullPath, alt: `picture-${index}` })
+              });
+          });
+          return Promise.all(promises);
+        })
+        .then(() => {
+          this.feedback.message.next(new FeedbackMessage('Item added'))
+        })
+        .catch((error) => this.feedback.message.next(new FeedbackMessage(error.message)));
 
-      console.log({ sizes, images, ...this.itemForm.value });
+    } else {
+      this.feedback.message.next(new FeedbackMessage('Invalid form'))
     }
   }
 }

@@ -13,6 +13,7 @@ import {
 import { SizeFormModule } from '../../../components/size-form/size-form.module';
 import { ImageFormModule } from '../../../components/image-form/image-form.module';
 import { ItemFormModule } from '../../../components/item-form/item-form.module';
+import { AttributeFormModule } from '../../../components/attribute-form/attribute-form.module';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import { ItemFormModule } from '../../../components/item-form/item-form.module';
     SizeFormModule,
     ImageFormModule,
     ItemFormModule,
+    AttributeFormModule,
 
     FlexLayoutModule,
 

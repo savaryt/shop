@@ -6,7 +6,7 @@ import { ItemFormComponent } from './item-form.component';
 
 import { FlexLayoutModule } from '@angular/flex-layout'
 import {
-  MatInputModule
+  MatInputModule, MatSelectModule
 } from '@angular/material';
 
 @NgModule({
@@ -17,6 +17,7 @@ import {
     FlexLayoutModule,
 
     MatInputModule,
+    MatSelectModule
   ],
   declarations: [ItemFormComponent],
   exports: [ItemFormComponent],

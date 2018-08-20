@@ -2,7 +2,8 @@ import { Component, AfterViewInit, ViewChild, EventEmitter, Output } from '@angu
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { FieldConfig } from '../dynamic-form/dynamic-field/field-config.interface';
 import { Validators } from '@angular/forms';
-import { throttleTime } from '../../../../node_modules/rxjs/operators';
+import { throttleTime } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-image-form',
@@ -45,7 +46,7 @@ export class ImageFormComponent implements AfterViewInit {
   }
 
   removeInput() {
-    const id = this.config.filter(input => input.type === 'ImageInput').length - 1;
+    const id = this.config.filter(input => input.type === 'imageInput').length - 1;
     this.config = this.config
       .filter(input => input.name !== `image-${id}`);
   }

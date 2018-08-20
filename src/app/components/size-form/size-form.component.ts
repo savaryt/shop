@@ -16,7 +16,22 @@ export class SizeFormComponent implements AfterViewInit {
   config: FieldConfig[];
 
   constructor() {
-    this.config = [];
+    this.config = [
+      {
+        type: 'textInput',
+        name: `label-0`,
+        placeholder: 'Size',
+        validation: [Validators.required],
+        value: 'S'
+      },
+      {
+        type: 'numberInput',
+        name: `stock-0`,
+        placeholder: 'Stock',
+        validation: [Validators.required],
+        value: 10
+      }
+    ];
   }
 
   ngAfterViewInit() {
@@ -40,7 +55,7 @@ export class SizeFormComponent implements AfterViewInit {
     };
     const textInput = {
       type: 'textInput',
-      name: `size-${id}`,
+      name: `label-${id}`,
       placeholder: 'Size',
       validation: [Validators.required]
     };
@@ -50,6 +65,6 @@ export class SizeFormComponent implements AfterViewInit {
   removeInput() {
     const id = this.config.filter(input => input.type === 'numberInput').length - 1;
     this.config = this.config
-      .filter(input => input.name !== `stock-${id}` && input.name !== `size-${id}`);
+      .filter(input => input.name !== `stock-${id}` && input.name !== `label-${id}`);
   }
 }

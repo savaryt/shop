@@ -13,10 +13,12 @@ import {
   MatButtonModule,
   MatIconModule,
   MatTooltipModule,
+  MatSelectModule,
 } from '@angular/material';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormImageInputComponent } from './form-image-input/form-image-input.component';
+import { FormSelectComponent } from './form-select/form-select.component';
 
 @NgModule({
   imports: [
@@ -26,6 +28,7 @@ import { FormImageInputComponent } from './form-image-input/form-image-input.com
     FlexLayoutModule,
 
     MatInputModule,
+    MatSelectModule,
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,
@@ -37,6 +40,7 @@ import { FormImageInputComponent } from './form-image-input/form-image-input.com
     FormInputComponent,
     FormNumberInputComponent,
     FormImageInputComponent,
+    FormSelectComponent
   ],
   exports: [
     DynamicFormComponent
@@ -45,6 +49,7 @@ import { FormImageInputComponent } from './form-image-input/form-image-input.com
     FormInputComponent,
     FormNumberInputComponent,
     FormImageInputComponent,
+    FormSelectComponent
   ]
 })
 export class DynamicFormModule { }

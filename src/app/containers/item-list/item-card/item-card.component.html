@@ -12,8 +12,8 @@
   <mat-card-content>
     <div class="item-img-wrapper">
       <img class="item-img"
-           [src]="item?.pictures[0].src"
-           [alt]="item?.pictures[0].alt">
+           [src]="picture | async"
+           alt="product picture">
     </div>
   </mat-card-content>
   <mat-divider class="mat-divider-shifted"></mat-divider>

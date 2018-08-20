@@ -18,10 +18,11 @@ export class ItemFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      price: ['', Validators.required],
-      sale: ['', Validators.required],
-      label: ['', Validators.required],
-      description: ['', Validators.required],
+      price: ['34.90', Validators.required],
+      sale: ['5', Validators.required],
+      label: ['Branded Tshirt', Validators.required],
+      description: ['Wash: 30°C \n Material: Cotton', Validators.required],
+      sex: ['men', Validators.required],
     });
 
 

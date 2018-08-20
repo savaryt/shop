@@ -33,6 +33,7 @@ export class ItemListComponent implements OnInit {
         .snapshotChanges()
         .pipe(map(changes => changes.map(change => ({ id: change.payload.doc.id, ...change.payload.doc.data() }) as DatabaseItem)));
     }))
+
   }
 
 }

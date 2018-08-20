@@ -23,8 +23,8 @@
       <div fxFlex="50%"
            class="image-wrapper">
         <img class="item-img"
-             [src]="image.src"
-             [alt]="image.alt">
+             [src]="image?.src"
+             [alt]="image?.alt">
       </div>
 
       <div fxFlex="50%"
@@ -32,11 +32,11 @@
            fxLayoutAlign="space-between"
            fxLayoutGap="24px">
 
-        <app-image-selector [images]="item?.pictures"
+        <app-image-selector [images]="images | async"
                             (selectedChange)="onSelectedImageChange($event)"></app-image-selector>
 
         <div>
-          <div>
+          <div class="description">
             <h3>Description</h3>
             <p>{{item?.description}}</p>
           </div>
