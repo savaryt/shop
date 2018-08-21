@@ -35,6 +35,7 @@ import {
 } from '@angular/material';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
     // Features
     ItemModule,
+
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent]
