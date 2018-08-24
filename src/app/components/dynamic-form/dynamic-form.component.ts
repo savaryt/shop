@@ -7,12 +7,19 @@ import { FormGroup, FormBuilder } from '@angular/forms';
   selector: 'dynamic-form',
   exportAs: 'dynamicForm',
   templateUrl: './dynamic-form.component.html',
-  styleUrls: ['./dynamic-form.component.scss']
+  styleUrls: ['./dynamic-form.component.scss'],
 })
 export class DynamicFormComponent implements OnInit, OnChanges {
 
-
-  @Input() config: FieldConfig[] = [];
+  private _config: FieldConfig[];
+  @Input() set config(config: FieldConfig[]) {
+    if (config) {
+      this._config = config;
+    }
+  }
+  get config(): FieldConfig[] {
+    return this._config;
+  }
 
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
@@ -26,7 +33,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
   get valid() { return this.form.valid; }
   get value() { return this.form.value; }
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder) {
+    this._config = [];
+  }
 
   ngOnInit() {
     this.form = this.createGroup();

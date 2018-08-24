@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 import { DatabaseItem } from '../../../item/item.model';
 import { AngularFirestore } from '../../../../../node_modules/angularfire2/firestore';
 import { ActivatedRoute } from '../../../../../node_modules/@angular/router';
-import { switchMap, tap, first, map } from '../../../../../node_modules/rxjs/operators';
+import { switchMap, tap, first, map, delay, retry } from '../../../../../node_modules/rxjs/operators';
 import { AngularFireStorage } from '../../../../../node_modules/angularfire2/storage';
 import { Observable } from '../../../../../node_modules/rxjs';
 
@@ -34,9 +34,11 @@ export class ItemCardComponent implements OnInit {
           .doc(this.item.id)
           .collection('pictures')
           .valueChanges()
+          .pipe(delay(1000))
           .pipe(switchMap(pictures => {
             return this.storage.ref(pictures[0].src).getDownloadURL();
-          }));
+          }))
+          .pipe(retry(5));
       }));
   }
 

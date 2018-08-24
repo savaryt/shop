@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChild, EventEmitter, Output } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { FieldConfig } from '../dynamic-form/dynamic-field/field-config.interface';
 import { Validators } from '@angular/forms';
@@ -15,7 +15,7 @@ export class AttributeFormComponent implements AfterViewInit {
 
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
-  config: FieldConfig[];
+  @Input() config: FieldConfig[];
 
   constructor() {
     this.config = [

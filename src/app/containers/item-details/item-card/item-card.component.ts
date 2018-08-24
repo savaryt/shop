@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Item, DatabaseItem } from '../../../item/item.model';
@@ -13,13 +13,14 @@ import { Observable, of, from } from '../../../../../node_modules/rxjs';
 @Component({
   selector: 'app-item-card',
   templateUrl: './item-card.component.html',
-  styleUrls: ['./item-card.component.scss']
+  styleUrls: ['./item-card.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ItemCardComponent implements OnInit {
   @Input() item: DatabaseItem;
   form: FormGroup;
-  images: Observable<string[]>;
-  image: string;
+  images: Observable<{ src: string, alt: string }[]>;
+  image: { src: string, alt: string };
 
   constructor(
     private store: Store<Item>,
@@ -46,12 +47,10 @@ export class ItemCardComponent implements OnInit {
           .pipe(first())
           .pipe(switchMap(pictures => {
             return from(pictures)
-              .pipe(mergeMap(picture => this.storage.ref(picture.src).getDownloadURL()))
-              .pipe(map(url => ({ src: url, alt: 'product_picture' })))
+              .pipe(tap(console.log))
+              .pipe(mergeMap(picture => this.storage.ref(picture.src).getDownloadURL().pipe(map(url => ({ src: url, alt: picture.alt })))))
           }))
-          .pipe(debounceTime(100))
-          .pipe(scan((acc, curr) => [...acc, curr], []))
-          .pipe(tap(console.log))
+          .pipe(scan((acc, curr) => [...acc, curr], []));
       }));
   }
 
@@ -69,9 +68,19 @@ export class ItemCardComponent implements OnInit {
     this.store.dispatch(action);
   }
 
-  onSelectedImageChange(image: string) {
+  onSelectedImageChange(image: { src: string, alt: string }) {
     this.image = image;
+    console.log(this.image)
   }
 
+  isNew(item: DatabaseItem) {
+    if (item) {
+      const now = Date.now();
+      const createdAt = item.createdAt;
+      const day = 1000 * 60 * 60 * 24;
+      const days = Math.round((now - createdAt) / day);
+      return days < 7;
+    }
+  }
 
 }

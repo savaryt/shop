@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, Output, EventEmitter } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, Output, EventEmitter, Input } from '@angular/core';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { FieldConfig } from '../dynamic-form/dynamic-field/field-config.interface';
 import { Validators } from '@angular/forms';
@@ -13,7 +13,7 @@ export class SizeFormComponent implements AfterViewInit {
   @Output() valueChange = new EventEmitter();
 
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
-  config: FieldConfig[];
+  @Input() config: FieldConfig[];
 
   constructor() {
     this.config = [

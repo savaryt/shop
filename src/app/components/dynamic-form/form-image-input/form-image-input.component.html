@@ -1,16 +1,17 @@
-<div [formGroup]="group"
-     fxLayout="row"
-     fxLayoutAlign="start center">
+<label #label>
+  <input type="file"
+         accept="image/*"
+         (change)="onImageChange($event)">
+</label>
 
-  <label #label>
-    <input type="file"
-           accept="image/*"
-           (change)="onImageChange($event)">
-  </label>
-  <input #input
-         type="text"
-         [formControlName]="config.name"
-         [ngModel]="imageData">
+<div [formGroup]="group">
+  <input type="text"
+         [formControlName]="config.name">
+</div>
+
+
+<div fxLayout="row"
+     fxLayoutAlign="start center">
 
   <button mat-icon-button
           color="primary"
@@ -19,11 +20,16 @@
     <mat-icon>add_a_photo</mat-icon>
   </button>
 
-  <img [fxShow]="!!dataUrl"
-       [src]="dataUrl"
+  <img [fxShow]="!!url"
+       [src]="url"
        alt="preview">
 
-  <span *ngIf="!dataUrl && !placeholder">Choose an image...</span>
-  <span *ngIf="!dataUrl && !!placeholder">{{placeholder}}</span>
+  <span *ngIf="!url">Choose an image...</span>
 
+  <button mat-icon-button
+          color="warn"
+          type="button"
+          (click)="label.click()">
+    <mat-icon>clear</mat-icon>
+  </button>
 </div>

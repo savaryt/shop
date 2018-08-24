@@ -1,15 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ItemDetailsComponent } from './item-details.component';
+import { ItemUpdateComponent } from './item-update.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ItemDetailsComponent,
-  },
-  {
-    path: 'update',
-    loadChildren: '../item-update/item-update.module#ItemUpdateModule',
+    component: ItemUpdateComponent,
   },
   {
     path: '**',
@@ -21,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ItemDetailsRoutingModule { }
+export class ItemUpdateRoutingModule { }

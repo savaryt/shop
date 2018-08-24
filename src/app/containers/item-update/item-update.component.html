@@ -1,0 +1,26 @@
+<div class="wrapper"
+     fxLayout
+     fxLayoutAlign="center start">
+
+  <mat-card fxFlex.gt-md="50%"
+            fxFlex.md="75%"
+            fxFlex.lt-md="100%">
+
+    <mat-card-title>Add Item</mat-card-title>
+
+    <mat-card-content>
+      <app-item-form (valueChange)="onItemFormChange($event)"></app-item-form>
+      <app-size-form [config]="sizeFormConfig | async"
+                     (valueChange)="onSizeFormChange($event)"></app-size-form>
+      <app-image-form [config]="imageFormConfig | async"
+                      (valueChange)="onImageFormChange($event)"></app-image-form>
+      <app-attribute-form [config]="attributeFormConfig | async"
+                          (valueChange)="onAttributeFormChange($event)"></app-attribute-form>
+    </mat-card-content>
+    <mat-card-footer>
+      <button mat-raised-button
+              (click)="onSubmit()">Submit</button>
+    </mat-card-footer>
+  </mat-card>
+
+</div>

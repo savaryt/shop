@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { AngularFirestore } from '../../../../../node_modules/angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFireStorage } from 'angularfire2/storage';
 import { FeedbackService } from '../../../services/feedback.service';
 import { FeedbackMessage } from '../../../services/feedback-message.model';
-import { AngularFireStorage } from '../../../../../node_modules/angularfire2/storage';
 
 @Component({
   selector: 'app-item-add',
@@ -68,15 +68,22 @@ export class ItemAddComponent {
       }
 
       const images = [];
-      for (const property in this.imageForm.value) {
-        if (this.imageForm.value.hasOwnProperty(property)) {
-          const parts = property.split('-');
-          const propertyName = parts[0];
+      for (const image in this.imageForm.value) {
+        if (this.imageForm.value.hasOwnProperty(image)) {
+          const parts = image.split('-');
           const index = parts[1];
-
-          images[index] = { src: this.imageForm.value[property], alt: 'picture' };
+          for (const property in this.imageForm.value[image]) {
+            if (this.imageForm.value[image].hasOwnProperty(property)) {
+              if (images[index]) {
+                images[index] = { ...images[index], [property]: this.imageForm.value[image][property] }
+              } else {
+                images[index] = { [property]: this.imageForm.value[image][property] };
+              }
+            }
+          }
         }
       }
+
       const { sex, ...values } = this.itemForm.value;
       this.firestore
         .collection('sex')

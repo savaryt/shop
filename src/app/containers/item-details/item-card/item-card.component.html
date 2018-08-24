@@ -5,14 +5,23 @@
   <mat-card fxFlex.gt-lg="50%"
             fxFlex.lg="65%"
             fxFlex.lt-lg="100%">
-    <mat-card-title [matTooltip]="item?.label"
-                    matTooltipPosition="below">{{item?.label}}</mat-card-title>
-    <mat-card-subtitle fxLayout
-                       fxLayoutGap="16px">
-      <span [style.textDecoration]="item?.sale !== 0 ? 'line-through' : 'none'">{{item?.price | currency}}</span>
-      <span *ngIf="item?.sale !== 0"
-            class="text-warn">{{item?.price - item?.sale | currency}}</span>
-    </mat-card-subtitle>
+    <div fxLayout
+         fxLayoutAlign="space-between center">
+      <div fxFlex>
+        <mat-card-title [matTooltip]="item?.label"
+                        matTooltipPosition="below">{{item?.label}}</mat-card-title>
+        <mat-card-subtitle fxLayout
+                           fxLayoutGap="16px">
+          <span [style.textDecoration]="item?.sale !== 0 ? 'line-through' : 'none'">{{item?.price | currency}}</span>
+          <span *ngIf="item?.sale !== 0"
+                class="text-warn">{{item?.price - item?.sale | currency}}</span>
+        </mat-card-subtitle>
+      </div>
+
+      <a mat-raised-button
+         color="accent"
+         [routerLink]="['update']">Update</a>
+    </div>
 
     <mat-divider></mat-divider>
 
@@ -24,7 +33,7 @@
            class="image-wrapper">
         <img class="item-img"
              [src]="image?.src"
-             [alt]="image?.alt">
+             [alt]="image?.alt || 'product_picture'">
       </div>
 
       <div fxFlex="50%"
@@ -91,6 +100,9 @@
         <mat-chip *ngIf="item?.sale !== 0"
                   selected
                   color="warn">On sale</mat-chip>
+        <mat-chip *ngIf="isNew(item)"
+                  selected
+                  color="accent">New</mat-chip>
       </mat-chip-list>
 
       <span fxFlex> </span>
@@ -100,5 +112,6 @@
       </div>
 
     </mat-card-footer>
+
   </mat-card>
 </div>
