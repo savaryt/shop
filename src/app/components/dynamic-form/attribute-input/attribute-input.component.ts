@@ -47,7 +47,7 @@ export class AttributeInputComponent implements ControlValueAccessor {
     this.onChange(this.value);
   }
   colorChange($event) {
-    this.value.color = $event.target.value;
+    this.value.color = $event.value;
     this.onChange(this.value);
   }
 

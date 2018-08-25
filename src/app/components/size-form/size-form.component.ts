@@ -21,7 +21,7 @@ export class SizeFormComponent implements AfterViewInit {
       {
         type: 'size',
         name: 'size-0',
-        value: { size: 'S', stock: 10 }
+        value: { label: 'S', stock: 10 }
       }
     ];
   }
@@ -41,7 +41,7 @@ export class SizeFormComponent implements AfterViewInit {
     const size = {
       type: 'size',
       name: `size-${cuid()}`,
-      value: { size: null, stock: null }
+      value: { label: null, stock: null }
     };
     this.config = [...this.config, size];
   }

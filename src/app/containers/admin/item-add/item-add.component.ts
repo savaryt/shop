@@ -52,6 +52,7 @@ export class ItemAddComponent {
           attributes.push(this.attributeForm.value[property]);
         }
       }
+      console.log(attributes)
 
       const images = [];
       for (const property in this.imageForm.value) {

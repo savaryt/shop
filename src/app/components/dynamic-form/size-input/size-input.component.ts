@@ -15,21 +15,21 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class SizeInputComponent implements ControlValueAccessor {
 
-  private _value: { size: string, stock: number };
-  set value(value: { size: string, stock: number }) {
+  private _value: { label: string, stock: number };
+  set value(value: { label: string, stock: number }) {
     if (value) {
       this.writeValue(value);
       this.onChange(value);
     }
   }
-  get value(): { size: string, stock: number } {
+  get value(): { label: string, stock: number } {
     return this._value;
   }
   onChange = (_: any) => { };
   onTouched = (_: any) => { };
 
   constructor() {
-    this.value = { size: null, stock: null };
+    this.value = { label: null, stock: null };
   }
 
   writeValue(value: any): void {
@@ -43,8 +43,8 @@ export class SizeInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  sizeChange($event) {
-    this.value.size = $event.target.value;
+  labelChange($event) {
+    this.value.label = $event.target.value;
     this.onChange(this.value);
   }
   stockChange($event) {
