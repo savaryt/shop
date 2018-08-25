@@ -1,0 +1,18 @@
+<div fxLayout="row wrap">
+  <mat-form-field fxFlex>
+    <input type="text"
+           matInput
+           placeholder="Size"
+           (input)="labelChange($event)"
+           [value]="value.label">
+  </mat-form-field>
+  <mat-form-field fxFlex>
+    <mat-select placeholder="Color"
+                [value]="value.color"
+                (change)="colorChange($event)">
+      <mat-option value="primary">Primary</mat-option>
+      <mat-option value="accent">Accent</mat-option>
+      <mat-option value="warn">Warn</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

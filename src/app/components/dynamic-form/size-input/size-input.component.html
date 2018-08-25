@@ -1,0 +1,16 @@
+<div fxLayout="row wrap">
+  <mat-form-field fxFlex>
+    <input type="text"
+           matInput
+           placeholder="Size"
+           (input)="sizeChange($event)"
+           [value]="value.size">
+  </mat-form-field>
+  <mat-form-field fxFlex>
+    <input type="number"
+           matInput
+           placeholder="Stock"
+           (input)="stockChange($event)"
+           [value]="value.stock">
+  </mat-form-field>
+</div>

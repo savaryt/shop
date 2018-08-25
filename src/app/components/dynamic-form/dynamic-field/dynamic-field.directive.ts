@@ -8,12 +8,16 @@ import { FormInputComponent } from '../form-input/form-input.component';
 import { FormNumberInputComponent } from '../form-number-input/form-number-input.component';
 import { FormImageInputComponent } from '../form-image-input/form-image-input.component';
 import { FormSelectComponent } from '../form-select/form-select.component';
+import { FormSizeInputComponent } from '../form-size-input/form-size-input.component';
+import { FormAttributeInputComponent } from '../form-attribute-input/form-attribute-input.component';
 
 const components: { [type: string]: Type<Field> } = {
   textInput: FormInputComponent,
   numberInput: FormNumberInputComponent,
   imageInput: FormImageInputComponent,
-  select: FormSelectComponent
+  select: FormSelectComponent,
+  size: FormSizeInputComponent,
+  attribute: FormAttributeInputComponent
 };
 
 @Directive({

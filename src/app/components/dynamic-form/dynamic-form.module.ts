@@ -19,6 +19,10 @@ import {
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { FormImageInputComponent } from './form-image-input/form-image-input.component';
 import { FormSelectComponent } from './form-select/form-select.component';
+import { FormSizeInputComponent } from './form-size-input/form-size-input.component';
+import { SizeInputComponent } from './size-input/size-input.component';
+import { FormAttributeInputComponent } from './form-attribute-input/form-attribute-input.component';
+import { AttributeInputComponent } from './attribute-input/attribute-input.component';
 
 @NgModule({
   imports: [
@@ -37,10 +41,15 @@ import { FormSelectComponent } from './form-select/form-select.component';
     DynamicFormComponent,
     DynamicFieldDirective,
 
+    SizeInputComponent,
+    AttributeInputComponent,
+
     FormInputComponent,
     FormNumberInputComponent,
     FormImageInputComponent,
-    FormSelectComponent
+    FormSelectComponent,
+    FormSizeInputComponent,
+    FormAttributeInputComponent,
   ],
   exports: [
     DynamicFormComponent
@@ -49,7 +58,10 @@ import { FormSelectComponent } from './form-select/form-select.component';
     FormInputComponent,
     FormNumberInputComponent,
     FormImageInputComponent,
-    FormSelectComponent
+    FormSelectComponent,
+    FormSizeInputComponent,
+    FormAttributeInputComponent,
+
   ]
 })
 export class DynamicFormModule { }

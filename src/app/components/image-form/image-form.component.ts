@@ -3,7 +3,7 @@ import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { FieldConfig } from '../dynamic-form/dynamic-field/field-config.interface';
 import { Validators } from '@angular/forms';
 import { throttleTime } from 'rxjs/operators';
-
+import * as cuid from 'cuid';
 
 @Component({
   selector: 'app-image-form',
@@ -35,10 +35,9 @@ export class ImageFormComponent implements AfterViewInit {
   }
 
   addInput() {
-    const id = this.config.filter(input => input.type === 'imageInput').length;
     const imageInput = {
       type: 'imageInput',
-      name: `image-${id}`,
+      name: `image-${cuid()}`,
       placeholder: 'Image',
       validation: [Validators.required]
     };
@@ -46,8 +45,15 @@ export class ImageFormComponent implements AfterViewInit {
   }
 
   removeInput() {
-    const id = this.config.filter(input => input.type === 'imageInput').length - 1;
+    this.config.pop()
+  }
+
+  onRemove(index: number) {
     this.config = this.config
-      .filter(input => input.name !== `image-${id}`);
+      .filter((control, i) => i !== index)
+      .map((control, i) => {
+        control.name = `attribute-${cuid()}`;
+        return control;
+      });
   }
 }

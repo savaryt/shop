@@ -1,5 +1,6 @@
 <dynamic-form [config]="config"
-              #form="dynamicForm">
+              #form="dynamicForm"
+              (removeControl)="onRemove($event)">
 </dynamic-form>
 <button mat-icon-button
         color="primary"

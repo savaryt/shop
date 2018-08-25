@@ -11,6 +11,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 })
 export class DynamicFormComponent implements OnInit, OnChanges {
 
+  @Output() removeControl = new EventEmitter();
+
   private _config: FieldConfig[];
   @Input() set config(config: FieldConfig[]) {
     if (config) {
@@ -93,5 +95,9 @@ export class DynamicFormComponent implements OnInit, OnChanges {
 
   setValue(name: string, value: any) {
     this.form.controls[name].setValue(value, { emitEvent: true });
+  }
+
+  remove(index: number) {
+    this.removeControl.emit(index);
   }
 }

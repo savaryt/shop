@@ -3,6 +3,7 @@ import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { FieldConfig } from '../dynamic-form/dynamic-field/field-config.interface';
 import { Validators } from '@angular/forms';
 import { throttleTime } from '../../../../node_modules/rxjs/operators';
+import * as cuid from 'cuid';
 
 @Component({
   selector: 'app-size-form',
@@ -18,18 +19,9 @@ export class SizeFormComponent implements AfterViewInit {
   constructor() {
     this.config = [
       {
-        type: 'textInput',
-        name: `label-0`,
-        placeholder: 'Size',
-        validation: [Validators.required],
-        value: 'S'
-      },
-      {
-        type: 'numberInput',
-        name: `stock-0`,
-        placeholder: 'Stock',
-        validation: [Validators.required],
-        value: 10
+        type: 'size',
+        name: 'size-0',
+        value: { size: 'S', stock: 10 }
       }
     ];
   }
@@ -46,25 +38,24 @@ export class SizeFormComponent implements AfterViewInit {
   }
 
   addInput() {
-    const id = this.config.filter(input => input.type === 'numberInput').length;
-    const numberInput = {
-      type: 'numberInput',
-      name: `stock-${id}`,
-      placeholder: 'Stock',
-      validation: [Validators.required]
+    const size = {
+      type: 'size',
+      name: `size-${cuid()}`,
+      value: { size: null, stock: null }
     };
-    const textInput = {
-      type: 'textInput',
-      name: `label-${id}`,
-      placeholder: 'Size',
-      validation: [Validators.required]
-    };
-    this.config = [...this.config, textInput, numberInput];
+    this.config = [...this.config, size];
   }
 
   removeInput() {
-    const id = this.config.filter(input => input.type === 'numberInput').length - 1;
+    this.config.pop()
+  }
+
+  onRemove(index: number) {
     this.config = this.config
-      .filter(input => input.name !== `stock-${id}` && input.name !== `label-${id}`);
+      .filter((control, i) => i !== index)
+      .map((control, i) => {
+        control.name = `attribute-${cuid()}`;
+        return control;
+      });
   }
 }

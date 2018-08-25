@@ -1,8 +1,8 @@
 import { Component, AfterViewInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { FieldConfig } from '../dynamic-form/dynamic-field/field-config.interface';
-import { Validators } from '@angular/forms';
 import { throttleTime } from 'rxjs/operators';
+import * as cuid from 'cuid';
 
 @Component({
   selector: 'app-attribute-form',
@@ -20,24 +20,10 @@ export class AttributeFormComponent implements AfterViewInit {
   constructor() {
     this.config = [
       {
-        type: 'textInput',
-        name: `label-0`,
-        placeholder: 'Attribute',
-        validation: [Validators.required],
-        value: 'Attribute'
+        type: 'attribute',
+        name: `attribute-0`,
+        value: { label: 'Hot', color: 'primary' }
       },
-      {
-        type: 'select',
-        name: `color-0`,
-        placeholder: 'Color',
-        options: [
-          { label: 'Primary', value: 'primary' },
-          { label: 'Accent', value: 'accent' },
-          { label: 'Warn', value: 'warn' },
-        ],
-        validation: [Validators.required],
-        value: 'primary'
-      }
     ];
   }
 
@@ -54,30 +40,24 @@ export class AttributeFormComponent implements AfterViewInit {
   }
 
   addInput() {
-    const id = this.config.filter(input => input.type === 'textInput').length;
-    const attributeInput = {
-      type: 'textInput',
-      name: `label-${id}`,
-      placeholder: 'Attribute',
-      validation: [Validators.required]
+    const attribute = {
+      type: 'attribute',
+      name: `attribute-${cuid()}`,
+      value: { label: null, color: 'primary' }
     };
-    const colorInput = {
-      type: 'select',
-      name: `color-${id}`,
-      placeholder: 'Color',
-      options: [
-        { label: 'Primary', value: 'primary' },
-        { label: 'Accent', value: 'accent' },
-        { label: 'Warn', value: 'warn' },
-      ],
-      validation: [Validators.required]
-    };
-    this.config = [...this.config, attributeInput, colorInput];
+    this.config = [...this.config, attribute];
   }
 
   removeInput() {
-    const id = this.config.filter(input => input.type === 'textInput').length - 1;
+    this.config.pop();
+  }
+
+  onRemove(index: number) {
     this.config = this.config
-      .filter(input => input.name !== `label-${id}` && input.name !== `color-${id}`);
+      .filter((control, i) => i !== index)
+      .map((control, i) => {
+        control.name = `attribute-${cuid()}`;
+        return control;
+      });
   }
 }

@@ -42,45 +42,21 @@ export class ItemAddComponent {
       const sizes = [];
       for (const property in this.sizeForm.value) {
         if (this.sizeForm.value.hasOwnProperty(property)) {
-          const parts = property.split('-');
-          const propertyName = parts[0];
-          const index = parts[1];
-          if (sizes[index]) {
-            sizes[index] = { ...sizes[index], [propertyName]: this.sizeForm.value[property] };
-          } else {
-            sizes[index] = { [propertyName]: this.sizeForm.value[property] };
-          }
+          sizes.push(this.sizeForm.value[property]);
         }
       }
 
       const attributes = [];
       for (const property in this.attributeForm.value) {
         if (this.attributeForm.value.hasOwnProperty(property)) {
-          const parts = property.split('-');
-          const propertyName = parts[0];
-          const index = parts[1];
-          if (attributes[index]) {
-            attributes[index] = { ...attributes[index], [propertyName]: this.attributeForm.value[property] };
-          } else {
-            attributes[index] = { [propertyName]: this.attributeForm.value[property] };
-          }
+          attributes.push(this.attributeForm.value[property]);
         }
       }
 
       const images = [];
-      for (const image in this.imageForm.value) {
-        if (this.imageForm.value.hasOwnProperty(image)) {
-          const parts = image.split('-');
-          const index = parts[1];
-          for (const property in this.imageForm.value[image]) {
-            if (this.imageForm.value[image].hasOwnProperty(property)) {
-              if (images[index]) {
-                images[index] = { ...images[index], [property]: this.imageForm.value[image][property] }
-              } else {
-                images[index] = { [property]: this.imageForm.value[image][property] };
-              }
-            }
-          }
+      for (const property in this.imageForm.value) {
+        if (this.imageForm.value.hasOwnProperty(property)) {
+          images.push(this.imageForm.value[property]);
         }
       }
 

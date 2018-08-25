@@ -2,10 +2,14 @@
       fxLayoutAlign="start center"
       [formGroup]="form"
       (submit)="handleSubmit($event)">
-  <ng-container *ngFor="let field of config"
-                dynamicField
-                [config]="field"
-                [group]="form">
+  <ng-container *ngFor="let field of config; let i = index">
+    <ng-container dynamicField
+                  [config]="field"
+                  [group]="form">
+    </ng-container>
+    <button mat-icon-button
+            (click)="remove(i)">
+      <mat-icon>clear</mat-icon>
+    </button>
   </ng-container>
-
 </form>
