@@ -5,13 +5,11 @@ import { createSelector, createFeatureSelector } from '@ngrx/store';
 
 import * as localforage from 'localforage';
 
-export interface State extends EntityState<Item> {
-  selectedItem: Item | null;
-}
+export interface State extends EntityState<Item> { }
 
 export const adapter: EntityAdapter<Item> = createEntityAdapter<Item>();
 
-export const initialState: State = adapter.getInitialState({ selectedItem: null });
+export const initialState: State = adapter.getInitialState();
 
 export function reducer(
   state = initialState,
@@ -84,8 +82,4 @@ export const {
   selectTotal,
 } = adapter.getSelectors(selectState);
 
-
-// selected item id selector
-const getSelectedId = (state: State): string => state.selectedItem.id;
-export const selectId = createSelector(selectState, getSelectedId);
 

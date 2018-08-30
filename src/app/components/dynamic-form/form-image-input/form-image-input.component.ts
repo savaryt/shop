@@ -46,7 +46,6 @@ export class FormImageInputComponent implements Field, OnChanges, OnInit {
   }
 
   ngOnChanges() {
-    console.log('changes')
 
   }
 

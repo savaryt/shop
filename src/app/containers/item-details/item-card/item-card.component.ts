@@ -4,11 +4,9 @@ import { Store } from '@ngrx/store';
 import { Item, DatabaseItem } from '../../../item/item.model';
 import { AddItem } from '../../../item/item.actions';
 import { ActivatedRoute } from '@angular/router';
-import { first, switchMap, mergeMap, tap, scan, debounceTime, map } from 'rxjs/operators';
 import { getStoreId } from '../../../utilities';
-import { AngularFirestore } from '../../../../../node_modules/angularfire2/firestore';
-import { AngularFireStorage } from '../../../../../node_modules/angularfire2/storage';
-import { Observable, of, from } from '../../../../../node_modules/rxjs';
+import { ImageModalComponent } from '../../../components/image-modal/image-modal.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-item-card',
@@ -19,39 +17,18 @@ import { Observable, of, from } from '../../../../../node_modules/rxjs';
 export class ItemCardComponent implements OnInit {
   @Input() item: DatabaseItem;
   form: FormGroup;
-  images: Observable<{ src: string, alt: string }[]>;
-  image: { src: string, alt: string };
 
   constructor(
     private store: Store<Item>,
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private firestore: AngularFirestore,
-    private storage: AngularFireStorage,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
       size: ['', Validators.required],
     });
-
-    this.images = this.route.params
-      .pipe(switchMap(({ sex, id }) => {
-        return this.firestore
-          .collection('sex')
-          .doc(sex)
-          .collection<DatabaseItem>('items')
-          .doc(id)
-          .collection('pictures')
-          .valueChanges()
-          .pipe(first())
-          .pipe(switchMap(pictures => {
-            return from(pictures)
-              .pipe(tap(console.log))
-              .pipe(mergeMap(picture => this.storage.ref(picture.src).getDownloadURL().pipe(map(url => ({ src: url, alt: picture.alt })))))
-          }))
-          .pipe(scan((acc, curr) => [...acc, curr], []));
-      }));
   }
 
   onSubmit() {
@@ -68,11 +45,6 @@ export class ItemCardComponent implements OnInit {
     this.store.dispatch(action);
   }
 
-  onSelectedImageChange(image: { src: string, alt: string }) {
-    this.image = image;
-    console.log(this.image)
-  }
-
   isNew(item: DatabaseItem) {
     if (item) {
       const now = Date.now();
@@ -81,6 +53,10 @@ export class ItemCardComponent implements OnInit {
       const days = Math.round((now - createdAt) / day);
       return days < 7;
     }
+  }
+
+  onSelectedImageClick(image: { src: string, alt: string }) {
+    this.dialog.open(ImageModalComponent, { data: { image }, panelClass: 'panel-class' });
   }
 
 }

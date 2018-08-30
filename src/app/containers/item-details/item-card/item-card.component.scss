@@ -1,37 +1,10 @@
+@import '~@angular/material/theming';
 :host {
-  border: 8px solid transparent;
-  box-sizing: border-box;
-  mat-card {
-    box-sizing: border-box;
-  }
-  mat-card-title {
-    max-width: calc(100% - 48px);
-    overflow: hidden;
-    display: inline-block;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  mat-card-content {
-    margin-bottom: 0;
-  }
-  mat-card-footer {
-    padding: 6px;
-  }
-  div.image-wrapper {
-    height: auto;
-  }
-  img {
-    display: block;
-    height: 100%;
-    width: 100%;
-  }
-  app-image-selector {
-    margin-top: 16px;
-  }
-  form {
-    margin-bottom: 16px;
-  }
   .description {
     white-space: pre-wrap;
   }
+  mat-card {
+    border-radius: 0;
+  }
+  app-image-selector {}
 }

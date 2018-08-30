@@ -1,61 +1,14 @@
-<div class="wrapper"
-     fxLayout
-     fxLayoutAlign="center start">
+<h2>{{item?.label | uppercase}}</h2>
 
-  <mat-card fxFlex.gt-lg="50%"
-            fxFlex.lg="65%"
-            fxFlex.lt-lg="100%">
-    <div fxLayout
-         fxLayoutAlign="space-between center">
-      <div fxFlex>
-        <mat-card-title [matTooltip]="item?.label"
-                        matTooltipPosition="below">{{item?.label}}</mat-card-title>
-        <mat-card-subtitle fxLayout
-                           fxLayoutGap="16px">
-          <span [style.textDecoration]="item?.sale !== 0 ? 'line-through' : 'none'">{{item?.price | currency}}</span>
-          <span *ngIf="item?.sale !== 0"
-                class="text-warn">{{item?.price - item?.sale | currency}}</span>
-        </mat-card-subtitle>
-      </div>
 
-      <a mat-raised-button
+
+
+<!-- <a mat-raised-button
          color="accent"
-         [routerLink]="['update']">Update</a>
-    </div>
+         [routerLink]="['update']">Update</a> -->
 
-    <mat-divider></mat-divider>
 
-    <mat-card-content fxLayout
-                      fxLayout.lt-lg="column"
-                      fxLayoutGap="16px">
-
-      <div fxFlex="50%"
-           class="image-wrapper">
-        <img class="item-img"
-             [src]="image?.src"
-             [alt]="image?.alt || 'product_picture'">
-      </div>
-
-      <div fxFlex="50%"
-           fxLayout="column"
-           fxLayoutAlign="space-between"
-           fxLayoutGap="24px">
-
-        <app-image-selector [images]="images | async"
-                            (selectedChange)="onSelectedImageChange($event)"></app-image-selector>
-
-        <div>
-          <div class="description">
-            <h3>Description</h3>
-            <p>{{item?.description}}</p>
-          </div>
-          <div>
-            <p>Ref: {{item?.id}}</p>
-          </div>
-        </div>
-
-        <div>
-          <form [formGroup]="form"
+<!-- <form [formGroup]="form"
                 (ngSubmit)="onSubmit()"
                 fxLayout="column">
             <mat-form-field>
@@ -80,38 +33,62 @@
                     [disabled]="!form.valid">
               <mat-icon>add_shopping_cart</mat-icon>
             </button>
-          </form>
+          </form> -->
+
+
+
+
+
+
+<div *ngIf="item"
+     fxLayout
+     fxLayoutAlign="center center">
+  <span fxLayout="column"
+        fxLayoutAlign="center stretch"
+        fxLayoutGap="8px">
+    <app-image-selector [images]="item?.pictures"
+                        (selectedClick)="onSelectedImageClick($event)">
+    </app-image-selector>
+
+    <mat-card fxLayout="column">
+
+      <mat-card-content fxLayout
+                        fxLayoutAlign="space-between center">
+        <mat-chip-list>
+          <ng-container *ngFor="let attribute of item?.attributes">
+            <mat-chip selected
+                      [color]="attribute.color">{{attribute.label}}</mat-chip>
+          </ng-container>
+          <mat-chip *ngIf="item?.sale !== 0"
+                    selected
+                    color="warn">On sale</mat-chip>
+          <mat-chip *ngIf="isNew(item)"
+                    selected
+                    color="accent">New</mat-chip>
+        </mat-chip-list>
+        <mat-card-subtitle fxLayout
+                           fxLayoutGap="16px">
+          <span [style.textDecoration]="item?.sale !== 0 ? 'line-through' : 'none'">{{item?.price | currency}}</span>
+          <span *ngIf="item?.sale !== 0"
+                class="text-warn">{{item?.price - item?.sale | currency}}</span>
+        </mat-card-subtitle>
+      </mat-card-content>
+
+
+
+      <mat-card-content>
+        <div class="description">
+          <h3>Description</h3>
+          <p>{{item?.description}}</p>
         </div>
+        <h3>Reference </h3>
+        <p>{{item?.id}}</p>
+      </mat-card-content>
 
-      </div>
 
-    </mat-card-content>
 
-    <mat-divider class="mat-divider-shifted"></mat-divider>
 
-    <mat-card-footer fxLayout
-                     fxLayoutAlign="start center">
+    </mat-card>
 
-      <mat-chip-list>
-        <ng-container *ngFor="let attribute of item?.attributes">
-          <mat-chip selected
-                    [color]="attribute.color">{{attribute.label}}</mat-chip>
-        </ng-container>
-        <mat-chip *ngIf="item?.sale !== 0"
-                  selected
-                  color="warn">On sale</mat-chip>
-        <mat-chip *ngIf="isNew(item)"
-                  selected
-                  color="accent">New</mat-chip>
-      </mat-chip-list>
-
-      <span fxFlex> </span>
-
-      <div>
-
-      </div>
-
-    </mat-card-footer>
-
-  </mat-card>
+  </span>
 </div>

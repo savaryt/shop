@@ -9,16 +9,18 @@ import { ItemCardComponent } from './item-card/item-card.component';
 import { ImageSelectorModule } from '../../components/image-selector/image-selector.module';
 
 import {
-  MatCardModule,
   MatButtonModule,
-  MatIconModule,
+  MatCardModule,
+  MatChipsModule,
   MatBadgeModule,
   MatDividerModule,
-  MatChipsModule,
-  MatTooltipModule,
+  MatDialogModule,
+  MatIconModule,
   MatSelectModule,
+  MatTooltipModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ImageModalComponent } from '../../components/image-modal/image-modal.component';
 
 @NgModule({
   imports: [
@@ -30,15 +32,23 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
     FlexLayoutModule,
 
-    MatCardModule,
     MatButtonModule,
-    MatIconModule,
+    MatCardModule,
+    MatChipsModule,
     MatBadgeModule,
     MatDividerModule,
-    MatChipsModule,
-    MatTooltipModule,
+    MatDialogModule,
+    MatIconModule,
     MatSelectModule,
+    MatTooltipModule,
   ],
-  declarations: [ItemDetailsComponent, ItemCardComponent]
+  declarations: [
+    ItemDetailsComponent,
+    ItemCardComponent,
+    ImageModalComponent,
+  ],
+  entryComponents: [
+    ImageModalComponent,
+  ]
 })
 export class ItemDetailsModule { }

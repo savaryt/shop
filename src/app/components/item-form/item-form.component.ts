@@ -21,7 +21,7 @@ export class ItemFormComponent implements OnInit {
       price: ['34.90', Validators.required],
       sale: ['5', Validators.required],
       label: ['Branded Tshirt', Validators.required],
-      description: ['Wash: 30°C \n Material: Cotton', Validators.required],
+      description: ['Wash: 30°C\nMaterial: Cotton\nOccasion: Relax', Validators.required],
       sex: ['men', Validators.required],
     });
 

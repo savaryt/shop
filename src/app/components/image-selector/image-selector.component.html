@@ -1,9 +1,33 @@
-<div class="wrapper"
-     fxLayout="row"
-     fxLayoutAlign="start center">
-  <img *ngFor="let image of images; let i = index"
-       [src]="image.src"
-       [alt]="image.alt"
-       (click)="select(i)"
-       [class]="selectedIndex === i ? 'line-bottom' : ''">
+<div fxLayout.gt-sm="row"
+     fxLayout.sm="column"
+     fxLayout.lt-sm="column"
+     fxLayoutGap="8px">
+  <div class="wrapper-selected"
+       fxFlex="0 1 auto"
+       ngStyle.gt-sm="height: 600px; width: auto;">
+    <img ngStyle.gt-sm="height: 600px; width: auto;"
+         ngStyle.sm="width: 100%;"
+         ngStyle.lt-sm="width: 100%;"
+         class="img-selected"
+         [src]="selected?.src"
+         [alt]="selected?.alt || 'product_picture'"
+         (click)="onClick()">
+  </div>
+  <div class="wrapper-miniature"
+       fxLayout.gt-sm="column"
+       fxLayout.sm="row"
+       fxLayout.lt-sm="row"
+       fxLayoutAlign="start center"
+       ngStyle.gt-sm="height: 600px; overflow-y: auto;"
+       ngStyle.sm="height: 132px; overflow-y: auto;"
+       ngStyle.lt-sm="height: 132px; overflow-x: auto; overflow-y: hidden; max-height: 132px;">
+    <img ngStyle.gt-sm=" margin: 8px 8px 8px 8px"
+         ngStyle.sm=" margin: 8px 8px 8px 8px"
+         ngStyle.lt-sm=" margin: 8px 8px 8px 8px"
+         *ngFor="let image of images; let i = index"
+         [src]="image.src"
+         [alt]="image.alt"
+         (click)="select(i)"
+         [class]="selectedIndex === i ? 'line-bottom img-miniature' : 'img-miniature'">
+  </div>
 </div>

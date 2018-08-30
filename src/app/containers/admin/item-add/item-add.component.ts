@@ -52,7 +52,6 @@ export class ItemAddComponent {
           attributes.push(this.attributeForm.value[property]);
         }
       }
-      console.log(attributes)
 
       const images = [];
       for (const property in this.imageForm.value) {
@@ -66,22 +65,44 @@ export class ItemAddComponent {
         .collection('sex')
         .doc(sex)
         .collection('items')
-        .add({ sizes, attributes, ...values })
+        .add({ ...values })
         .then(({ id }) => {
-          const promises = images.map((image, index) => {
-            fetch(image.src)
-              .then(response => response.blob())
-              .then(blob => this.storage.upload(`sex/${sex}/items/${id}/${index}`, blob))
-              .then(({ ref }) => {
-                return this.firestore
-                  .collection('sex')
-                  .doc(sex)
-                  .collection('items')
-                  .doc(id)
-                  .collection('pictures')
-                  .add({ src: ref.fullPath, alt: `picture-${index}` })
-              });
-          });
+          const picturesPromises = images
+            .map((image, index) => {
+              return fetch(image.src)
+                .then(response => response.blob())
+                .then(blob => this.storage.upload(`sex/${sex}/items/${id}/${index}`, blob))
+                .then(({ ref }) => {
+                  return this.firestore
+                    .collection('sex')
+                    .doc(sex)
+                    .collection('items')
+                    .doc(id)
+                    .collection('pictures')
+                    .add({ src: ref.fullPath, alt: `picture-${index}` });
+                });
+            });
+          const sizesPromises = sizes
+            .map(size => {
+              return this.firestore
+                .collection('sex')
+                .doc(sex)
+                .collection('items')
+                .doc(id)
+                .collection('sizes')
+                .add(size);
+            });
+          const attributesPromises = attributes
+            .map(attribute => {
+              return this.firestore
+                .collection('sex')
+                .doc(sex)
+                .collection('items')
+                .doc(id)
+                .collection('attributes')
+                .add(attribute);
+            });
+          const promises = [...picturesPromises, ...sizesPromises, ...attributesPromises]
           return Promise.all(promises);
         })
         .then(() => {

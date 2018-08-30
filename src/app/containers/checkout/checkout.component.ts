@@ -66,7 +66,7 @@ export class CheckoutComponent implements OnInit {
           .map((item) => {
             const parts = item.id.split('-');
             const id = parts[0];
-            return { id, size: item.size, quantity: item.quantity };
+            return { id, size: item.size, quantity: item.quantity, sex: item.sex };
           });
 
         const data = { account: this.account.value, shipping: this.shipping.value, payment: this.payment.value, order: usefulState };

@@ -2,6 +2,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as cors from 'cors';
 import { normalizeSnapshots } from '../utility';
+import { DatabaseItem, Item } from 'src/app/item/item.model';
 
 const fakePayment = (payment) => Promise.resolve(payment);
 
@@ -14,23 +15,25 @@ export const order = functions.https.onRequest((req, res) => {
       .then((payment) => {
         // update stock
         const promises = data.order
-          .map(item => {
-            return admin.firestore().doc(`items/${item.id}`).get()
+          .map((item: Item) => {
+            return admin.firestore().doc(`sex/${item.sex}/items/${item.id}`).get()
               .then(snapshot => {
-                const value = snapshot.data()
+                const { sizes } = snapshot.data() as DatabaseItem;
                 // avoid negative stock issue
-                const availableSize = value.availableSizes.find(x => x.size === item.size);
-                const index = value.availableSizes.findIndex(x => x.size === item.size);
-                const stock = availableSize.stock - item.quantity;
-                value.availableSizes[index].stock = stock;
+                const size = sizes.find(x => x.label === item.size);
+                const index = sizes.findIndex(x => x.label === item.size);
+                const stock = size.stock - item.quantity;
+                sizes[index].stock = stock;
+                const newSize = sizes[index];
                 if (stock >= 0) {
-                  return admin.firestore().doc(`items/${item.id}`).update(value);
+                  // concurrent write issue I think, use collection for sizes to solve the problem ?
+                  return admin.firestore().doc(`sex/${item.sex}/items/${item.id}`).update({ sizes });
                 } else {
                   return Promise.reject(new Error('Insufficent stock'));
                 }
               });
           });
-        return Promise.all(promises);
+        return Promise.all(promises).then(console.log);
         // @todo add shipping to queue
         // @todo send confirmation mail
       })

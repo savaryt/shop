@@ -1,25 +1,26 @@
+@import '~@angular/material/theming';
 :host {
   display: block;
-  img {
+  .wrapper-selected {
+    // max-height: 600px;
+  }
+  .img-selected {
+    // max-height: 600px;
+    @include mat-elevation(2);
+    cursor: pointer;
+  }
+  .wrapper-miniature {
+    @include mat-elevation(2);
+    padding: 8px 8px
+  }
+  .img-miniature {
     cursor: pointer;
     width: auto;
     height: 100px;
-    margin-right: 12px;
+    display: block;
+    @include mat-elevation(2);
     &.line-bottom {
-      box-sizing: border-box;
-      border-bottom: 2px solid #212121; // &:after {
-      //   content: "";
-      //   position: absolute;
-      //   top: 100%;
-      //   left: -50%;
-      //   width: 100%;
-      //   height: 2px;
-      //   margin-top: -4px;
-      //   background-color: #212121;
-      // }
+      @include mat-elevation(8);
     }
-  }
-  .wrapper {
-    overflow: auto;
   }
 }

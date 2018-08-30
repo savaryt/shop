@@ -15,31 +15,12 @@ import { Observable } from '../../../../../node_modules/rxjs';
 export class ItemCardComponent implements OnInit {
 
   @Input() item: DatabaseItem;
-  picture: Observable<string>;
 
   constructor(
-    private firestore: AngularFirestore,
-    private storage: AngularFireStorage,
-    private route: ActivatedRoute,
   ) { }
 
   ngOnInit() {
 
-    this.picture = this.route.params
-      .pipe(switchMap(({ sex }) => {
-        return this.firestore
-          .collection('sex')
-          .doc(sex)
-          .collection<DatabaseItem>('items')
-          .doc(this.item.id)
-          .collection('pictures')
-          .valueChanges()
-          .pipe(delay(1000))
-          .pipe(switchMap(pictures => {
-            return this.storage.ref(pictures[0].src).getDownloadURL();
-          }))
-          .pipe(retry(5));
-      }));
   }
 
 }

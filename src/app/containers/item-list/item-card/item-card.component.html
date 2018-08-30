@@ -1,26 +1,17 @@
 <mat-card>
-  <mat-card-title [matTooltip]="item?.label"
-                  matTooltipPosition="below">{{item?.label}}</mat-card-title>
-  <mat-card-subtitle fxLayout
-                     fxLayoutGap="16px">
-    <span [style.textDecoration]="item?.sale !== 0 ? 'line-through' : 'none'">{{item?.price | currency}}</span>
-    <span *ngIf="item?.sale !== 0"
-          class="text-warn">{{item?.price - item?.sale | currency}}</span>
-  </mat-card-subtitle>
-
-  <mat-divider></mat-divider>
   <mat-card-content>
     <div class="item-img-wrapper">
-      <img class="item-img"
-           [src]="picture | async"
-           alt="product picture">
+      <img class="item-img pointer"
+           [src]="item?.picture.src"
+           [alt]="item?.picture.alt"
+           [routerLink]="[item?.id]">
     </div>
   </mat-card-content>
   <mat-divider class="mat-divider-shifted"></mat-divider>
   <mat-card-footer fxLayout
-                   fxLayoutAlign="start center">
+                   fxLayoutAlign="space-between center">
 
-    <mat-chip-list>
+    <!-- <mat-chip-list>
       <ng-container *ngFor="let attribute of item?.attributes">
         <mat-chip selected
                   [color]="attribute.color">{{attribute.label}}</mat-chip>
@@ -28,17 +19,16 @@
       <mat-chip *ngIf="item?.sale !== 0"
                 selected
                 color="warn">On sale</mat-chip>
-    </mat-chip-list>
+    </mat-chip-list> -->
+    <mat-card-subtitle>{{item?.label}}</mat-card-subtitle>
 
-    <span fxFlex> </span>
-
-    <div>
-      <a mat-mini-fab
-         color="primary"
-         [routerLink]="[item?.id]">
-        <mat-icon>search</mat-icon>
-      </a>
-    </div>
+    <mat-card-subtitle fxLayout
+                       fxLayoutAlign="end"
+                       fxLayoutGap="12px">
+      <span [style.textDecoration]="item?.sale !== 0 ? 'line-through' : 'none'">{{item?.price | currency}}</span>
+      <span *ngIf="item?.sale !== 0"
+            class="text-warn">{{item?.price - item?.sale | currency}}</span>
+    </mat-card-subtitle>
 
   </mat-card-footer>
 </mat-card>

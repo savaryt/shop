@@ -105,7 +105,6 @@ export class ItemUpdateComponent implements OnInit {
       .pipe(map(({ description, label, price, sale }) => {
         return { description, label, price, sale, sex };
       }))
-      // .pipe(tap(console.log))
       .subscribe()
 
     this.imageFormConfig = this.firestore
@@ -123,26 +122,6 @@ export class ItemUpdateComponent implements OnInit {
             .pipe(map(url => ({ src: url, alt: picture.alt })))));
       }))
       .pipe(scan((acc, curr) => [...acc, curr], []))
-      // .pipe(switchMap((pictures: { src, alt }[]) => {
-      //   const reader = new FileReader();
-
-      //   return from(pictures)
-      //     .pipe(switchMap(picture => {
-      //       return from(fetch(picture.src, { mode: 'cors', headers: { 'Access-Control-Allow-Origin': '*' }, })
-      //         .then(response => response.blob()))
-      // .pipe(switchMap(blob => {
-
-      //   const promise = new Promise((resolve, reject) => {
-      //     reader.readAsDataURL(blob);
-      //     reader.onloadend = () => {
-      //       resolve(reader.result);
-      //     };
-      //   });
-      //   return from(promise);
-      // }));
-
-      //     }));
-      // }))
       .pipe(map((pictures: any[]) => {
         return pictures
           .map((picture, index) => {
@@ -157,9 +136,8 @@ export class ItemUpdateComponent implements OnInit {
             ];
           })
           .reduce((acc, curr) => [...acc, ...curr], []);
-      }))
-      .pipe(tap(console.log))
-    this.imageFormConfig.subscribe()
+      }));
+
   }
 
   onSizeFormChange(value) {

@@ -48,7 +48,7 @@ export class SizeInputComponent implements ControlValueAccessor {
     this.onChange(this.value);
   }
   stockChange($event) {
-    this.value.stock = $event.target.value;
+    this.value.stock = $event.target.valueAsNumber;
     this.onChange(this.value);
   }
 }

@@ -4,20 +4,24 @@
   mat-card {
     height: 100%;
     box-sizing: border-box;
+    padding: 0;
   }
-  mat-card-title {
-    font-size: 16px;
-    max-width: calc(100% - 48px);
+  mat-card-subtitle {
     overflow: hidden;
     display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-  mat-card-content {
-    margin-bottom: 0;
-  }
+  mat-card-subtitle,
+  mat-card-content,
   mat-card-footer {
+    margin: 0;
+  }
+  mat-card-subtitle {
     padding: 6px;
+  }
+  .mat-divider-shifted {
+    margin-top: -4px;
   }
   div.item-img-wrapper {
     width: 100%;

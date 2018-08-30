@@ -10,6 +10,7 @@ export class ImageSelectorComponent implements OnInit {
   selected: { src: string, alt: string };
   selectedIndex: number;
   @Output() selectedChange: EventEmitter<{ src: string, alt: string }> = new EventEmitter();
+  @Output() selectedClick: EventEmitter<{ src: string, alt: string }> = new EventEmitter();
 
   private _images: { src: string, alt: string }[];
   @Input() set images(images: { src: string, alt: string }[]) {
@@ -47,6 +48,10 @@ export class ImageSelectorComponent implements OnInit {
       this.selected = this.images[this.selectedIndex];
       this.selectedChange.emit(this.selected);
     }
+  }
+
+  onClick() {
+    this.selectedClick.emit(this.selected);
   }
 
 }

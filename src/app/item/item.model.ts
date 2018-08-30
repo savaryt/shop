@@ -22,6 +22,7 @@ export class DatabaseItem {
     public sizes: Size[],
     public attributes: Attribute[],
     public id?: string,
+    public picture?: Image
   ) { }
 }
 
@@ -30,7 +31,8 @@ export type Sex = 'men' | 'women' | 'unisex';
 export class Image {
   constructor(
     public src: string,
-    public alt: string
+    public alt: string,
+    public id?: string
   ) { }
 }
 
@@ -38,6 +40,7 @@ export class Size {
   constructor(
     public label: string,
     public stock: number,
+    public id?: string
   ) { }
 }
 
@@ -45,5 +48,6 @@ export class Attribute {
   constructor(
     public label: string,
     public color: string,
+    public id?: string
   ) { }
 }

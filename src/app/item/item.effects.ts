@@ -6,7 +6,7 @@ import { FeedbackService } from '../services/feedback.service';
 import { FeedbackMessage } from '../services/feedback-message.model';
 import { Item } from './item.model';
 import { Store } from '@ngrx/store';
-import { selectAll, selectEntities, selectIds } from './item.reducer';
+import { selectAll } from './item.reducer';
 import * as localforage from 'localforage';
 
 @Injectable()

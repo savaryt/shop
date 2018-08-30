@@ -3,8 +3,8 @@ import { Subscription, Observable, of, from, pipe } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { Item, DatabaseItem } from '../../item/item.model';
 import { UpdateItem, DeleteItem, ClearItems, LoadItems } from '../../item/item.actions';
-import { selectAll, selectIds } from '../../item/item.reducer';
-import { map, switchMap, tap, mergeMap, concatMap, scan, throttleTime, debounceTime, reduce, first, concat, merge } from 'rxjs/operators';
+import { selectAll } from '../../item/item.reducer';
+import { map, switchMap, mergeMap, first } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { uniqBy } from 'lodash';
@@ -90,7 +90,7 @@ export class CartComponent implements OnInit, OnDestroy {
               });
           }));
       }))
-      .subscribe(console.log);
+      .subscribe();
 
   }
 
