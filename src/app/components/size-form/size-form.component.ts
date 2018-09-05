@@ -2,7 +2,7 @@ import { Component, ViewChild, AfterViewInit, Output, EventEmitter, Input } from
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { FieldConfig } from '../dynamic-form/dynamic-field/field-config.interface';
 import { Validators } from '@angular/forms';
-import { throttleTime } from '../../../../node_modules/rxjs/operators';
+import { throttleTime, startWith } from '../../../../node_modules/rxjs/operators';
 import * as cuid from 'cuid';
 
 @Component({
@@ -28,6 +28,7 @@ export class SizeFormComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.form.changes
+      .pipe(startWith({ value: this.form.value, valid: this.form.valid }))
       .pipe(throttleTime(250))
       .subscribe(() => {
         this.valueChange.emit({

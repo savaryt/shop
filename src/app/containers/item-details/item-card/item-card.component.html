@@ -8,40 +8,14 @@
          [routerLink]="['update']">Update</a> -->
 
 
-<!-- <form [formGroup]="form"
-                (ngSubmit)="onSubmit()"
-                fxLayout="column">
-            <mat-form-field>
-              <mat-select formControlName="size"
-                          required
-                          placeholder="Size">
-                <ng-container *ngFor="let size of item?.sizes">
-                  <mat-option *ngIf="size.stock > 5"
-                              [value]="size.label">{{size.label}}</mat-option>
-                  <mat-option *ngIf="size.stock <= 5 && size.stock > 0"
-                              [value]="size.label">{{size.label}} - Only {{size.stock}} left</mat-option>
-                  <mat-option *ngIf="size.stock == 0"
-                              [value]="size.label"
-                              disabled>{{size.label}} - Unavailable</mat-option>
-                </ng-container>
-              </mat-select>
-            </mat-form-field>
-
-            <button mat-raised-button
-                    color="primary"
-                    type="submit"
-                    [disabled]="!form.valid">
-              <mat-icon>add_shopping_cart</mat-icon>
-            </button>
-          </form> -->
 
 
 
 
 
 
-<div *ngIf="item"
-     fxLayout
+
+<div fxLayout
      fxLayoutAlign="center center">
   <span fxLayout="column"
         fxLayoutAlign="center stretch"
@@ -88,6 +62,44 @@
 
 
 
+    </mat-card>
+    <mat-card>
+      <form [formGroup]="form"
+            (ngSubmit)="onSubmit()"
+            fxLayout="row"
+            fxLayoutAlign="start center">
+        <mat-form-field fxFlex>
+          <mat-select formControlName="size"
+                      required
+                      placeholder="Size">
+            <ng-container *ngFor="let size of item?.sizes">
+              <mat-option *ngIf="size.stock > 5"
+                          [value]="size.label">{{size.label}}</mat-option>
+              <mat-option *ngIf="size.stock <= 5 && size.stock > 0"
+                          [value]="size.label">{{size.label}} - Only {{size.stock}} left</mat-option>
+              <mat-option *ngIf="size.stock == 0"
+                          [value]="size.label"
+                          disabled>{{size.label}} - Unavailable</mat-option>
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-icon-button
+                color="primary"
+                type="submit"
+                [disabled]="!form.valid">
+          <mat-icon>add_shopping_cart</mat-icon>
+        </button>
+      </form>
+    </mat-card>
+
+    <mat-card *ngIf="isAdmin() | async">
+      <mat-card-content>
+        <a mat-raised-button
+           [routerLink]="['update']">Update</a>
+        <a mat-raised-button
+           [routerLink]="['delete']">Delete</a>
+      </mat-card-content>
     </mat-card>
 
   </span>

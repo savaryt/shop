@@ -3,10 +3,18 @@
 <div class="wrapper"
      fxLayout="row wrap"
      fxLayoutAlign="start stretch">
-  <app-item-card fxFlex.gt-lg="25%"
-                 fxFlex.lg="33%"
-                 fxFlex.md="33%"
-                 fxFlex.lt-md="100%"
-                 *ngFor="let item of items | async"
-                 [item]="item"></app-item-card>
+        <app-item-card fxFlex.gt-lg="25%"
+                       fxFlex.lg="33%"
+                       fxFlex.md="33%"
+                       fxFlex.lt-md="100%"
+                       *ngFor="let item of items | async"
+                       [item]="item"></app-item-card>
+</div>
+<div>
+        <button mat-raised-button
+                (click)="next()"
+                [disabled]="nextDisabled">Next</button>
+        <button mat-raised-button
+                (click)="previous()"
+                [disabled]="previousDisabled">Previous</button>
 </div>

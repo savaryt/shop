@@ -102,7 +102,7 @@ export class ItemDetailsComponent implements OnInit {
                 }));
             }));
         }));
-        this.item.subscribe(console.log)
     }
+
 
 }

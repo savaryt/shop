@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 import { getStoreId } from '../../../utilities';
 import { ImageModalComponent } from '../../../components/image-modal/image-modal.component';
 import { MatDialog } from '@angular/material';
+import { UserRightsService } from '../../../services/user-rights.service';
 
 @Component({
   selector: 'app-item-card',
@@ -23,6 +24,7 @@ export class ItemCardComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private dialog: MatDialog,
+    private rights: UserRightsService,
   ) { }
 
   ngOnInit() {
@@ -59,4 +61,8 @@ export class ItemCardComponent implements OnInit {
     this.dialog.open(ImageModalComponent, { data: { image }, panelClass: 'panel-class' });
   }
 
+
+  isAdmin() {
+    return this.rights.isAdmin();
+  }
 }

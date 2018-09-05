@@ -1,8 +1,8 @@
-<form fxLayout="row wrap"
-      fxLayoutAlign="start center"
+<form fxLayout="column"
+      fxLayoutAlign="start stretch"
       [formGroup]="form"
       (submit)="handleSubmit($event)">
-  <ng-container *ngFor="let field of config; let i = index">
+  <div *ngFor="let field of config; let i = index">
     <ng-container dynamicField
                   [config]="field"
                   [group]="form">
@@ -11,5 +11,5 @@
             (click)="remove(i)">
       <mat-icon>clear</mat-icon>
     </button>
-  </ng-container>
+  </div>
 </form>

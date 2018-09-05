@@ -3,6 +3,7 @@ import { AngularFirestore } from 'angularfire2/firestore';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { FeedbackService } from '../../../services/feedback.service';
 import { FeedbackMessage } from '../../../services/feedback-message.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-item-add',
@@ -11,15 +12,18 @@ import { FeedbackMessage } from '../../../services/feedback-message.model';
 })
 export class ItemAddComponent {
 
-  sizeForm: { value: any, valid: boolean } = { value: {}, valid: false };
-  imageForm: { value: any, valid: boolean } = { value: {}, valid: false };
-  itemForm: { value: any, valid: boolean } = { value: {}, valid: false };
-  attributeForm: { value: any, valid: boolean } = { value: {}, valid: true };
+  isSubmitting: boolean;
+
+  sizeForm: { value: any, valid: boolean };
+  imageForm: { value: any, valid: boolean };
+  itemForm: { value: any, valid: boolean };
+  attributeForm: { value: any, valid: boolean };
 
   constructor(
     private firestore: AngularFirestore,
     private storage: AngularFireStorage,
     private feedback: FeedbackService,
+    private router: Router,
   ) { }
 
   onSizeFormChange(value) {
@@ -39,6 +43,7 @@ export class ItemAddComponent {
 
   onSubmit() {
     if (this.sizeForm.valid && this.imageForm.valid && this.itemForm.valid && this.attributeForm.valid) {
+      this.isSubmitting = true;
       const sizes = [];
       for (const property in this.sizeForm.value) {
         if (this.sizeForm.value.hasOwnProperty(property)) {
@@ -60,6 +65,7 @@ export class ItemAddComponent {
         }
       }
 
+
       const { sex, ...values } = this.itemForm.value;
       this.firestore
         .collection('sex')
@@ -67,6 +73,16 @@ export class ItemAddComponent {
         .collection('items')
         .add({ ...values })
         .then(({ id }) => {
+          if (!images.length) {
+            this.isSubmitting = false;
+            throw new Error('At least one picture is mandatory');
+
+          }
+          if (!sizes.length) {
+            this.isSubmitting = false;
+            throw new Error('At least one size is mandatory');
+          }
+
           const picturesPromises = images
             .map((image, index) => {
               return fetch(image.src)
@@ -103,12 +119,19 @@ export class ItemAddComponent {
                 .add(attribute);
             });
           const promises = [...picturesPromises, ...sizesPromises, ...attributesPromises]
-          return Promise.all(promises);
+          return Promise.all(promises).then(() => id);
+        })
+        .then((id) => {
+          this.isSubmitting = false;
+          this.router.navigate(['/items', sex, id])
         })
         .then(() => {
           this.feedback.message.next(new FeedbackMessage('Item added'))
         })
-        .catch((error) => this.feedback.message.next(new FeedbackMessage(error.message)));
+        .catch((error) => {
+          this.isSubmitting = false;
+          this.feedback.message.next(new FeedbackMessage(error.message));
+        });
 
     } else {
       this.feedback.message.next(new FeedbackMessage('Invalid form'))

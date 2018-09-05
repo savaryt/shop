@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges, EventEmitter, Input, Output } from '@angular/core';
 import { FieldConfig } from './dynamic-field/field-config.interface';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   // tslint:disable-next-line:component-selector

@@ -36,6 +36,7 @@ import {
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { UserRightsService } from './services/user-rights.service';
 
 @NgModule({
   declarations: [
@@ -74,7 +75,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
-  providers: [],
+  providers: [UserRightsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

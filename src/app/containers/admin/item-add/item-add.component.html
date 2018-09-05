@@ -14,10 +14,12 @@
       <app-image-form (valueChange)="onImageFormChange($event)"></app-image-form>
       <app-attribute-form (valueChange)="onAttributeFormChange($event)"></app-attribute-form>
     </mat-card-content>
-    <mat-card-footer>
+    <mat-card-content>
       <button mat-raised-button
-              (click)="onSubmit()">Submit</button>
-    </mat-card-footer>
+              color="primary"
+              (click)="onSubmit()"
+              [disabled]="isSubmitting">Submit</button>
+    </mat-card-content>
   </mat-card>
 
 </div>

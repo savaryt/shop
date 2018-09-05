@@ -1,5 +1,5 @@
 import { Component, forwardRef } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, Validators, FormControl } from '@angular/forms';
 
 @Component({
   providers: [
@@ -14,6 +14,9 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   styleUrls: ['./size-input.component.scss']
 })
 export class SizeInputComponent implements ControlValueAccessor {
+
+  label: FormControl;
+  stock: FormControl;
 
   private _value: { label: string, stock: number };
   set value(value: { label: string, stock: number }) {
@@ -30,10 +33,17 @@ export class SizeInputComponent implements ControlValueAccessor {
 
   constructor() {
     this.value = { label: null, stock: null };
+
+    this.label = new FormControl(this.value.label, [Validators.required]);
+    this.stock = new FormControl(this.value.stock, [Validators.required]);
   }
 
   writeValue(value: any): void {
     this._value = value;
+    if (this.label && this.stock) {
+      this.label.setValue(value.label);
+      this.stock.setValue(value.stock);
+    }
   }
 
   registerOnChange(fn: any): void {

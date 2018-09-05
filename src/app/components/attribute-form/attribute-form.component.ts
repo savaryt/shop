@@ -1,8 +1,9 @@
 import { Component, AfterViewInit, ViewChild, EventEmitter, Output, Input } from '@angular/core';
 import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 import { FieldConfig } from '../dynamic-form/dynamic-field/field-config.interface';
-import { throttleTime } from 'rxjs/operators';
+import { throttleTime, tap, startWith } from 'rxjs/operators';
 import * as cuid from 'cuid';
+import { Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-attribute-form',
@@ -29,6 +30,7 @@ export class AttributeFormComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.form.changes
+      .pipe(startWith({ value: this.form.value, valid: this.form.valid }))
       .pipe(throttleTime(250))
       .subscribe(() => {
         this.valueChange.emit({
@@ -43,7 +45,7 @@ export class AttributeFormComponent implements AfterViewInit {
     const attribute = {
       type: 'attribute',
       name: `attribute-${cuid()}`,
-      value: { label: null, color: 'primary' }
+      value: { label: null, color: 'primary' },
     };
     this.config = [...this.config, attribute];
   }

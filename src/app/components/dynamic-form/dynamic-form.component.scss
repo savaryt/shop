@@ -1,5 +1,6 @@
 :host {
-  form {
-    flex-direction: row;
+  display: block;
+  div {
+    display: flex;
   }
 }
