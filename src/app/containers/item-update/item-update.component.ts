@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 import { AngularFireStorage } from 'angularfire2/storage';
 import { FeedbackService } from '../../services/feedback.service';
 import { FeedbackMessage } from '../../services/feedback-message.model';
 import { FieldConfig } from '../../components/dynamic-form/dynamic-field/field-config.interface';
-import { ActivatedRoute } from '../../../../node_modules/@angular/router';
+import { ActivatedRoute, Router } from '../../../../node_modules/@angular/router';
 import { Observable, from } from '../../../../node_modules/rxjs';
 import { DatabaseItem } from '../../item/item.model';
 import { tap, first, map, startWith, switchMap, mergeMap, scan } from '../../../../node_modules/rxjs/operators';
@@ -17,16 +17,19 @@ import { Validators } from '../../../../node_modules/@angular/forms';
 })
 export class ItemUpdateComponent implements OnInit {
 
-  item: Observable<DatabaseItem>;
+  item: AngularFirestoreDocument<DatabaseItem>;
 
-  sizeForm: { value: any, valid: boolean } = { value: {}, valid: false };
-  imageForm: { value: any, valid: boolean } = { value: {}, valid: false };
-  itemForm: { value: any, valid: boolean } = { value: {}, valid: false };
-  attributeForm: { value: any, valid: boolean } = { value: {}, valid: true };
+  isSubmitting: boolean;
+
+  sizeForm: { value: any, valid: boolean };
+  imageForm: { value: any, valid: boolean };
+  itemForm: { value: any, valid: boolean };
+  attributeForm: { value: any, valid: boolean };
+
 
   sizeFormConfig: Observable<FieldConfig[]>;
   imageFormConfig: Observable<FieldConfig[]>;
-  itemFormConfig: Observable<FieldConfig[]>;
+  itemFormConfig: Observable<any>;
   attributeFormConfig: Observable<FieldConfig[]>;
 
   constructor(
@@ -34,6 +37,7 @@ export class ItemUpdateComponent implements OnInit {
     private storage: AngularFireStorage,
     private feedback: FeedbackService,
     private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -42,70 +46,44 @@ export class ItemUpdateComponent implements OnInit {
       .collection('sex')
       .doc(sex)
       .collection('items')
-      .doc<DatabaseItem>(id)
-      .valueChanges()
+      .doc<DatabaseItem>(id);
 
     this.attributeFormConfig = this.item
-      .pipe(map(item => item.attributes))
+      .collection('attributes')
+      .valueChanges()
       .pipe(map(attributes => {
         return attributes
           .map((attribute, index) => {
-            return [
-              {
-                type: 'textInput',
-                name: `label-${index}`,
-                placeholder: 'Attribute',
-                validation: [Validators.required],
-                value: attribute.label
-              },
-              {
-                type: 'select',
-                name: `color-${id}`,
-                placeholder: 'Color',
-                options: [
-                  { label: 'Primary', value: 'primary' },
-                  { label: 'Accent', value: 'accent' },
-                  { label: 'Warn', value: 'warn' },
-                ],
-                validation: [Validators.required]
-              }
-            ];
+            return {
+              type: 'attribute',
+              name: `label-${index}`,
+              value: attribute
+            };
           })
-          .reduce((acc, curr) => [...acc, ...curr], []);
+          .reduce((acc, curr) => [...acc, curr], []);
       }));
 
     this.sizeFormConfig = this.item
-      .pipe(map(item => item.sizes))
+      .collection('sizes')
+      .valueChanges()
       .pipe(map(sizes => {
         return sizes
           .map((size, index) => {
-            return [
-              {
-                type: 'textInput',
-                name: `label-${index}`,
-                placeholder: 'Size',
-                validation: [Validators.required],
-                value: size.label
-              },
-              {
-                type: 'numberInput',
-                name: `stock-${index}`,
-                placeholder: 'Stock',
-                validation: [Validators.required],
-                value: size.stock
-              }
-            ];
+            return {
+              type: 'size',
+              name: `size-${index}`,
+              value: size
+            };
           })
-          .reduce((acc, curr) => [...acc, ...curr], []);
+          .reduce((acc, curr) => [...acc, curr], []);
       }));
 
 
-    // this.itemFormConfig =
-    this.item
+    this.itemFormConfig = this.item
+      .valueChanges()
       .pipe(map(({ description, label, price, sale }) => {
         return { description, label, price, sale, sex };
-      }))
-      .subscribe()
+      }));
 
     this.imageFormConfig = this.firestore
       .collection('sex')
@@ -129,8 +107,6 @@ export class ItemUpdateComponent implements OnInit {
               {
                 type: 'imageInput',
                 name: `image-${index}`,
-                placeholder: 'Image',
-                validation: [Validators.required],
                 value: picture
               }
             ];
@@ -139,6 +115,8 @@ export class ItemUpdateComponent implements OnInit {
       }));
 
   }
+
+
 
   onSizeFormChange(value) {
     this.sizeForm = value;
@@ -150,6 +128,7 @@ export class ItemUpdateComponent implements OnInit {
 
   onItemFormChange(value) {
     this.itemForm = value;
+    console.log(value)
   }
   onAttributeFormChange(value) {
     this.attributeForm = value;
@@ -157,82 +136,135 @@ export class ItemUpdateComponent implements OnInit {
 
   onSubmit() {
     if (this.sizeForm.valid && this.imageForm.valid && this.itemForm.valid && this.attributeForm.valid) {
+      this.isSubmitting = true;
       const sizes = [];
       for (const property in this.sizeForm.value) {
         if (this.sizeForm.value.hasOwnProperty(property)) {
-          const parts = property.split('-');
-          const propertyName = parts[0];
-          const index = parts[1];
-          if (sizes[index]) {
-            sizes[index] = { ...sizes[index], [propertyName]: this.sizeForm.value[property] };
-          } else {
-            sizes[index] = { [propertyName]: this.sizeForm.value[property] };
-          }
+          sizes.push(this.sizeForm.value[property]);
         }
       }
 
       const attributes = [];
       for (const property in this.attributeForm.value) {
         if (this.attributeForm.value.hasOwnProperty(property)) {
-          const parts = property.split('-');
-          const propertyName = parts[0];
-          const index = parts[1];
-          if (attributes[index]) {
-            attributes[index] = { ...attributes[index], [propertyName]: this.attributeForm.value[property] };
-          } else {
-            attributes[index] = { [propertyName]: this.attributeForm.value[property] };
-          }
+          attributes.push(this.attributeForm.value[property]);
         }
       }
 
       const images = [];
-      for (const image in this.imageForm.value) {
-        if (this.imageForm.value.hasOwnProperty(image)) {
-          const parts = image.split('-');
-          const index = parts[1];
-          for (const property in this.imageForm.value[image]) {
-            if (this.imageForm.value[image].hasOwnProperty(property)) {
-              if (images[index]) {
-                images[index] = { ...images[index], [property]: this.imageForm.value[image][property] }
-              } else {
-                images[index] = { [property]: this.imageForm.value[image][property] };
-              }
-            }
-          }
+      for (const property in this.imageForm.value) {
+        if (this.imageForm.value.hasOwnProperty(property)) {
+          images.push(this.imageForm.value[property]);
         }
       }
 
+
       const { sex, ...values } = this.itemForm.value;
+      const { id } = this.route.snapshot.params;
       this.firestore
         .collection('sex')
         .doc(sex)
         .collection('items')
-        .add({ sizes, attributes, ...values })
-        .then(({ id }) => {
-          const promises = images.map((image, index) => {
-            fetch(image.src)
-              .then(response => response.blob())
-              .then(blob => this.storage.upload(`sex/${sex}/items/${id}/${index}`, blob))
-              .then(({ ref }) => {
-                return this.firestore
-                  .collection('sex')
-                  .doc(sex)
-                  .collection('items')
-                  .doc(id)
-                  .collection('pictures')
-                  .add({ src: ref.fullPath, alt: `picture-${index}` })
-              });
-          });
-          return Promise.all(promises);
+        .doc(id)
+        .update({ ...values })
+        .then(() => {
+          if (!images.length) {
+            this.isSubmitting = false;
+            throw new Error('At least one picture is mandatory');
+
+          }
+          if (!sizes.length) {
+            this.isSubmitting = false;
+            throw new Error('At least one size is mandatory');
+          }
+
+          // const picturesPromises = images
+          //   .map((image, index) => {
+          //     return fetch(image.src)
+          //       .then(response => response.blob())
+          //       .then(blob => this.storage.upload(`sex/${sex}/items/${id}/${index}`, blob))
+          //       .then(({ ref }) => {
+          //         return this.firestore
+          //           .collection('sex')
+          //           .doc(sex)
+          //           .collection('items')
+          //           .doc(id)
+          //           .collection('pictures')
+          //           .add({ src: ref.fullPath, alt: `picture-${index}` });
+          //       });
+          //   });
+
+          const removeSizesPromise = this.firestore
+            .collection('sex')
+            .doc(sex)
+            .collection('items')
+            .doc(id)
+            .collection('sizes')
+            .ref
+            .get()
+            .then(({ docs }) => {
+              const batch = this.firestore.firestore.batch();
+              docs.forEach(doc => batch.delete(doc.ref));
+              return batch.commit().then(() => ({ removed: true }));
+            });
+          const removeAttributesPromise = this.firestore
+            .collection('sex')
+            .doc(sex)
+            .collection('items')
+            .doc(id)
+            .collection('attributes')
+            .ref
+            .get()
+            .then(({ docs }) => {
+              const batch = this.firestore.firestore.batch();
+              docs.forEach(doc => batch.delete(doc.ref));
+              return batch.commit().then(() => ({ removed: true }));
+            });
+
+          const sizesPromises = sizes
+            .map(size => {
+              return this.firestore
+                .collection('sex')
+                .doc(sex)
+                .collection('items')
+                .doc(id)
+                .collection('sizes')
+                .add(size);
+            });
+          const attributesPromises = attributes
+            .map(attribute => {
+              return this.firestore
+                .collection('sex')
+                .doc(sex)
+                .collection('items')
+                .doc(id)
+                .collection('attributes')
+                .add(attribute)
+            });
+          return Promise
+            .all([...sizesPromises, ...attributesPromises])
+            .then(() => Promise.all([removeSizesPromise, removeAttributesPromise]));
+        })
+        .then(() => {
+          this.isSubmitting = false;
+          this.router.navigate(['/items', sex, id])
         })
         .then(() => {
           this.feedback.message.next(new FeedbackMessage('Item added'))
         })
-        .catch((error) => this.feedback.message.next(new FeedbackMessage(error.message)));
+        .catch((error) => {
+          this.isSubmitting = false;
+          this.feedback.message.next(new FeedbackMessage(error.message));
+        });
 
     } else {
+      console.log(`
+      size: ${this.sizeForm.valid}
+      img : ${this.imageForm.valid}
+      item: ${this.itemForm.valid}
+      attr: ${this.attributeForm.valid}
+      `)
       this.feedback.message.next(new FeedbackMessage('Invalid form'))
     }
   }
-
 }

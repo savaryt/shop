@@ -79,6 +79,9 @@ export class AppComponent {
     private feedback: FeedbackService,
     private firestore: AngularFirestore,
   ) {
+    const settings = { timestampsInSnapshots: true };
+    firestore.firestore.settings(settings);
+
     this.isMobile = this.media.asObservable()
       .pipe(map((change: MediaChange) => {
         if (change.mqAlias === 'sm' || change.mqAlias === 'xs') {

@@ -20,11 +20,11 @@ export class AttributeFormComponent implements AfterViewInit {
 
   constructor() {
     this.config = [
-      {
-        type: 'attribute',
-        name: `attribute-0`,
-        value: { label: 'Hot', color: 'primary' }
-      },
+      // {
+      //   type: 'attribute',
+      //   name: `attribute-0`,
+      //   value: { label: 'Hot', color: 'primary' }
+      // },
     ];
   }
 

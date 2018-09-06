@@ -18,7 +18,8 @@
 
   <mat-form-field fxFlex="100%">
     <mat-select placeholder="Sex"
-                formControlName="sex">
+                formControlName="sex"
+                [disabled]="sexDisabled">
       <mat-option value="men">Men</mat-option>
       <mat-option value="women">Women</mat-option>
     </mat-select>
@@ -39,3 +40,7 @@
   </mat-form-field>
 
 </form>
+<pre>
+  {{ form.value | json}}
+  {{ form.valid | json}}
+</pre>

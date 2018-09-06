@@ -12,6 +12,10 @@ const routes: Routes = [
     loadChildren: '../item-update/item-update.module#ItemUpdateModule',
   },
   {
+    path: 'delete',
+    loadChildren: '../item-delete/item-delete.module#ItemDeleteModule',
+  },
+  {
     path: '**',
     redirectTo: '',
   }

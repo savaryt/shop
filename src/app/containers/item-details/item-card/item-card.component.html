@@ -94,10 +94,14 @@
     </mat-card>
 
     <mat-card *ngIf="isAdmin() | async">
-      <mat-card-content>
+      <mat-card-content fxLayout
+                        fxLayoutAlign="end"
+                        fxLayoutGap="16px">
         <a mat-raised-button
+           color="primary"
            [routerLink]="['update']">Update</a>
         <a mat-raised-button
+           color="primary"
            [routerLink]="['delete']">Delete</a>
       </mat-card-content>
     </mat-card>

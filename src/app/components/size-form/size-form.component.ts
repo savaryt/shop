@@ -18,11 +18,11 @@ export class SizeFormComponent implements AfterViewInit {
 
   constructor() {
     this.config = [
-      {
-        type: 'size',
-        name: 'size-0',
-        value: { label: 'S', stock: 10 }
-      }
+      // {
+      //   type: 'size',
+      //   name: 'size-0',
+      //   value: { label: 'S', stock: 10 }
+      // }
     ];
   }
 

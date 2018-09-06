@@ -10,11 +10,16 @@
                        *ngFor="let item of items | async"
                        [item]="item"></app-item-card>
 </div>
-<div>
-        <button mat-raised-button
-                (click)="next()"
-                [disabled]="nextDisabled">Next</button>
-        <button mat-raised-button
+<div fxLayout
+     fxLayoutAlign="space-between">
+        <button mat-icon-button
                 (click)="previous()"
-                [disabled]="previousDisabled">Previous</button>
+                [disabled]="previousDisabled">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+        </button>
+        <button mat-icon-button
+                (click)="next()"
+                [disabled]="nextDisabled">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+        </button>
 </div>

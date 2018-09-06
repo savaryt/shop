@@ -20,10 +20,10 @@ export class ImageFormComponent implements AfterViewInit {
 
   constructor() {
     this.config = [
-      {
-        type: 'imageInput',
-        name: `image-${cuid()}`,
-      }
+      // {
+      //   type: 'imageInput',
+      //   name: `image-${cuid()}`,
+      // }
     ];
   }
 

@@ -76,8 +76,8 @@ export class CheckoutComponent implements OnInit {
       }))
       .toPromise()
       .then(({ success }: { success }) => {
-        const action = new ClearItems();
-        this.store.dispatch(action);
+        // const action = new ClearItems();
+        // this.store.dispatch(action);
         this.feedback.message.next(new FeedbackMessage(success));
       })
       .catch(({ error }: { error }) => {

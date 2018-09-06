@@ -49,7 +49,7 @@ import { UserRightsService } from './services/user-rights.service';
 
     // Firebase
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule.enablePersistence(),
+    AngularFirestoreModule,
     AngularFireFunctionsModule,
     AngularFireStorageModule,
     AngularFireAuthModule,

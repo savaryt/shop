@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { throttleTime, startWith } from '../../../../node_modules/rxjs/operators';
 
@@ -10,6 +10,13 @@ import { throttleTime, startWith } from '../../../../node_modules/rxjs/operators
 export class ItemFormComponent implements OnInit {
 
   form: FormGroup;
+  @Input() set value(value: any) {
+    if (this.form && value) {
+      this.form.setValue(value);
+      this.valueChange.emit({ value: this.form.value, valid: this.form.valid });
+    }
+  }
+  @Input() sexDisabled = false;
   @Output() valueChange = new EventEmitter();
 
   constructor(
@@ -18,11 +25,11 @@ export class ItemFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      price: ['34.90', Validators.required],
-      sale: ['5', Validators.required],
-      label: ['Branded Tshirt', Validators.required],
-      description: ['Wash: 30°C\nMaterial: Cotton\nOccasion: Relax', Validators.required],
-      sex: ['men', Validators.required],
+      price: ['', Validators.required],
+      sale: ['', Validators.required],
+      label: ['', Validators.required],
+      description: ['', Validators.required],
+      sex: ['', Validators.required],
     });
 
 

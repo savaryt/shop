@@ -1,0 +1,28 @@
+<h2>DELETE</h2>
+<div class="wrapper"
+     fxLayout
+     fxLayoutAlign="center start">
+
+  <mat-card fxFlex.gt-md="50%"
+            fxFlex.md="75%"
+            fxFlex.lt-md="100%">
+    <mat-card-content>
+      Delete item ref: {{ id | async }} ?
+    </mat-card-content>
+    <mat-card-content fxLayout
+                      fxLayoutAlign="end"
+                      fxLayoutGap="16px">
+      <button mat-raised-button
+              color="primary"
+              (click)="confirm()">
+        Confirm
+      </button>
+      <a mat-raised-button
+         color="primary"
+         (click)="cancel()">
+        Cancel
+      </a>
+
+    </mat-card-content>
+  </mat-card>
+</div>

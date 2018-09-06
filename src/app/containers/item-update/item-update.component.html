@@ -9,7 +9,9 @@
     <mat-card-title>Add Item</mat-card-title>
 
     <mat-card-content>
-      <app-item-form (valueChange)="onItemFormChange($event)"></app-item-form>
+      <app-item-form (valueChange)="onItemFormChange($event)"
+                     [value]="itemFormConfig | async"
+                     [sexDisabled]="true"></app-item-form>
       <app-size-form [config]="sizeFormConfig | async"
                      (valueChange)="onSizeFormChange($event)"></app-size-form>
       <app-image-form [config]="imageFormConfig | async"

@@ -2,5 +2,9 @@
   display: block;
   div {
     display: flex;
+    flex-direction: row;
+    button {
+      align-self: center;
+    }
   }
 }

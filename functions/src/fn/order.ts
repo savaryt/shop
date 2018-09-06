@@ -2,7 +2,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import * as cors from 'cors';
 import { normalizeSnapshots } from '../utility';
-import { DatabaseItem, Item } from 'src/app/item/item.model';
+import { DatabaseItem, Item, Size } from 'src/app/item/item.model';
 
 const fakePayment = (payment) => Promise.resolve(payment);
 
@@ -16,18 +16,16 @@ export const order = functions.https.onRequest((req, res) => {
         // update stock
         const promises = data.order
           .map((item: Item) => {
-            return admin.firestore().doc(`sex/${item.sex}/items/${item.id}`).get()
+            return admin.firestore().collection(`sex/${item.sex}/items/${item.id}/sizes`).get()
               .then(snapshot => {
-                const { sizes } = snapshot.data() as DatabaseItem;
-                // avoid negative stock issue
-                const size = sizes.find(x => x.label === item.size);
-                const index = sizes.findIndex(x => x.label === item.size);
+                const documents = [];
+                snapshot.docs.forEach((doc) => {
+                  documents.push({ ...doc.data(), id: doc.id });
+                })
+                const size = documents.find((s: Size) => s.label === item.size);
                 const stock = size.stock - item.quantity;
-                sizes[index].stock = stock;
-                const newSize = sizes[index];
                 if (stock >= 0) {
-                  // concurrent write issue I think, use collection for sizes to solve the problem ?
-                  return admin.firestore().doc(`sex/${item.sex}/items/${item.id}`).update({ sizes });
+                  return admin.firestore().doc(`sex/${item.sex}/items/${item.id}/sizes/${size.id}`).update({ stock });
                 } else {
                   return Promise.reject(new Error('Insufficent stock'));
                 }
