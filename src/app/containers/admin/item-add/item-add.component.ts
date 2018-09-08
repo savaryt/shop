@@ -123,7 +123,7 @@ export class ItemAddComponent {
         })
         .then((id) => {
           this.isSubmitting = false;
-          this.router.navigate(['/items', sex, id])
+          // this.router.navigate(['/items', sex, id])
         })
         .then(() => {
           this.feedback.message.next(new FeedbackMessage('Item added'))

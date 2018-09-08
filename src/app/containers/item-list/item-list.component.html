@@ -1,5 +1,24 @@
 <h2>ITEMS</h2>
-
+<div fxLayout="row"
+     fxLayoutAlign="space-between start"
+     fxLayoutGap="16px">
+        <mat-form-field fxFlex>
+                <mat-select placeholder="Order by"
+                            (selectionChange)="onOrderByChange($event)"
+                            value="createdAt">
+                        <mat-option *ngFor="let option of orderBy"
+                                    [value]="option.value">{{option.label}}</mat-option>
+                </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+                <mat-select placeholder="Direction"
+                            (selectionChange)="onDirectionChange($event)"
+                            value="asc">
+                        <mat-option value="asc">Ascendant</mat-option>
+                        <mat-option value="desc">Descendant</mat-option>
+                </mat-select>
+        </mat-form-field>
+</div>
 <div class="wrapper"
      fxLayout="row wrap"
      fxLayoutAlign="start stretch">

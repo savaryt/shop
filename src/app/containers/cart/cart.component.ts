@@ -100,6 +100,7 @@ export class CartComponent implements OnInit, OnDestroy {
                     this.remove(item);
                   }
                 } else {
+                  // Not user friendly, find another way
                   const action = new DeleteItem({ id: item.id });
                   this.store.dispatch(action);
                 }

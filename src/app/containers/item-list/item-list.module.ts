@@ -13,6 +13,7 @@ import {
   MatDividerModule,
   MatChipsModule,
   MatTooltipModule,
+  MatSelectModule,
 } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -30,6 +31,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatChipsModule,
     MatTooltipModule,
     MatDividerModule,
+    MatSelectModule,
   ],
   declarations: [ItemListComponent, ItemCardComponent],
   exports: [ItemListComponent]
