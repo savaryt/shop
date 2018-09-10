@@ -18,6 +18,7 @@ import { Validators } from '../../../../node_modules/@angular/forms';
 export class ItemUpdateComponent implements OnInit {
 
   item: AngularFirestoreDocument<DatabaseItem>;
+  id: string;
 
   isSubmitting: boolean;
 
@@ -42,6 +43,7 @@ export class ItemUpdateComponent implements OnInit {
 
   ngOnInit() {
     const { sex, id } = this.route.snapshot.params;
+    this.id = id;
     this.item = this.firestore
       .collection('sex')
       .doc(sex)
@@ -97,7 +99,20 @@ export class ItemUpdateComponent implements OnInit {
           .pipe(mergeMap(picture => this.storage
             .ref(picture.src)
             .getDownloadURL()
-            .pipe(map(url => ({ src: url, alt: picture.alt })))));
+            .pipe(switchMap(url => {
+              const promise = fetch(url)
+                .then(res => res.blob())
+                .then(blob => {
+                  const reader = new FileReader();
+                  return new Promise((resolve, reject) => {
+                    reader.readAsDataURL(blob);
+                    reader.onloadend = () => {
+                      resolve({ src: reader.result, alt: picture.alt });
+                    };
+                  });
+                });
+              return from(promise);
+            }))))
       }))
       .pipe(scan((acc, curr) => [...acc, curr], []))
       .pipe(map((pictures: any[]) => {
@@ -128,7 +143,6 @@ export class ItemUpdateComponent implements OnInit {
 
   onItemFormChange(value) {
     this.itemForm = value;
-    console.log(value)
   }
   onAttributeFormChange(value) {
     this.attributeForm = value;
@@ -159,40 +173,54 @@ export class ItemUpdateComponent implements OnInit {
       }
 
 
-      const { sex, ...values } = this.itemForm.value;
+      const { sex, price, sale, ...values } = this.itemForm.value;
       const { id } = this.route.snapshot.params;
       this.firestore
         .collection('sex')
         .doc(sex)
         .collection('items')
         .doc(id)
-        .update({ ...values })
+        .update({ ...values, price, sale, total: `${price - sale}-${Date.now()}` })
         .then(() => {
           if (!images.length) {
             this.isSubmitting = false;
             throw new Error('At least one picture is mandatory');
-
           }
           if (!sizes.length) {
             this.isSubmitting = false;
             throw new Error('At least one size is mandatory');
           }
 
-          // const picturesPromises = images
-          //   .map((image, index) => {
-          //     return fetch(image.src)
-          //       .then(response => response.blob())
-          //       .then(blob => this.storage.upload(`sex/${sex}/items/${id}/${index}`, blob))
-          //       .then(({ ref }) => {
-          //         return this.firestore
-          //           .collection('sex')
-          //           .doc(sex)
-          //           .collection('items')
-          //           .doc(id)
-          //           .collection('pictures')
-          //           .add({ src: ref.fullPath, alt: `picture-${index}` });
-          //       });
-          //   });
+          const removePicturesPromise = this.firestore
+            .collection('sex')
+            .doc(sex)
+            .collection('items')
+            .doc(id)
+            .collection('pictures')
+            .ref
+            .get()
+            .then(({ docs }) => {
+              const batch = this.firestore.firestore.batch();
+              docs.forEach(doc => batch.delete(doc.ref));
+
+              return batch.commit().then(() => this.storage.ref(`sex/${sex}/items/${id}`).delete());
+            });
+
+          const picturesPromises = images
+            .map((image, index) => {
+              return fetch(image.src)
+                .then(response => response.blob())
+                .then(blob => this.storage.upload(`sex/${sex}/items/${id}/${index}`, blob))
+                .then(({ ref }) => {
+                  return this.firestore
+                    .collection('sex')
+                    .doc(sex)
+                    .collection('items')
+                    .doc(id)
+                    .collection('pictures')
+                    .add({ src: ref.fullPath, alt: `picture-${index}` });
+                });
+            });
 
           const removeSizesPromise = this.firestore
             .collection('sex')
@@ -205,8 +233,9 @@ export class ItemUpdateComponent implements OnInit {
             .then(({ docs }) => {
               const batch = this.firestore.firestore.batch();
               docs.forEach(doc => batch.delete(doc.ref));
-              return batch.commit().then(() => ({ removed: true }));
+              return batch.commit();
             });
+
           const removeAttributesPromise = this.firestore
             .collection('sex')
             .doc(sex)
@@ -218,7 +247,7 @@ export class ItemUpdateComponent implements OnInit {
             .then(({ docs }) => {
               const batch = this.firestore.firestore.batch();
               docs.forEach(doc => batch.delete(doc.ref));
-              return batch.commit().then(() => ({ removed: true }));
+              return batch.commit();
             });
 
           const sizesPromises = sizes
@@ -242,8 +271,8 @@ export class ItemUpdateComponent implements OnInit {
                 .add(attribute)
             });
           return Promise
-            .all([...sizesPromises, ...attributesPromises])
-            .then(() => Promise.all([removeSizesPromise, removeAttributesPromise]));
+            .all([...sizesPromises, ...attributesPromises, ...picturesPromises])
+            .then(() => Promise.all([removeSizesPromise, removeAttributesPromise, removePicturesPromise]));
         })
         .then(() => {
           this.isSubmitting = false;

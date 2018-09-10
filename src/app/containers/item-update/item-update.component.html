@@ -1,3 +1,5 @@
+<h2>UPDATE ITEM</h2>
+<h3>Reference: {{id}}</h3>
 <div class="wrapper"
      fxLayout
      fxLayoutAlign="center start">
@@ -6,7 +8,6 @@
             fxFlex.md="75%"
             fxFlex.lt-md="100%">
 
-    <mat-card-title>Add Item</mat-card-title>
 
     <mat-card-content>
       <app-item-form (valueChange)="onItemFormChange($event)"
@@ -19,10 +20,11 @@
       <app-attribute-form [config]="attributeFormConfig | async"
                           (valueChange)="onAttributeFormChange($event)"></app-attribute-form>
     </mat-card-content>
-    <mat-card-footer>
+    <mat-card-content>
       <button mat-raised-button
+              color="primary"
               (click)="onSubmit()">Submit</button>
-    </mat-card-footer>
+    </mat-card-content>
   </mat-card>
 
 </div>

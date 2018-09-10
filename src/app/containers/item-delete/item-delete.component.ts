@@ -5,6 +5,7 @@ import { Observable, from } from 'rxjs';
 import { map, first } from 'rxjs/operators';
 import { FeedbackMessage } from '../../services/feedback-message.model';
 import { FeedbackService } from '../../services/feedback.service';
+import { AngularFireStorage } from 'angularfire2/storage';
 
 @Component({
   selector: 'app-item-delete',
@@ -19,6 +20,7 @@ export class ItemDeleteComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private firestore: AngularFirestore,
+    private storage: AngularFireStorage,
     private feedback: FeedbackService,
   ) { }
 
@@ -35,6 +37,9 @@ export class ItemDeleteComponent implements OnInit {
           .collection('items')
           .doc(id)
           .delete()
+          .then(() => {
+            return this.storage.ref(`sex/${sex}/items/${id}`).delete();
+          })
           .then(() => {
             this.feedback.message.next(new FeedbackMessage('Item deleted'));
             this.router.navigate(['/items', sex])

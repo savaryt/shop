@@ -66,12 +66,12 @@ export class ItemAddComponent {
       }
 
 
-      const { sex, ...values } = this.itemForm.value;
+      const { sex, price, sale, ...values } = this.itemForm.value;
       this.firestore
         .collection('sex')
         .doc(sex)
         .collection('items')
-        .add({ ...values })
+        .add({ ...values, price, sale, total: `${price - sale}-${Date.now()}` })
         .then(({ id }) => {
           if (!images.length) {
             this.isSubmitting = false;

@@ -4,7 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AngularFirestore } from 'angularfire2/firestore';
 
 import { Observable, BehaviorSubject, from, of, combineLatest, pipe } from 'rxjs';
-import { map, switchMap, mergeMap, scan, first, debounceTime, tap } from 'rxjs/operators';
+import { map, switchMap, mergeMap, scan, first, debounceTime, tap, withLatestFrom } from 'rxjs/operators';
 
 import { DatabaseItem, Sex } from '../../item/item.model';
 import { AngularFireStorage } from 'angularfire2/storage';
@@ -20,7 +20,7 @@ export type OrderByDirection = 'asc' | 'desc';
 export class ItemListComponent implements OnInit {
 
   orderBy = [
-    { label: 'Price', value: 'price' },
+    { label: 'Price', value: 'total' },
     { label: 'Date', value: 'createdAt', selected: true },
   ];
 
@@ -36,6 +36,8 @@ export class ItemListComponent implements OnInit {
 
   cursorStart: any = 0;
   cursorEnd: any;
+  cursorHistory;
+  page;
   length = 3;
 
   previousDisabled: boolean;
@@ -64,20 +66,27 @@ export class ItemListComponent implements OnInit {
           .pipe(map(changes => changes.map(change => ({ id: change.payload.doc.id, ...change.payload.doc.data() }) as DatabaseItem)))
           .pipe(switchMap(_items => {
             return from(_items)
-              .pipe(mergeMap((item: DatabaseItem) => this.getPictures(item, sex)))
+              .pipe(mergeMap((item: DatabaseItem) => this.getPicture(item, sex)))
               .pipe(scan((acc, curr) => [...acc, curr], []))
               .pipe(debounceTime(100))
               .pipe(map((items: DatabaseItem[]) => sort(items, order, direction)))
               .pipe(tap(items => {
+                this.cursorHistory = [];
+                this.cursorHistory.push(items[0][order]);
+                this.page = 0;
+                this.cursorStart = this.cursorHistory[this.page];
                 this.cursorEnd = items[items.length - 1][order];
-                this.cursorStart = items[0][order];
+                console.log(this.page, this.cursorHistory)
                 this.previousDisabled = true;
+                this.nextDisabled = false;
               }));
           }));
       }));
   }
 
   next() {
+    this.cursorStart = this.cursorHistory[this.page];
+    this.page++;
     this.items = this.combined
       .pipe(switchMap(([sex, order, direction]) => {
         return this.firestore
@@ -88,13 +97,17 @@ export class ItemListComponent implements OnInit {
           .pipe(map(changes => changes.map(change => ({ id: change.payload.doc.id, ...change.payload.doc.data() }) as DatabaseItem)))
           .pipe(switchMap(_items => {
             return from(_items)
-              .pipe(mergeMap((item: DatabaseItem) => this.getPictures(item, sex)))
+              .pipe(mergeMap((item: DatabaseItem) => this.getPicture(item, sex)))
               .pipe(scan((acc, curr) => [...acc, curr], []))
               .pipe(debounceTime(100))
               .pipe(map((items: DatabaseItem[]) => sort(items, order, direction)))
               .pipe(switchMap(items => {
+                if (this.page >= this.cursorHistory.length && this.cursorHistory.indexOf(items[0][order] === -1)) {
+                  this.cursorHistory.push(items[0][order]);
+                }
                 this.cursorEnd = items[items.length - 1][order];
-                this.cursorStart = items[0][order];
+                console.log(this.page, this.cursorHistory, this.cursorStart);
+
                 return this.last
                   .pipe(map(last => {
                     if (items[items.length - 1][order] === last) {
@@ -109,24 +122,27 @@ export class ItemListComponent implements OnInit {
           }));
       }));
   }
+
   previous() {
+    this.page--;
+    this.cursorStart = this.cursorHistory[this.page];
     this.items = this.combined
       .pipe(switchMap(([sex, order, direction]) => {
         return this.firestore
           .collection('sex')
           .doc(sex)
-          .collection<DatabaseItem>('items', ref => ref.limit(this.length).orderBy(order, direction).endBefore(this.cursorStart))
+          .collection<DatabaseItem>('items', ref => ref.limit(this.length).orderBy(order, direction).startAt(this.cursorStart))
           .snapshotChanges()
           .pipe(map(changes => changes.map(change => ({ id: change.payload.doc.id, ...change.payload.doc.data() }) as DatabaseItem)))
           .pipe(switchMap(_items => {
             return from(_items)
-              .pipe(mergeMap((item: DatabaseItem) => this.getPictures(item, sex)))
+              .pipe(mergeMap((item: DatabaseItem) => this.getPicture(item, sex)))
               .pipe(scan((acc, curr) => [...acc, curr], []))
               .pipe(debounceTime(100))
               .pipe(map((items: DatabaseItem[]) => sort(items, order, direction)))
               .pipe(switchMap(items => {
                 this.cursorEnd = items[items.length - 1][order];
-                this.cursorStart = items[0][order];
+                console.log(this.page, this.cursorHistory, this.cursorStart);
                 return this.first
                   .pipe(map(_first => {
                     if (items[0][order] === _first) {
@@ -142,7 +158,7 @@ export class ItemListComponent implements OnInit {
       }));
   }
 
-  getPictures(item: DatabaseItem, sex: Sex): Observable<DatabaseItem> {
+  getPicture(item: DatabaseItem, sex: Sex): Observable<DatabaseItem> {
     return this.firestore
       .collection('sex')
       .doc(sex)
@@ -151,9 +167,10 @@ export class ItemListComponent implements OnInit {
       .collection('pictures')
       .valueChanges()
       .pipe(switchMap(pictures => {
-        if (pictures && pictures[0]) {
+        if (pictures.length) {
+          const firstPicture = pictures.find(picture => picture.alt === 'picture-0')
           return this.storage
-            .ref(pictures[0].src)
+            .ref(firstPicture.src)
             .getDownloadURL()
             .pipe(map(url => {
               return { src: url, alt: pictures[0].alt };
@@ -172,28 +189,31 @@ export class ItemListComponent implements OnInit {
     const { value } = event;
     this.items = this.combined
       .pipe(switchMap(([sex, order, direction, start]) => {
-        console.log(order, direction, start)
         return this.firestore
           .collection('sex')
           .doc(sex)
           .collection<DatabaseItem>('items', ref => ref.limit(this.length).orderBy(order, direction).startAt(start))
           .snapshotChanges()
           .pipe(map(changes => changes.map(change => ({ id: change.payload.doc.id, ...change.payload.doc.data() }) as DatabaseItem)))
-          .pipe(tap(console.log))
           .pipe(switchMap(_items => {
             return from(_items)
-              .pipe(mergeMap((item: DatabaseItem) => this.getPictures(item, sex)))
+              .pipe(mergeMap((item: DatabaseItem) => this.getPicture(item, sex)))
               .pipe(scan((acc, curr) => [...acc, curr], []))
               .pipe(debounceTime(100))
               .pipe(map((items: DatabaseItem[]) => sort(items, order, direction)))
               .pipe(tap(items => {
+                this.cursorHistory = [];
+                this.cursorHistory.push(items[0][order]);
+                this.page = 0;
+                this.cursorStart = this.cursorHistory[this.page];
                 this.cursorEnd = items[items.length - 1][order];
-                this.cursorStart = items[0][order];
+                console.log(this.page, this.cursorHistory)
+
                 this.previousDisabled = true;
                 this.nextDisabled = false;
               }))
           }));
-      }));
+      }))
     this.order.next(value);
     this.setFirst();
     this.setLast();
@@ -210,21 +230,25 @@ export class ItemListComponent implements OnInit {
           .collection<DatabaseItem>('items', ref => ref.limit(this.length).orderBy(order, direction).startAt(start))
           .snapshotChanges()
           .pipe(map(changes => changes.map(change => ({ id: change.payload.doc.id, ...change.payload.doc.data() }) as DatabaseItem)))
-          .pipe(tap(console.log))
           .pipe(switchMap(_items => {
             return from(_items)
-              .pipe(mergeMap((item: DatabaseItem) => this.getPictures(item, sex)))
+              .pipe(mergeMap((item: DatabaseItem) => this.getPicture(item, sex)))
               .pipe(scan((acc, curr) => [...acc, curr], []))
               .pipe(debounceTime(100))
               .pipe(map((items: DatabaseItem[]) => sort(items, order, direction)))
               .pipe(tap(items => {
+                this.cursorHistory = [];
+                this.cursorHistory.push(items[0][order]);
+                this.page = 0;
+                this.cursorStart = this.cursorHistory[this.page];
                 this.cursorEnd = items[items.length - 1][order];
-                this.cursorStart = items[0][order];
+                console.log(this.page, this.cursorHistory)
+
                 this.previousDisabled = true;
                 this.nextDisabled = false;
               }));
           }));
-      }));
+      }))
     this.direction.next(value);
     this.setFirst();
     this.setLast();
@@ -232,28 +256,29 @@ export class ItemListComponent implements OnInit {
   }
 
   setCursor() {
+    let start;
     this.combined
       .pipe(first())
       .subscribe(([sex, order, direction]) => {
         switch (order) {
           case 'createdAt': {
             if (direction === 'asc') {
-              this.cursorStart = 0;
+              start = 0;
             } else {
-              this.cursorStart = Date.now();
+              start = Date.now();
             }
           }
             break;
-          case 'price': {
+          case 'total': {
             if (direction === 'asc') {
-              this.cursorStart = 0;
+              start = `${0}-${Date.now()}`;
             } else {
-              this.cursorStart = Infinity;
+              start = `${Infinity}-${Date.now()}`;
             }
           }
             break;
         }
-        this.start.next(this.cursorStart);
+        this.start.next(start);
       })
   }
 
